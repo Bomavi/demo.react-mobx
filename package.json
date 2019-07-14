@@ -1,7 +1,7 @@
 {
   "name": "react-mobx-demo",
   "version": "1.0.0",
-	"author": "Maksym Bozhenov <max.bozh.n1mbo@gmail.com>",
+  "author": "Maksym Bozhenov <max.bozh.n1mbo@gmail.com>",
   "scripts": {
     "start": "BROWSER=none react-scripts start",
     "build": "react-scripts build",
@@ -12,6 +12,7 @@
     "extends": "react-app"
   },
   "dependencies": {
+    "@material-ui/core": "^4.2.0",
     "classnames": "^2.2.6",
     "mobx": "^5.10.1",
     "mobx-logger": "^0.7.1",
