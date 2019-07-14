@@ -1,0 +1,55 @@
+{
+  "name": "react-mobx-demo",
+  "version": "1.0.0",
+	"author": "Maksym Bozhenov <max.bozh.n1mbo@gmail.com>",
+  "scripts": {
+    "start": "BROWSER=none react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "mobx": "^5.10.1",
+    "mobx-logger": "^0.7.1",
+    "mobx-react": "^6.1.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "router5": "^7.0.2",
+    "router5-plugin-browser": "^7.0.2",
+    "styled-components": "^4.3.2",
+    "styled-normalize": "^8.0.6"
+  },
+  "devDependencies": {
+    "@types/classnames": "^2.2.8",
+    "@types/jest": "24.0.15",
+    "@types/node": "^12.0.10",
+    "@types/react": "16.8.22",
+    "@types/react-dom": "16.8.4",
+    "@types/styled-components": "^4.1.16",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "@typescript-eslint/parser": "^1.11.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-react-app": "^4.0.1",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.1.0",
+    "prettier": "^1.18.2",
+    "react-scripts": "3.0.1",
+    "typescript": "3.5.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
