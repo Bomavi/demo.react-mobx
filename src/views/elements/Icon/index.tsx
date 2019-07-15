@@ -1,27 +1,32 @@
+/* npm imports: common */
 import React, { Suspense } from 'react';
-// import cx from 'classnames';
-import FQ from 'assets/icons/file-question';
-import { StyledWrapper } from './styles';
+import cx from 'classnames';
 
-// const reqSvgs = require.context('assets/icons', true, /\.svg$/);
-// const paths = reqSvgs.keys();
-// const svgs = paths.map(p => p.substring(2, p.length - 4));
+/* root imports: common */
+import FQ from 'assets/icons/file-question';
+
+/* local imports: common */
+import { useStyles, IconParams } from './styles';
+
+export type IconName = 'settings' | 'file-question' | 'theme-light-dark';
 
 interface IconProps {
-	name: 'instagram' | 'file-question';
+	name: IconName;
 }
 
-export class Icon extends React.Component<IconProps> {
-	public render(): React.ReactNode {
-		const { name } = this.props;
-		const SVG = React.lazy(() => import(`assets/icons/${name}`));
+const Icon: React.FC<IconProps & IconParams> = ({ name, size = 'md', color }) => {
+	const SVG = React.lazy(() => import(`assets/icons/${name}`));
+	const classes = useStyles({ color });
 
-		return (
-			<StyledWrapper>
+	return (
+		<div className={cx(classes.iconWrapper, size)}>
+			<div className={classes.svgWrapper}>
 				<Suspense fallback={<FQ />}>
 					<SVG />
 				</Suspense>
-			</StyledWrapper>
-		);
-	}
-}
+			</div>
+		</div>
+	);
+};
+
+export { Icon };

@@ -1,124 +1,51 @@
-import styled from 'styled-components';
+/* npm imports: material-ui/core */
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
-export const StyledWrapper = styled.div`
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+export interface IconParams {
+	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+	color?: 'white' | 'black';
+}
 
-	.icon-box {
-		display: block;
-
-		svg {
-			display: block;
-		}
-	}
-
-	.primary {
-		svg {
-			fill: #0074f9;
-		}
-	}
-
-	.secondary {
-		svg {
-			fill: #fff;
-		}
-	}
-
-	.white {
-		svg {
-			fill: #fff;
-		}
-	}
-
-	.black {
-		svg {
-			fill: #000;
-		}
-	}
-
-	.gray {
-		svg {
-			fill: #777;
-		}
-	}
-
-	.light {
-		svg {
-			fill: rgba(0, 0, 0, 0.1);
-		}
-	}
-
-	.light-gray {
-		svg {
-			fill: #ccc;
-		}
-	}
-
-	.dark-gray {
-		svg {
-			fill: #444;
-		}
-	}
-
-	.warn {
-		svg {
-			fill: #ff9800;
-		}
-	}
-
-	.success {
-		svg {
-			fill: #4caf50;
-		}
-	}
-
-	.danger {
-		svg {
-			fill: #f44336;
-		}
-	}
-
-	.xs {
-		svg {
-			width: 16px;
-			height: 16px;
-		}
-	}
-
-	.sm {
-		svg {
-			width: 20px;
-			height: 20px;
-		}
-	}
-
-	.md {
-		svg {
-			width: 26px;
-			height: 26px;
-		}
-	}
-
-	.lg {
-		svg {
-			width: 36px;
-			height: 36px;
-		}
-	}
-
-	.xl {
-		svg {
-			width: 48px;
-			height: 48px;
-		}
-	}
-
-	.xxl {
-		svg {
-			width: 56px;
-			height: 56px;
-		}
-	}
-`;
+export const useStyles = makeStyles((theme: Theme) =>
+	createStyles({
+		svgWrapper: (p: IconParams) => ({
+			position: 'absolute',
+			top: '50%',
+			left: '50%',
+			transform: 'translate(-50%, -50%)',
+			display: 'block',
+			'& svg': {
+				display: 'block',
+				fill: p.color ? p.color : theme.palette.text.primary,
+			},
+		}),
+		iconWrapper: {
+			display: 'flex',
+			position: 'relative',
+			'&.xs': {
+				width: 16,
+				height: 16,
+			},
+			'&.sm': {
+				width: 20,
+				height: 20,
+			},
+			'&.md': {
+				width: 26,
+				height: 26,
+			},
+			'&.lg': {
+				width: 36,
+				height: 36,
+			},
+			'&.xl': {
+				width: 48,
+				height: 48,
+			},
+			'&.xxl': {
+				width: 56,
+				height: 56,
+			},
+		},
+	})
+);
