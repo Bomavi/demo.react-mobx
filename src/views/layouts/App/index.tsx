@@ -1,30 +1,24 @@
+/* npm imports: common */
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import styled, { ThemeProvider } from 'styled-components';
 
-import { Header, Content, Footer } from 'views/layouts';
+/* npm imports: material-ui/core */
+import { ThemeProvider } from '@material-ui/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+/* root imports: view components */
+import { Content } from 'views/layouts';
 import { Home } from 'features/Home';
 
+/* root imports: common */
 import { RouterStore } from 'utils/services/router';
 import { GlobalStore } from 'config/store';
-import { theme } from 'utils/themes';
 
-import bg from 'assets/images/notebook.png';
+/* local imports: common */
+import { styles } from './styles';
 
-interface AppWrapperProps {
-	background?: string;
-}
-
-const AppWrapper = styled.div<AppWrapperProps>`
-	position: relative;
-	width: 100vw;
-	min-height: 100vh;
-	font-family: 'Roboto', sans-serif;
-	background-image: url(${p => p.background});
-	background-repeat: repeat;
-`;
-
-interface AppProps {
+interface AppProps extends WithStyles<typeof styles> {
 	routerStore?: RouterStore;
 	globalStore?: GlobalStore;
 }
@@ -32,10 +26,11 @@ interface AppProps {
 @inject('routerStore')
 @inject('globalStore')
 @observer
-class App extends React.Component<AppProps> {
-	public render(): React.ReactNode {
+class AppComponent extends React.Component<AppProps> {
+	public render() {
+		const { classes } = this.props;
 		const { current } = this.props.routerStore!;
-		const { isLight } = this.props.globalStore!;
+		const { selectedTheme } = this.props.globalStore!;
 
 		if (current === null) return null;
 
@@ -50,15 +45,18 @@ class App extends React.Component<AppProps> {
 		}
 
 		return (
-			<ThemeProvider theme={theme(isLight)}>
-				<AppWrapper background={bg}>
-					<Header />
-					<Content>{component}</Content>
-					<Footer />
-				</AppWrapper>
+			<ThemeProvider theme={selectedTheme}>
+				<>
+					<CssBaseline />
+					<div className={classes.root}>
+						<Content>{component}</Content>
+					</div>
+				</>
 			</ThemeProvider>
 		);
 	}
 }
+
+const App = withStyles(styles)(AppComponent);
 
 export { App };
