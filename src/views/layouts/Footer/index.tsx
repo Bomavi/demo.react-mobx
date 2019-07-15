@@ -1,11 +1,22 @@
 /* npm imports: common */
 import React from 'react';
 
+/* npm imports: material-ui/core */
+import Typography from '@material-ui/core/Typography';
+
 /* local imports: common */
-import { FooterWrapper } from './styles';
+import { useStyles } from './styles';
 
 const Footer: React.FC = () => {
-	return <FooterWrapper>Created by Maksym Bozhenov for DEMO purpose</FooterWrapper>;
+	const classes = useStyles();
+
+	return (
+		<footer className={classes.root}>
+			<Typography className={classes.title} noWrap variant="body1" align="center">
+				Created by Maksym Bozhenov for DEMO purpose
+			</Typography>
+		</footer>
+	);
 };
 
 export { Footer };
