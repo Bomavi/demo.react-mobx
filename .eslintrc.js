@@ -26,7 +26,13 @@ module.exports = {
 		'@typescript-eslint/no-non-null-assertion': 0,
 		'@typescript-eslint/no-explicit-any': 0,
 		'@typescript-eslint/no-empty-interface': 0,
-		'@typescript-eslint/explicit-function-return-type': [2, { allowExpressions: true }],
+		'@typescript-eslint/explicit-function-return-type': [0,
+			{
+				allowExpressions: true,
+				allowTypedFunctionExpressions: true,
+				allowHigherOrderFunctions: true,
+			}
+		],
 	},
 	settings: {
 		react: {
