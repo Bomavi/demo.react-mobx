@@ -1,14 +1,11 @@
+/* npm imports: common */
 import React from 'react';
 
-import { SocialBar } from 'views/layouts';
+/* local imports: common */
 import { FooterWrapper } from './styles';
 
-const Footer = (): JSX.Element => {
-	return (
-		<FooterWrapper>
-			<SocialBar />
-		</FooterWrapper>
-	);
+const Footer: React.FC = () => {
+	return <FooterWrapper>Created by Maksym Bozhenov for DEMO purpose</FooterWrapper>;
 };
 
 export { Footer };

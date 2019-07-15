@@ -1,7 +1,11 @@
+/* npm imports: common */
 import React from 'react';
 import cx from 'classnames';
 
+/* root imports: common */
 import router from 'utils/services/router';
+
+/* local imports: common */
 import { LinkWrapper } from './styles';
 
 interface LinkProps {
@@ -31,7 +35,7 @@ class Link extends React.Component<LinkProps> {
 		}
 	};
 
-	public render(): React.ReactNode {
+	public render() {
 		const { children, name, block, params } = this.props;
 		const href = router.buildPath(name, params as any);
 

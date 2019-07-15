@@ -1,11 +1,12 @@
+/* npm imports: common */
 import { observable, computed } from 'mobx';
 
 export class HomeStore {
 	@observable public name: string = 'Maksym';
 	@observable public surname: string = 'Bozhenov';
 
-	@computed public get fullName(): string {
-	    return `${this.name} ${this.surname}`;
+	@computed public get fullName() {
+		return `${this.name} ${this.surname}`;
 	}
 }
 
