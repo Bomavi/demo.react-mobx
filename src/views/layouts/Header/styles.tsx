@@ -1,14 +1,13 @@
-import styled from 'styled-components';
+/* npm imports: material-ui/core */
+import { createStyles, Theme } from '@material-ui/core/styles';
 
-const HeaderWrapper: React.FC = styled.header`
-	position: absolute;
-	top: 0;
-	left: 0;
-	display: flex;
-	width: 100%;
-	height: 80px;
-	line-height: 80px;
-	z-index: 99;
-`;
-
-export { HeaderWrapper };
+export const styles = (theme: Theme) =>
+	createStyles({
+		title: {
+			flexGrow: 1,
+		},
+		appBar: {
+			flexGrow: 1,
+			zIndex: theme.zIndex.drawer + 1,
+		},
+	});
