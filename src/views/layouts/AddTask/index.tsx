@@ -1,7 +1,7 @@
 /* npm imports: common */
 import React from 'react';
 import { observer } from 'mobx-react';
-import { observable, action } from 'mobx';
+import { action } from 'mobx';
 
 /* npm imports: material-ui/core */
 import { withStyles, WithStyles } from '@material-ui/core/styles';
@@ -16,12 +16,6 @@ interface AddTaskProps extends WithStyles<typeof styles> {}
 
 @observer
 class AddTaskComponent extends React.Component<AddTaskProps> {
-	@observable private tabIndex: number = 0;
-
-	@action private tabClickHandler = (e: React.ChangeEvent<{}>, value: number) => {
-		this.tabIndex = value;
-	};
-
 	@action public actionHandler = (value: string) => {
 		console.warn('actionHandler: ', value);
 	};
@@ -30,7 +24,7 @@ class AddTaskComponent extends React.Component<AddTaskProps> {
 		// const { classes } = this.props;
 
 		return (
-			<CustomInput placeholder="Add task here..." onClick={this.actionHandler}>
+			<CustomInput placeholder="Type task description..." onClick={this.actionHandler}>
 				<Icon name="plus" size="md" />
 			</CustomInput>
 		);
