@@ -8,7 +8,17 @@ import FQ from 'assets/icons/file-question';
 /* local imports: common */
 import { useStyles, IconParams } from './styles';
 
-export type IconName = 'settings' | 'file-question' | 'theme-light-dark';
+export type IconName =
+	| 'settings'
+	| 'file-question'
+	| 'theme-light-dark'
+	| 'pencil'
+	| 'account-circle'
+	| 'delete'
+	| 'grab'
+	| 'magnify'
+	| 'close'
+	| 'plus';
 
 interface IconProps {
 	name: IconName;
