@@ -34,7 +34,7 @@ class HeaderComponent extends React.Component<HeaderProps> {
 			<AppBar position="fixed" className={classes.appBar}>
 				<Toolbar>
 					<Typography variant="h6" noWrap className={classes.title}>
-						TODOSHER
+						TODO'SHER
 					</Typography>
 					<Button color="inherit">Login</Button>
 					<IconButton color="inherit" onClick={toggleDrawer}>
