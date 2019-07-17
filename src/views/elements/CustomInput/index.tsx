@@ -6,11 +6,10 @@ import { observable, computed, action } from 'mobx';
 /* npm imports: material-ui/core */
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
-import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
 
 /* root imports: view components */
-import { Icon } from 'views/elements';
+import { Icon, InputButton } from 'views/elements';
 
 /* local imports: common */
 import { styles } from './styles';
@@ -58,21 +57,25 @@ class CustomInputComponent extends React.Component<CustomInputProps> {
 	public render() {
 		const { classes, children, placeholder, onClick } = this.props;
 
+		const renderLeftIcon = children && (
+			<InputButton
+				isFetching={!this.isEmpty}
+				disabled={onClick && this.isEmpty}
+				onClick={onClick && this.actionClickHandler}
+			>
+				{children}
+			</InputButton>
+		);
+
+		const renderRightIcon = !this.isEmpty && (
+			<InputButton onClick={this.clearHandler}>
+				<Icon name="close" size="md" />
+			</InputButton>
+		);
+
 		return (
 			<div className={classes.root}>
-				{children && onClick ? (
-					<div className={classes.icon}>
-						<IconButton
-							className={classes.button}
-							disabled={this.isEmpty}
-							onClick={this.actionClickHandler}
-						>
-							{children}
-						</IconButton>
-					</div>
-				) : (
-					<div className={classes.icon}>{children}</div>
-				)}
+				{renderLeftIcon}
 				{children && <Divider className={classes.divider} />}
 				<InputBase
 					className={classes.input}
@@ -81,16 +84,8 @@ class CustomInputComponent extends React.Component<CustomInputProps> {
 					onChange={this.changeHandler}
 					onKeyPress={this.keyPressHandler}
 				/>
-				{!this.isEmpty && (
-					<>
-						<Divider className={classes.divider} />
-						<div className={classes.icon}>
-							<IconButton onClick={this.clearHandler}>
-								<Icon name="close" size="md" />
-							</IconButton>
-						</div>
-					</>
-				)}
+				{!this.isEmpty && <Divider className={classes.divider} />}
+				{renderRightIcon}
 			</div>
 		);
 	}
