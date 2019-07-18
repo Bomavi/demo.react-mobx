@@ -8,4 +8,10 @@ declare interface NumberTMap<T = string> {
 declare type DynamicImportType = () => Promise<{ default: React.ComponentType<any> }>;
 declare type LazyComponentType = React.LazyExoticComponent<React.ComponentType<any>>;
 
+declare interface CustomServerError extends Error {
+	res: {
+		status: number;
+	};
+}
+
 declare type Sizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
