@@ -4,13 +4,13 @@ import { State } from 'router5';
 // import { authApiPrefix } from 'utils/config';
 
 export const authenticate = (): any => async (
-    _nextState: State,
-    _prevState: State,
-    done: any
+	_nextState: State,
+	_prevState: State,
+	done: any
 ): Promise<any> => {
-    // const res = await axios.get(`${authApiPrefix}/access`);
+	// const res = await axios.get(`${authApiPrefix}/access`);
 
-    // if (res.status === 200) return true;
+	// if (res.status === 200) return true;
 
-    return done({ redirect: { name: 'login' } });
+	return done({ redirect: { name: 'login' } });
 };

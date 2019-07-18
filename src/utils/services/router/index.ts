@@ -6,7 +6,7 @@ import { asyncMiddleware } from './middleware';
 import { mobxRouterPlugin } from './plugins';
 
 const router: Router = createRouter(routes, {
-    allowNotFound: true,
+	allowNotFound: true,
 });
 
 router.usePlugin(browserPlugin(), mobxRouterPlugin);

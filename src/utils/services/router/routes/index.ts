@@ -1,25 +1,25 @@
 import { routerStore } from './../store';
 
 const activate = (pageName: string): void => {
-    const { setPageName } = routerStore;
+	const { setPageName } = routerStore;
 
-    setPageName(pageName);
+	setPageName(pageName);
 };
 
 export const routes: CustomeRoute[] = [
-    {
-        name: 'home',
-        path: '/',
+	{
+		name: 'home',
+		path: '/',
 
-        onActivate: (): void => activate('Home'),
-        onDeactivate: (): void => console.log(0),
-    },
+		onActivate: (): void => activate('Home'),
+		onDeactivate: (): void => console.error(0),
+	},
 
-    {
-        name: 'about',
-        path: '/about',
+	{
+		name: 'about',
+		path: '/about',
 
-        onActivate: (): void => activate('About'),
-        onDeactivate: (): void => console.log(0),
-    },
+		onActivate: (): void => activate('About'),
+		onDeactivate: (): void => console.error(0),
+	},
 ];
