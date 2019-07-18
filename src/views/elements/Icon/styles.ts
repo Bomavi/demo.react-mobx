@@ -23,12 +23,12 @@ export const useStyles = makeStyles((theme: Theme) =>
 			display: 'flex',
 			position: 'relative',
 			'&.xs': {
-				width: 16,
-				height: 16,
+				width: 14,
+				height: 14,
 			},
 			'&.sm': {
-				width: 20,
-				height: 20,
+				width: 18,
+				height: 18,
 			},
 			'&.md': {
 				width: 26,
