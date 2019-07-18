@@ -1,6 +1,5 @@
 /* npm imports: common */
 import React from 'react';
-import cx from 'classnames';
 
 /* npm imports: material-ui/core */
 import IconButton from '@material-ui/core/IconButton';
@@ -48,12 +47,7 @@ const TaskActions: React.FC<TaskActionsProps> = ({
 				</IconButton>
 			</div>
 			<div className={classes.iconButtonWrapper}>
-				<IconButton
-					className={cx(classes.iconButton, classes.delete)}
-					color="secondary"
-					disabled={disabled}
-					onClick={onClick}
-				>
+				<IconButton className={classes.iconButton} disabled={disabled} onClick={onClick}>
 					<Icon name="delete" size="sm" />
 				</IconButton>
 			</div>
