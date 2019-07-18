@@ -18,13 +18,15 @@ export type IconName =
 	| 'grab'
 	| 'magnify'
 	| 'close'
-	| 'plus';
+	| 'plus'
+	| 'check'
+	| 'check-bold';
 
-interface IconProps {
+export interface IconProps {
 	name: IconName;
 }
 
-const Icon: React.FC<IconProps & IconParams> = ({ name, size = 'md', color }) => {
+const Icon: React.FC<IconProps & IconParams> = ({ name, size = 'sm', color }) => {
 	const SVG = React.lazy(() => import(`assets/icons/${name}`));
 	const classes = useStyles({ color });
 
