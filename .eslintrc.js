@@ -33,6 +33,8 @@ module.exports = {
 				allowHigherOrderFunctions: true,
 			}
 		],
+		// jsx-a11y
+		'jsx-a11y/no-autofocus': 0,
 	},
 	settings: {
 		react: {
