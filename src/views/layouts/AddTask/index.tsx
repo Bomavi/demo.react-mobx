@@ -7,7 +7,7 @@ import { action } from 'mobx';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 
 /* root imports: view components */
-import { Icon, CustomInput } from 'views/elements';
+import { CustomInput } from 'views/elements';
 
 /* local imports: common */
 import { styles } from './styles';
@@ -24,9 +24,11 @@ class AddTaskComponent extends React.Component<AddTaskProps> {
 		// const { classes } = this.props;
 
 		return (
-			<CustomInput placeholder="Type task description..." onClick={this.actionHandler}>
-				<Icon name="plus" size="md" />
-			</CustomInput>
+			<CustomInput
+				iconName="plus"
+				placeholder="Type task description..."
+				onClick={this.actionHandler}
+			/>
 		);
 	}
 }

@@ -16,6 +16,11 @@ export const useStyles = makeStyles((theme: Theme) =>
 					fill: theme.palette.text.disabled,
 				},
 			},
+			'&.primary': {
+				'& svg': {
+					fill: theme.palette.primary.main,
+				},
+			},
 		},
 	})
 );

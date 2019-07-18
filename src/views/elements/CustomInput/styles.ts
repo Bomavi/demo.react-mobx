@@ -14,6 +14,10 @@ export const styles = (theme: Theme) =>
 			flexGrow: 1,
 			height: 60,
 			padding: '0 20px',
+
+			'& > input': {
+				letterSpacing: theme.typography.body1.letterSpacing,
+			},
 		},
 		divider: {
 			width: 1,

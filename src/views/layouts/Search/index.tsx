@@ -7,7 +7,7 @@ import { action } from 'mobx';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 
 /* root imports: view components */
-import { Icon, CustomInput } from 'views/elements';
+import { CustomInput } from 'views/elements';
 
 /* root imports: common */
 import { debounce } from 'utils/helpers';
@@ -27,9 +27,11 @@ class SearchComponent extends React.Component<SearchProps> {
 		// const { classes } = this.props;
 
 		return (
-			<CustomInput placeholder="Type to search tasks..." onChange={this.changeHandler}>
-				<Icon name="magnify" size="md" />
-			</CustomInput>
+			<CustomInput
+				iconName="magnify"
+				placeholder="Type to search tasks..."
+				onChange={this.changeHandler}
+			/>
 		);
 	}
 }

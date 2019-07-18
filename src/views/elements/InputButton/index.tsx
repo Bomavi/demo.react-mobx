@@ -1,24 +1,31 @@
 /* npm imports: common */
 import React from 'react';
+import cx from 'classnames';
 
 /* npm imports: material-ui/core */
 import IconButton from '@material-ui/core/IconButton';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+/* root imports: view components */
+import { Icon, IconName } from 'views/elements';
+
 /* local imports: common */
 import { useStyles } from './styles';
 
-interface InputButtonProps {
+export interface InputButtonProps {
+	iconName: IconName;
 	disabled?: boolean;
 	isFetching?: boolean;
+	color?: 'primary' | 'secondary' | 'inherit';
 	onClick?: () => void;
 }
 
 const InputButton: React.FC<InputButtonProps> = ({
-	children,
+	iconName,
 	disabled,
-	onClick,
 	isFetching = false,
+	color = 'inherit',
+	onClick,
 }) => {
 	const classes = useStyles();
 
@@ -30,14 +37,23 @@ const InputButton: React.FC<InputButtonProps> = ({
 		);
 	}
 
-	if (!onClick && children) {
-		return <div className={classes.root}>{children}</div>;
+	if (!onClick) {
+		return (
+			<div className={classes.root}>
+				<Icon name={iconName} size="sm" />
+			</div>
+		);
 	}
 
 	return (
 		<div className={classes.root}>
-			<IconButton className={classes.iconButton} disabled={disabled} onClick={onClick}>
-				{children}
+			<IconButton
+				className={cx(classes.iconButton, color)}
+				color={color}
+				disabled={disabled}
+				onClick={onClick}
+			>
+				<Icon name={iconName} size="sm" />
 			</IconButton>
 		</div>
 	);

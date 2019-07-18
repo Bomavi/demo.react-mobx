@@ -9,15 +9,19 @@ import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 
 /* root imports: view components */
-import { Icon, InputButton } from 'views/elements';
+import { IconName, InputButton } from 'views/elements';
 
 /* local imports: common */
 import { styles } from './styles';
 
-interface CustomInputProps extends WithStyles<typeof styles> {
+export interface CustomInputProps extends WithStyles<typeof styles> {
+	iconName?: IconName;
 	placeholder?: string;
+	defaultValue?: string;
+	autoFocus?: boolean;
 	onClick?: (value: string) => void;
 	onChange?: (value: string) => void;
+	onCancel?: () => void;
 }
 
 @observer
@@ -25,7 +29,8 @@ class CustomInputComponent extends React.Component<CustomInputProps> {
 	@observable private inputValue: string = '';
 
 	@computed private get isEmpty() {
-		return !this.inputValue;
+		const { defaultValue } = this.props;
+		return !this.inputValue || this.inputValue === defaultValue;
 	}
 
 	@action private changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,18 +40,28 @@ class CustomInputComponent extends React.Component<CustomInputProps> {
 	};
 
 	@action private actionClickHandler = () => {
-		const { onClick } = this.props;
+		const { onClick, onCancel } = this.props;
 		if (onClick) onClick(this.inputValue);
-		this.inputValue = '';
+		if (onCancel) onCancel();
+		this.clearInputValue();
 	};
 
 	@action private clearHandler = () => {
-		this.inputValue = '';
+		this.clearInputValue();
 		this.changeCallbackHandler(this.inputValue);
 	};
 
+	@action private clearInputValue = () => {
+		this.inputValue = '';
+	};
+
 	private keyPressHandler = (e: React.KeyboardEvent) => {
-		if (e.key === 'Enter') this.changeCallbackHandler(this.inputValue);
+		const { onClick, onCancel } = this.props;
+		if (e.key === 'Enter' && onClick) {
+			onClick(this.inputValue);
+			if (onCancel) onCancel();
+			this.clearInputValue();
+		}
 	};
 
 	private changeCallbackHandler = (value: string) => {
@@ -55,37 +70,43 @@ class CustomInputComponent extends React.Component<CustomInputProps> {
 	};
 
 	public render() {
-		const { classes, children, placeholder, onClick } = this.props;
+		const {
+			classes,
+			iconName,
+			placeholder,
+			defaultValue,
+			autoFocus = false,
+			onClick,
+			onCancel,
+		} = this.props;
 
-		const renderLeftIcon = children && (
-			<InputButton
-				isFetching={!this.isEmpty}
-				disabled={onClick && this.isEmpty}
-				onClick={onClick && this.actionClickHandler}
-			>
-				{children}
-			</InputButton>
-		);
-
-		const renderRightIcon = !this.isEmpty && (
-			<InputButton onClick={this.clearHandler}>
-				<Icon name="close" size="md" />
-			</InputButton>
-		);
+		const value = this.inputValue || defaultValue || this.inputValue;
 
 		return (
 			<div className={classes.root}>
-				{renderLeftIcon}
-				{children && <Divider className={classes.divider} />}
+				{iconName && (
+					<InputButton
+						iconName={iconName}
+						// isFetching={!this.isEmpty}
+						color={onClick ? 'primary' : 'inherit'}
+						disabled={onClick && this.isEmpty}
+						onClick={onClick && this.actionClickHandler}
+					/>
+				)}
+				{iconName && <Divider className={classes.divider} />}
 				<InputBase
 					className={classes.input}
 					placeholder={placeholder}
-					value={this.inputValue}
+					value={value}
+					autoFocus={autoFocus}
 					onChange={this.changeHandler}
 					onKeyPress={this.keyPressHandler}
 				/>
-				{!this.isEmpty && <Divider className={classes.divider} />}
-				{renderRightIcon}
+				{(!this.isEmpty || onCancel) && <Divider className={classes.divider} />}
+				{!this.isEmpty && !onCancel && (
+					<InputButton iconName="close" onClick={this.clearHandler} />
+				)}
+				{onCancel && <InputButton iconName="close" onClick={onCancel} />}
 			</div>
 		);
 	}
