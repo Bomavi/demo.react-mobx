@@ -10,7 +10,7 @@ import { App } from 'views/layouts/App';
 
 /* root imports: common */
 import router, { routerStore } from 'utils/services/router';
-import { globalStore } from 'config/store';
+import { globalStore } from 'config/global-store';
 
 configure({ enforceActions: 'observed' });
 

@@ -16,7 +16,7 @@ import Divider from '@material-ui/core/Divider';
 import { Icon } from 'views/elements';
 
 /* root imports: common */
-import { GlobalStore } from 'config/store';
+import { GlobalStore } from 'config/global-store';
 
 /* local imports: common */
 import { styles } from './styles';
