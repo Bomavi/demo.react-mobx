@@ -12,7 +12,7 @@ import { Content } from 'views/layouts';
 import { Home } from 'features/Home';
 
 /* root imports: common */
-import { RouterStore } from 'utils/services/router';
+import { RouterStore } from 'config/router';
 import { GlobalStore } from 'config/global-store';
 
 /* local imports: common */
