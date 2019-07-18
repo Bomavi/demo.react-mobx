@@ -2,7 +2,8 @@
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 export interface IconParams {
-	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+	size?: Sizes;
+	svgSize?: Sizes;
 	color?: 'white' | 'black';
 }
 
@@ -17,6 +18,18 @@ export const useStyles = makeStyles((theme: Theme) =>
 			'& svg': {
 				display: 'block',
 				fill: p.color ? p.color : theme.palette.text.primary,
+			},
+			'&.xs svg': {
+				width: 15,
+				height: 15,
+			},
+			'&.sm svg': {
+				width: 20,
+				height: 20,
+			},
+			'&.md svg': {
+				width: 24,
+				height: 24,
 			},
 		}),
 		iconWrapper: {

@@ -14,7 +14,13 @@ const EditInput: React.FC<EditInputProps> = props => {
 
 	return (
 		<div className={classes.root}>
-			<CustomInput iconName="check" {...props} />
+			<CustomInput
+				icon={{
+					name: 'check',
+					svgSize: 'md',
+				}}
+				{...props}
+			/>
 		</div>
 	);
 };

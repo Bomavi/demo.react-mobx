@@ -22,17 +22,17 @@ export type IconName =
 	| 'check'
 	| 'check-bold';
 
-export interface IconProps {
+export interface IconProps extends IconParams {
 	name: IconName;
 }
 
-const Icon: React.FC<IconProps & IconParams> = ({ name, size = 'sm', color }) => {
+const Icon: React.FC<IconProps> = ({ name, size = 'sm', svgSize = 'sm', color }) => {
 	const SVG = React.lazy(() => import(`assets/icons/${name}`));
 	const classes = useStyles({ color });
 
 	return (
 		<div className={cx(classes.iconWrapper, size)}>
-			<div className={classes.svgWrapper}>
+			<div className={cx(classes.svgWrapper, svgSize)}>
 				<Suspense fallback={<FQ />}>
 					<SVG />
 				</Suspense>

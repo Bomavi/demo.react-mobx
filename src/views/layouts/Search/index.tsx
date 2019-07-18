@@ -28,7 +28,10 @@ class SearchComponent extends React.Component<SearchProps> {
 
 		return (
 			<CustomInput
-				iconName="magnify"
+				icon={{
+					name: 'magnify',
+					svgSize: 'md',
+				}}
 				placeholder="Type to search tasks..."
 				onChange={this.changeHandler}
 			/>

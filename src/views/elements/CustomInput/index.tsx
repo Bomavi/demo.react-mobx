@@ -9,13 +9,13 @@ import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 
 /* root imports: view components */
-import { IconName, InputButton } from 'views/elements';
+import { IconProps, InputButton } from 'views/elements';
 
 /* local imports: common */
 import { styles } from './styles';
 
 export interface CustomInputProps extends WithStyles<typeof styles> {
-	iconName?: IconName;
+	icon?: IconProps;
 	placeholder?: string;
 	defaultValue?: string;
 	autoFocus?: boolean;
@@ -72,7 +72,7 @@ class CustomInputComponent extends React.Component<CustomInputProps> {
 	public render() {
 		const {
 			classes,
-			iconName,
+			icon,
 			placeholder,
 			defaultValue,
 			autoFocus = false,
@@ -84,16 +84,16 @@ class CustomInputComponent extends React.Component<CustomInputProps> {
 
 		return (
 			<div className={classes.root}>
-				{iconName && (
+				{icon && (
 					<InputButton
-						iconName={iconName}
+						icon={icon}
 						// isFetching={!this.isEmpty}
 						color={onClick ? 'primary' : 'inherit'}
 						disabled={onClick && this.isEmpty}
 						onClick={onClick && this.actionClickHandler}
 					/>
 				)}
-				{iconName && <Divider className={classes.divider} />}
+				{icon && <Divider className={classes.divider} />}
 				<InputBase
 					className={classes.input}
 					placeholder={placeholder}
@@ -104,9 +104,9 @@ class CustomInputComponent extends React.Component<CustomInputProps> {
 				/>
 				{(!this.isEmpty || onCancel) && <Divider className={classes.divider} />}
 				{!this.isEmpty && !onCancel && (
-					<InputButton iconName="close" onClick={this.clearHandler} />
+					<InputButton icon={{ name: 'close' }} onClick={this.clearHandler} />
 				)}
-				{onCancel && <InputButton iconName="close" onClick={onCancel} />}
+				{onCancel && <InputButton icon={{ name: 'close' }} onClick={onCancel} />}
 			</div>
 		);
 	}

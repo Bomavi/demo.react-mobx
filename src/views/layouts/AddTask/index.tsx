@@ -25,7 +25,10 @@ class AddTaskComponent extends React.Component<AddTaskProps> {
 
 		return (
 			<CustomInput
-				iconName="plus"
+				icon={{
+					name: 'plus',
+					svgSize: 'md',
+				}}
 				placeholder="Type task description..."
 				onClick={this.actionHandler}
 			/>

@@ -5,5 +5,7 @@ declare interface NumberTMap<T = string> {
 	[key: number]: T;
 }
 
-type DynamicImportType = () => Promise<{ default: React.ComponentType<any> }>;
-type LazyComponentType = React.LazyExoticComponent<React.ComponentType<any>>;
+declare type DynamicImportType = () => Promise<{ default: React.ComponentType<any> }>;
+declare type LazyComponentType = React.LazyExoticComponent<React.ComponentType<any>>;
+
+declare type Sizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';

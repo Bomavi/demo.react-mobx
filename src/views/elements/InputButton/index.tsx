@@ -7,13 +7,14 @@ import IconButton from '@material-ui/core/IconButton';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 /* root imports: view components */
-import { Icon, IconName } from 'views/elements';
+import { Icon, IconProps } from 'views/elements';
 
 /* local imports: common */
 import { useStyles } from './styles';
 
 export interface InputButtonProps {
-	iconName: IconName;
+	icon: IconProps;
+	svgSize?: Sizes;
 	disabled?: boolean;
 	isFetching?: boolean;
 	color?: 'primary' | 'secondary' | 'inherit';
@@ -21,7 +22,7 @@ export interface InputButtonProps {
 }
 
 const InputButton: React.FC<InputButtonProps> = ({
-	iconName,
+	icon: { name: iconName, svgSize = 'sm' },
 	disabled,
 	isFetching = false,
 	color = 'inherit',
@@ -40,7 +41,7 @@ const InputButton: React.FC<InputButtonProps> = ({
 	if (!onClick) {
 		return (
 			<div className={classes.root}>
-				<Icon name={iconName} size="sm" />
+				<Icon name={iconName} size="sm" svgSize={svgSize} />
 			</div>
 		);
 	}
@@ -53,7 +54,7 @@ const InputButton: React.FC<InputButtonProps> = ({
 				disabled={disabled}
 				onClick={onClick}
 			>
-				<Icon name={iconName} size="sm" />
+				<Icon name={iconName} size="sm" svgSize={svgSize} />
 			</IconButton>
 		</div>
 	);
