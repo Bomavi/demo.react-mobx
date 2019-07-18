@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { configure } from 'mobx';
 import { Provider } from 'mobx-react';
 import { enableLogging } from 'mobx-logger';
+import dotenv from 'dotenv';
 
 /* root imports: view components */
 import { App } from 'views/layouts/App';
@@ -11,6 +12,8 @@ import { App } from 'views/layouts/App';
 /* root imports: common */
 import router, { routerStore } from 'utils/services/router';
 import { globalStore } from 'config/global-store';
+
+dotenv.config();
 
 configure({ enforceActions: 'observed' });
 
