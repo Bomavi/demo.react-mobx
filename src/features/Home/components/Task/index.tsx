@@ -8,7 +8,7 @@ import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 
 /* root imports: view components */
-import { TaskCheckbox, TaskActions } from 'views/elements';
+import { TaskCheckbox, TaskActions } from 'features/Home/components';
 
 /* local imports: common */
 import { Description } from './Description';

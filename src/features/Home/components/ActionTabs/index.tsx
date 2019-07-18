@@ -10,7 +10,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 /* root imports: view components */
-import { AddTask, Search } from 'views/layouts';
+import { AddTask, Search } from 'features/Home/components';
 
 /* local imports: common */
 import { styles } from './styles';

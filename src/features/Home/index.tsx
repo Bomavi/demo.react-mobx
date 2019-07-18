@@ -2,10 +2,8 @@
 import React from 'react';
 import { Provider, observer, inject } from 'mobx-react';
 
-/* root imports: view components */
-import { ActionTabs, TaskList } from 'views/layouts';
-
 /* local imports: common */
+import { ActionTabs, TaskList } from './components';
 import { homeStore, HomeStore } from './store';
 
 interface HomePageProps {

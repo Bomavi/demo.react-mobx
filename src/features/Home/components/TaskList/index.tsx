@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 /* root imports: view components */
-import { Task } from 'views/layouts';
+import { Task } from 'features/Home/components';
 
 /* local imports: common */
 import { styles } from './styles';
