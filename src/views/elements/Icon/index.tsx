@@ -20,7 +20,16 @@ export type IconName =
 	| 'close'
 	| 'plus'
 	| 'check'
-	| 'check-bold';
+	| 'check-bold'
+	| 'compare'
+	| 'account'
+	| 'login-variant'
+	| 'logout-variant'
+	| 'textbox-password'
+	| 'eye-off-outline'
+	| 'eye-outline'
+	| 'help'
+	| 'help-rhombus-outline';
 
 export interface IconProps extends IconParams {
 	name: IconName;
