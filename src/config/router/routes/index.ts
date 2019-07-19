@@ -16,10 +16,10 @@ export const routes: CustomeRoute[] = [
 	},
 
 	{
-		name: 'about',
-		path: '/about',
+		name: 'login',
+		path: '/login',
 
-		onActivate: (): void => activate('About'),
+		onActivate: (): void => activate('Login'),
 		onDeactivate: (): void => console.error(0),
 	},
 ];
