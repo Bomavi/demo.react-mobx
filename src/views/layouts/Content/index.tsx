@@ -1,9 +1,6 @@
 /* npm imports: common */
 import React from 'react';
 
-/* npm imports: material-ui/core */
-import Container from '@material-ui/core/Container';
-
 /* root imports: view components */
 import { Header, Footer, Drawer } from 'views/layouts';
 
@@ -18,9 +15,7 @@ const Content: React.FC = ({ children }) => {
 			<Header />
 			<div className={classes.toolbar} />
 			<Drawer />
-			<main className={classes.root}>
-				<Container maxWidth="md">{children}</Container>
-			</main>
+			<main className={classes.root}>{children}</main>
 			<Footer />
 		</>
 	);
