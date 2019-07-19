@@ -1,7 +1,7 @@
 import axiosBase, { AxiosRequestConfig, AxiosError } from 'axios';
 
 export const axios = axiosBase.create({
-	// baseURL: process.env.API_BASE_PREFIX,
+	// baseURL: process.env.REACT_APP_API_BASE,
 	headers: { 'Content-Type': 'application/json' },
 });
 
