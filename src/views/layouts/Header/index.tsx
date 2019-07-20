@@ -7,7 +7,6 @@ import { withStyles, WithStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 
 /* root imports: view components */
@@ -36,9 +35,11 @@ class HeaderComponent extends React.Component<HeaderProps> {
 					<Typography variant="h6" noWrap className={classes.title}>
 						TODO'SHER
 					</Typography>
-					<Button color="inherit">Login</Button>
+					<Typography variant="subtitle2" noWrap className={classes.hello}>
+						Hello, Bomav1
+					</Typography>
 					<IconButton color="inherit" onClick={toggleDrawer}>
-						<Icon name="settings" color="white" />
+						<Icon name="account-circle" color="white" size="md" svgSize="lg" />
 					</IconButton>
 				</Toolbar>
 			</AppBar>
