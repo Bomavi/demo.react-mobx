@@ -1,7 +1,11 @@
+/* npm imports: common */
 import axiosBase, { AxiosRequestConfig, AxiosError } from 'axios';
 
+/* root imports: common */
+import { BASE_URL } from 'utils/constants';
+
 export const axios = axiosBase.create({
-	// baseURL: process.env.REACT_APP_API_BASE,
+	baseURL: BASE_URL,
 	headers: { 'Content-Type': 'application/json' },
 });
 

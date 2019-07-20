@@ -2,18 +2,16 @@
 import { ApiClient } from 'config/axios/api-client';
 
 /* local imports: common */
-import { TasksApi } from './tasks';
+import { AuthService } from './auth';
 
-export class Api {
-	public req: ApiClient;
-	public tasks: TasksApi;
+export class Services {
+	public auth: AuthService;
 
 	public constructor(apiPrefix: string) {
 		if (!apiPrefix) {
 			throw new Error('[apiPrefix] required');
 		}
 
-		this.req = new ApiClient({ apiPrefix });
-		this.tasks = new TasksApi(this.req);
+		this.auth = new AuthService(new ApiClient({ apiPrefix: `${apiPrefix}/auth` }));
 	}
 }
