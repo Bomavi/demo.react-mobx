@@ -2,6 +2,7 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
 /* local imports: common */
+import { defaultTheme } from './default';
 import { themeWithOverrides } from './overrides';
 
 const darkTheme = createMuiTheme({
@@ -14,6 +15,7 @@ const darkTheme = createMuiTheme({
 			main: '#e64a19',
 		},
 	},
+	gradients: defaultTheme.gradients,
 	overrides: themeWithOverrides.overrides,
 });
 
