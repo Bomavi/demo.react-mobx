@@ -1,5 +1,5 @@
 /* npm imports: common */
-import { observable, computed } from 'mobx';
+import { observable, computed, action } from 'mobx';
 
 /* root imports: common */
 import { BaseStore } from 'config/base-store';
@@ -10,6 +10,21 @@ export class AuthStore extends BaseStore {
 	@computed public get isAuthenticated() {
 		return this.user;
 	}
+
+	@action public login = async ({ isGuest = false }: any) => {
+		const res = await this.services.auth.login({});
+		console.warn(res);
+	};
+
+	@action public register = async () => {
+		const res = await this.services.auth.register({});
+		console.warn(res);
+	};
+
+	@action public logout = async () => {
+		const res = await this.services.auth.logout();
+		console.warn(res);
+	};
 }
 
 export const authStore = new AuthStore();
