@@ -36,11 +36,17 @@ class LoginFormComponent extends React.Component<LoginFormProps> {
 				<div className={classes.wrapper}>
 					<UsernameInput />
 					<PasswordInput />
-					{this.tabIndex === 0 && <LoginButton gradient="secondary">Login</LoginButton>}
+					{this.tabIndex === 0 && (
+						<LoginButton marginTop={14} gradient="secondary">
+							Login
+						</LoginButton>
+					)}
 					{this.tabIndex === 1 && (
 						<>
 							<PasswordInput repeatPassword />
-							<LoginButton gradient="secondary">Register</LoginButton>
+							<LoginButton marginTop={14} gradient="secondary">
+								Register
+							</LoginButton>
 						</>
 					)}
 				</div>

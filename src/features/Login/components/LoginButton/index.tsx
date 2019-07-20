@@ -9,14 +9,16 @@ import { useStyles } from './styles';
 
 export interface LoginButtonProps {
 	gradient: 'primary' | 'secondary';
+	marginTop?: number;
 }
 
 const LoginButton: React.FC<LoginButtonProps & ButtonProps> = ({
 	children,
 	gradient,
+	marginTop = 0,
 	...props
 }) => {
-	const classes = useStyles({ gradient });
+	const classes = useStyles({ marginTop, gradient });
 
 	return (
 		<Button className={classes.button} {...props}>
