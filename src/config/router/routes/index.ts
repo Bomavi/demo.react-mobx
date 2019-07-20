@@ -1,4 +1,5 @@
-import { routerStore } from './../store';
+/* root imports: common */
+import { routerStore } from 'config/router/store';
 
 const activate = (pageName: string): void => {
 	const { setPageName } = routerStore;

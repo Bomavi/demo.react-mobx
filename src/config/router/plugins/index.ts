@@ -1,6 +1,8 @@
+/* npm imports: common */
 import { PluginFactory, Plugin, Router, State } from 'router5';
 
-import { routerStore } from './../store';
+/* root imports: common */
+import { routerStore } from 'config/router/store';
 
 const factory = (_router: Router): Plugin => {
 	return {

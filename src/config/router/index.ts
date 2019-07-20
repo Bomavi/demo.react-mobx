@@ -1,6 +1,8 @@
+/* npm imports: common */
 import createRouter, { Router } from 'router5';
 import browserPlugin from 'router5-plugin-browser';
 
+/* local imports: common */
 import { routes } from './routes';
 import { asyncMiddleware } from './middleware';
 import { mobxRouterPlugin } from './plugins';
