@@ -31,6 +31,10 @@ export const useStyles = makeStyles((theme: Theme) =>
 				width: 24,
 				height: 24,
 			},
+			'&.lg svg': {
+				width: 28,
+				height: 28,
+			},
 		}),
 		iconWrapper: {
 			display: 'flex',
