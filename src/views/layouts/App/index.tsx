@@ -10,6 +10,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 /* root imports: view components */
 import { Content } from 'views/layouts';
 import { Home } from 'features/Home';
+import { Login } from 'features/Login';
 
 /* root imports: common */
 import { RouterStore } from 'config/router';
@@ -38,6 +39,9 @@ class AppComponent extends React.Component<AppProps> {
 		switch (current.name) {
 			case 'home':
 				component = <Home />;
+				break;
+			case 'login':
+				component = <Login />;
 				break;
 			default:
 				component = <h1>Page 404</h1>;
