@@ -49,21 +49,28 @@ class DrawerComponent extends React.Component<DrawerProps> {
 				<List>
 					<ListItem button onClick={switchTheme}>
 						<ListItemIcon>
-							<Icon name="theme-light-dark" />
+							<Icon name="compare" svgSize="md" />
 						</ListItemIcon>
 						<ListItemText primary={`Switch to ${themeNameToSwitch} theme`} />
 					</ListItem>
 				</List>
 				<Divider />
 				<List>
-					{['All mail', 'Trash', 'Spam'].map((text, index) => (
-						<ListItem button key={text}>
-							<ListItemIcon>
-								<Icon name="settings" />
-							</ListItemIcon>
-							<ListItemText primary={text} />
-						</ListItem>
-					))}
+					<ListItem button onClick={switchTheme}>
+						<ListItemIcon>
+							<Icon name="theme-light-dark" svgSize="md" />
+						</ListItemIcon>
+						<ListItemText primary={`Turn on theme autoswitch`} />
+					</ListItem>
+				</List>
+				<Divider />
+				<List>
+					<ListItem button onClick={switchTheme}>
+						<ListItemIcon>
+							<Icon name="logout-variant" svgSize="md" />
+						</ListItemIcon>
+						<ListItemText primary="Logout" />
+					</ListItem>
 				</List>
 			</MUIDrawer>
 		);
