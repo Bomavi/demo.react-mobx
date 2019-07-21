@@ -12,7 +12,7 @@ export class AuthStore extends BaseStore {
 	}
 
 	@action public login = async ({ isGuest = false }: any) => {
-		const res = await this.services.auth.login({});
+		const res = await this.services.auth.login({ isGuest: true });
 		console.warn(res);
 	};
 
@@ -23,6 +23,11 @@ export class AuthStore extends BaseStore {
 
 	@action public logout = async () => {
 		const res = await this.services.auth.logout();
+		console.warn(res);
+	};
+
+	@action public test = async () => {
+		const res = await this.api.tasks.test();
 		console.warn(res);
 	};
 }

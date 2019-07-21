@@ -10,10 +10,16 @@ export class TasksApi extends Base {
 	}
 
 	public async getById(id: string) {
-		return await this.apiClient.get<TaskType>(`/files/${id}`);
+		return await this.apiClient.get<TaskType>(`/tasks/${id}`);
 	}
 
 	public async update(id: string, task: TaskType) {
 		return await this.apiClient.post(`/tasks/${id}`, task);
+	}
+
+	public async test() {
+		return await this.apiClient.post(`/validate/user`, {
+			credentials: { username: '1111', password: '2222' },
+		});
 	}
 }
