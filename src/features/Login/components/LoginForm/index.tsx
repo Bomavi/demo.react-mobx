@@ -1,20 +1,24 @@
 /* npm imports: common */
 import React from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import { observable, action } from 'mobx';
 
 /* npm imports: material-ui/core */
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 
-/* root imports: view components */
+/* root imports: common */
 import { UsernameInput, PasswordInput, LoginTabs, LoginButton } from 'features/Login/components';
+import { AuthStore } from 'features/Login/store';
 
 /* local imports: common */
 import { styles } from './styles';
 
-interface LoginFormProps extends WithStyles<typeof styles> {}
+interface LoginFormProps extends WithStyles<typeof styles> {
+	store?: AuthStore;
+}
 
+@inject('store')
 @observer
 class LoginFormComponent extends React.Component<LoginFormProps> {
 	@observable private tabIndex: number = 0;
@@ -23,8 +27,10 @@ class LoginFormComponent extends React.Component<LoginFormProps> {
 		this.tabIndex = value;
 	};
 
-	@action public actionHandler = (value: string) => {
-		console.warn('actionHandler: ', value);
+	public loginHandler = () => {
+		const { test } = this.props.store!;
+
+		test();
 	};
 
 	public render() {
@@ -37,7 +43,11 @@ class LoginFormComponent extends React.Component<LoginFormProps> {
 					<UsernameInput />
 					<PasswordInput />
 					{this.tabIndex === 0 && (
-						<LoginButton marginTop={14} gradient="secondary">
+						<LoginButton
+							marginTop={14}
+							gradient="secondary"
+							onClick={this.loginHandler}
+						>
 							Login
 						</LoginButton>
 					)}

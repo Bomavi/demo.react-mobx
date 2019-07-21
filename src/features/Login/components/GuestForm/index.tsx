@@ -1,24 +1,29 @@
 /* npm imports: common */
 import React from 'react';
-import { observer } from 'mobx-react';
-import { action } from 'mobx';
+import { observer, inject } from 'mobx-react';
 
 /* npm imports: material-ui/core */
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 
-/* root imports: view components */
+/* root imports: common */
 import { Subtitle, LoginButton } from 'features/Login/components';
+import { AuthStore } from 'features/Login/store';
 
 /* local imports: common */
 import { styles } from './styles';
 
-interface GuestFormProps extends WithStyles<typeof styles> {}
+interface GuestFormProps extends WithStyles<typeof styles> {
+	store?: AuthStore;
+}
 
+@inject('store')
 @observer
 class GuestFormComponent extends React.Component<GuestFormProps> {
-	@action public actionHandler = (value: string) => {
-		console.warn('actionHandler: ', value);
+	public loginHandler = () => {
+		const { login } = this.props.store!;
+
+		login({ isGuest: true });
 	};
 
 	public render() {
@@ -28,7 +33,9 @@ class GuestFormComponent extends React.Component<GuestFormProps> {
 			<Paper className={classes.paper}>
 				<Subtitle>Use Guest Access</Subtitle>
 				<div className={classes.wrapper}>
-					<LoginButton gradient="primary">Get access</LoginButton>
+					<LoginButton gradient="primary" onClick={this.loginHandler}>
+						Get access
+					</LoginButton>
 				</div>
 			</Paper>
 		);
