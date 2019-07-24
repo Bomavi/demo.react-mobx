@@ -11,6 +11,7 @@ import { App } from 'views/layouts/App';
 /* root imports: common */
 import router, { routerStore } from 'config/router';
 import { globalStore } from 'config/global-store';
+import { authStore } from 'features/Login/store';
 
 configure({ enforceActions: 'observed' });
 
@@ -26,7 +27,7 @@ if (localStorage.getItem('debug') === 'true') {
 
 router.start((_err: any, _state: any) => {
 	ReactDOM.render(
-		<Provider routerStore={routerStore} globalStore={globalStore}>
+		<Provider routerStore={routerStore} globalStore={globalStore} authStore={authStore}>
 			<App />
 		</Provider>,
 		document.getElementById('root') as HTMLElement
