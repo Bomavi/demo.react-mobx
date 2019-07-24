@@ -19,7 +19,8 @@ export class TasksApi extends Base {
 
 	public async test() {
 		return await this.apiClient.post(`/validate/user`, {
-			credentials: { username: '1111', password: '2222' },
+			username: 'guest',
+			password: 'guestPassword',
 		});
 	}
 }

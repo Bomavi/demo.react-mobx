@@ -1,17 +1,12 @@
 /* root imports: common */
 import { ApiClient } from 'config/axios/api-client';
+import { AUTH_URL, API_URL } from 'utils/constants';
 
 /* local imports: common */
 import { AuthService } from './auth';
+import { ApiService } from './api';
 
 export class Services {
-	public auth: AuthService;
-
-	public constructor(apiPrefix: string) {
-		if (!apiPrefix) {
-			throw new Error('[apiPrefix] required');
-		}
-
-		this.auth = new AuthService(new ApiClient({ apiPrefix: `${apiPrefix}/auth` }));
-	}
+	public auth: AuthService = new AuthService(new ApiClient({ apiPrefix: AUTH_URL }));
+	public api: ApiService = new ApiService(new ApiClient({ apiPrefix: API_URL }));
 }
