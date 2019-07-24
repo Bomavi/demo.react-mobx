@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "Maksym Bozhenov <max.bozh.n1mbo@gmail.com>",
   "scripts": {
-    "start": "BROWSER=none react-scripts start",
+    "start": "BROWSER=none PORT=80 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
