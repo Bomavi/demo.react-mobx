@@ -7,18 +7,18 @@ import TextField, { TextFieldProps } from '@material-ui/core/TextField';
 /* local imports: common */
 // import { useStyles } from './styles';
 
-const UsernameInput: React.FC<TextFieldProps> = () => {
+const UsernameInput: React.FC<TextFieldProps> = props => {
 	// const classes = useStyles();
 
 	return (
 		<TextField
 			fullWidth
+			{...props}
 			id="username"
 			label="Username"
+			autoComplete="off"
 			margin="normal"
 			variant="outlined"
-			// value={values.name}
-			// onChange={handleChange('name')}
 		/>
 	);
 };

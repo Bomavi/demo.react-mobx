@@ -3,32 +3,83 @@ import { observable, computed, action } from 'mobx';
 
 /* root imports: common */
 import { BaseStore } from 'config/base-store';
+import { RouterHelper } from 'config/router';
+import { UserModel } from 'features/Login/user.model';
 
 export class AuthStore extends BaseStore {
-	@observable public user: any = null;
+	private router = new RouterHelper();
+
+	@observable public user: UserModel | null = null;
 
 	@computed public get isAuthenticated() {
-		return this.user;
+		return !!this.user;
 	}
 
-	@action public login = async ({ isGuest = false }: any) => {
-		const res = await this.services.auth.login({ isGuest: true });
-		console.warn(res);
+	@action public setUser = (user: UserType) => {
+		this.user = new UserModel(user);
 	};
 
-	@action public register = async () => {
-		const res = await this.services.auth.register({});
-		console.warn(res);
+	@action public unsetUser = () => {
+		this.user = null;
 	};
 
-	@action public logout = async () => {
+	public authenticate = async () => {
+		try {
+			const user = await this.services.auth.authenticate();
+			console.log(user);
+			
+
+			if (!user) throw Error('authentication failed');
+
+			this.setUser(user);
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
+	public login = async (userData: LoginType) => {
+		try {
+			const user = await this.services.auth.login(userData);
+
+			if (!user) throw Error('login failed');
+
+			this.setUser(user);
+			this.router.navigate('home');
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
+	public register = async (userData: RegisterType) => {
+		try {
+			const user = await this.services.auth.register(userData);
+
+			if (!user) throw Error('registration failed');
+
+			this.setUser(user);
+			this.router.navigate('home');
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
+	public logout = async () => {
 		const res = await this.services.auth.logout();
-		console.warn(res);
+
+		if (res) {
+			this.unsetUser();
+			this.router.navigate('login');
+		}
 	};
 
-	@action public test = async () => {
-		const res = await this.api.tasks.test();
-		console.warn(res);
+	public test = async () => {
+		try {
+			const res = await this.services.api.tasks.search({});
+			console.warn(res);
+			
+		} catch (e) {
+			console.error(e);
+		}
 	};
 }
 

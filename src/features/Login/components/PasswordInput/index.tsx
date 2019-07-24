@@ -11,7 +11,10 @@ export interface PasswordInputProps {
 	repeatPassword?: boolean;
 }
 
-const PasswordInput: React.FC<PasswordInputProps & TextFieldProps> = ({ repeatPassword }) => {
+const PasswordInput: React.FC<PasswordInputProps & TextFieldProps> = ({
+	repeatPassword,
+	...props
+}) => {
 	// const classes = useStyles();
 	const id = repeatPassword ? 'repeat-password' : 'password';
 	const label = repeatPassword ? 'Repeat password' : 'Password';
@@ -19,13 +22,13 @@ const PasswordInput: React.FC<PasswordInputProps & TextFieldProps> = ({ repeatPa
 	return (
 		<TextField
 			fullWidth
+			{...props}
 			id={id}
 			label={label}
+			autoComplete="off"
 			type="password"
 			margin="normal"
 			variant="outlined"
-			// value={values.name}
-			// onChange={handleChange('name')}
 		/>
 	);
 };
