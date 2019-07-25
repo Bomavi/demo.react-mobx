@@ -10,30 +10,35 @@ export class AuthStore extends BaseStore {
 	private router = new RouterHelper();
 
 	@observable public user: UserModel | null = null;
+	@observable public isInitialized: boolean = false;
 
 	@computed public get isAuthenticated() {
 		return !!this.user;
 	}
 
-	@action public setUser = (user: UserType) => {
+	@action private setUser = (user: UserType) => {
 		this.user = new UserModel(user);
 	};
 
-	@action public unsetUser = () => {
+	@action private unsetUser = () => {
 		this.user = null;
+	};
+
+	@action private initialize = () => {
+		this.isInitialized = true;
 	};
 
 	public authenticate = async () => {
 		try {
 			const user = await this.services.auth.authenticate();
-			console.log(user);
-			
 
 			if (!user) throw Error('authentication failed');
 
 			this.setUser(user);
+			this.initialize();
 		} catch (e) {
 			console.error(e);
+			this.router.navigate('login');
 		}
 	};
 
@@ -76,7 +81,6 @@ export class AuthStore extends BaseStore {
 		try {
 			const res = await this.services.api.tasks.search({});
 			console.warn(res);
-			
 		} catch (e) {
 			console.error(e);
 		}
