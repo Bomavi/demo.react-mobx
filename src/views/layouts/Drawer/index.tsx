@@ -1,7 +1,6 @@
 /* npm imports: common */
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { observable, computed, action } from 'mobx';
 
 /* npm imports: material-ui/core */
 import { withStyles, WithStyles } from '@material-ui/core/styles';
@@ -20,6 +19,7 @@ import { GlobalStore } from 'config/global-store';
 
 /* local imports: common */
 import { styles } from './styles';
+import { Logout } from './Logout';
 
 interface DrawerProps extends WithStyles<typeof styles> {
 	globalStore?: GlobalStore;
@@ -28,15 +28,13 @@ interface DrawerProps extends WithStyles<typeof styles> {
 @inject('globalStore')
 @observer
 class DrawerComponent extends React.Component<DrawerProps> {
-	@observable private isDrawerOpen: boolean = false;
-
-	@computed private get themeType() {
-		const { isDark } = this.props.globalStore!;
-		return isDark ? 'light' : 'dark';
+	public componentWillUnmount() {
+		this.hideDrawer();
 	}
 
-	@action private toggleDrawer = () => {
-		this.isDrawerOpen = !this.isDrawerOpen;
+	private hideDrawer = () => {
+		const { toggleDrawer } = this.props.globalStore!;
+		toggleDrawer(false);
 	};
 
 	public render() {
@@ -56,21 +54,7 @@ class DrawerComponent extends React.Component<DrawerProps> {
 				</List>
 				<Divider />
 				<List>
-					<ListItem button onClick={switchTheme}>
-						<ListItemIcon>
-							<Icon name="theme-light-dark" svgSize="md" />
-						</ListItemIcon>
-						<ListItemText primary={`Turn on theme autoswitch`} />
-					</ListItem>
-				</List>
-				<Divider />
-				<List>
-					<ListItem button onClick={switchTheme}>
-						<ListItemIcon>
-							<Icon name="logout-variant" svgSize="md" />
-						</ListItemIcon>
-						<ListItemText primary="Logout" />
-					</ListItem>
+					<Logout />
 				</List>
 			</MUIDrawer>
 		);
