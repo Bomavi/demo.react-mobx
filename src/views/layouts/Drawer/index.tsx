@@ -6,13 +6,7 @@ import { observer, inject } from 'mobx-react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import MUIDrawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-
-/* root imports: view components */
-import { Icon } from 'views/elements';
 
 /* root imports: common */
 import { GlobalStore } from 'config/global-store';
@@ -20,6 +14,7 @@ import { GlobalStore } from 'config/global-store';
 /* local imports: common */
 import { styles } from './styles';
 import { Logout } from './Logout';
+import { ThemeSwitcher } from './ThemeSwitcher';
 
 interface DrawerProps extends WithStyles<typeof styles> {
 	globalStore?: GlobalStore;
@@ -39,18 +34,13 @@ class DrawerComponent extends React.Component<DrawerProps> {
 
 	public render() {
 		const { classes } = this.props;
-		const { switchTheme, themeNameToSwitch, isDrawerOpen } = this.props.globalStore!;
+		const { isDrawerOpen } = this.props.globalStore!;
 
 		return (
 			<MUIDrawer anchor="right" variant="persistent" open={isDrawerOpen}>
 				<div className={classes.toolbar} />
 				<List>
-					<ListItem button onClick={switchTheme}>
-						<ListItemIcon>
-							<Icon name="compare" svgSize="md" />
-						</ListItemIcon>
-						<ListItemText primary={`Switch to ${themeNameToSwitch} theme`} />
-					</ListItem>
+					<ThemeSwitcher />
 				</List>
 				<Divider />
 				<List>

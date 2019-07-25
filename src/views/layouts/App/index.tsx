@@ -36,8 +36,7 @@ class AppComponent extends React.Component<AppProps> {
 	public render() {
 		const { classes } = this.props;
 		const { current } = this.props.routerStore!;
-		const { isAuthenticated } = this.props.authStore!;
-		const { selectedTheme } = this.props.globalStore!;
+		const { isAuthenticated, selectedTheme } = this.props.authStore!;
 
 		if (current === null) return null;
 
