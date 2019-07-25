@@ -1,3 +1,8 @@
+export const debounceTiming = {
+	input: 500,
+	button: 1000,
+};
+
 export const debounce = (func: Function, wait: number, immediate?: boolean) => {
 	let timeout: ReturnType<typeof setTimeout> | null;
 

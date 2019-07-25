@@ -10,7 +10,7 @@ import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { CustomInput } from 'views/elements';
 
 /* root imports: common */
-import { debounce } from 'utils/helpers';
+import { debounce, debounceTiming } from 'utils/helpers';
 
 /* local imports: common */
 import { styles } from './styles';
@@ -21,7 +21,7 @@ interface SearchProps extends WithStyles<typeof styles> {}
 class SearchComponent extends React.Component<SearchProps> {
 	@action public changeHandler = debounce((value: string) => {
 		console.warn('changeHandler: ', value);
-	}, 500);
+	}, debounceTiming.input);
 
 	public render() {
 		// const { classes } = this.props;
