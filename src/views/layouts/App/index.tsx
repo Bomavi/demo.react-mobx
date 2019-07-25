@@ -15,6 +15,7 @@ import { Login } from 'features/Login';
 /* root imports: common */
 import { RouterStore } from 'config/router';
 import { GlobalStore } from 'config/global-store';
+import { AuthStore } from 'features/Login/store';
 
 /* local imports: common */
 import { styles } from './styles';
@@ -22,18 +23,25 @@ import { styles } from './styles';
 interface AppProps extends WithStyles<typeof styles> {
 	routerStore?: RouterStore;
 	globalStore?: GlobalStore;
+	authStore?: AuthStore;
 }
 
-@inject('routerStore')
-@inject('globalStore')
+@inject('routerStore', 'globalStore', 'authStore')
 @observer
 class AppComponent extends React.Component<AppProps> {
+	public async componentDidMount() {
+		await this.props.authStore!.authenticate();
+	}
+
 	public render() {
 		const { classes } = this.props;
 		const { current } = this.props.routerStore!;
+		const { isAuthenticated } = this.props.authStore!;
 		const { selectedTheme } = this.props.globalStore!;
 
 		if (current === null) return null;
+
+		const whileNotAuthenticated = !isAuthenticated && current.name !== 'login';
 
 		let component = null;
 		switch (current.name) {
@@ -53,7 +61,7 @@ class AppComponent extends React.Component<AppProps> {
 				<>
 					<CssBaseline />
 					<div className={classes.root}>
-						<Content>{component}</Content>
+						<Content>{!whileNotAuthenticated && component}</Content>
 					</div>
 				</>
 			</ThemeProvider>
