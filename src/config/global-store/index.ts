@@ -23,8 +23,8 @@ export class GlobalStore {
 		this.isDark = !this.isDark;
 	};
 
-	@action public toggleDrawer = () => {
-		this.isDrawerOpen = !this.isDrawerOpen;
+	@action public toggleDrawer = (isOpen: boolean | null = null) => {
+		this.isDrawerOpen = isOpen !== null ? isOpen : !this.isDrawerOpen;
 	};
 }
 
