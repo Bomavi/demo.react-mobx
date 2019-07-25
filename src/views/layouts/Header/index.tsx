@@ -14,20 +14,27 @@ import { Icon } from 'views/elements';
 
 /* root imports: common */
 import { GlobalStore } from 'config/global-store';
+import { AuthStore } from 'features/Login/store';
 
 /* local imports: common */
 import { styles } from './styles';
 
 interface HeaderProps extends WithStyles<typeof styles> {
 	globalStore?: GlobalStore;
+	authStore?: AuthStore;
 }
 
-@inject('globalStore')
+@inject('globalStore', 'authStore')
 @observer
 class HeaderComponent extends React.Component<HeaderProps> {
+	public toggleDrawer = () => {
+		this.props.globalStore!.toggleDrawer();
+	};
+
 	public render() {
 		const { classes } = this.props;
-		const { toggleDrawer } = this.props.globalStore!;
+
+		const { user } = this.props.authStore!;
 
 		return (
 			<AppBar position="fixed" className={classes.appBar}>
@@ -35,12 +42,16 @@ class HeaderComponent extends React.Component<HeaderProps> {
 					<Typography variant="h6" noWrap className={classes.title}>
 						TODO'SHER
 					</Typography>
-					<Typography variant="subtitle2" noWrap className={classes.hello}>
-						Hello, Bomav1
-					</Typography>
-					<IconButton color="inherit" onClick={toggleDrawer}>
-						<Icon name="account-circle" color="white" size="md" svgSize="lg" />
-					</IconButton>
+					{user && (
+						<Typography variant="subtitle2" noWrap className={classes.hello}>
+							Hello, {user.username}
+						</Typography>
+					)}
+					{user && (
+						<IconButton color="inherit" onClick={this.toggleDrawer}>
+							<Icon name="account-circle" color="white" size="md" svgSize="lg" />
+						</IconButton>
+					)}
 				</Toolbar>
 			</AppBar>
 		);
