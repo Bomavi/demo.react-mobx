@@ -7,7 +7,9 @@ import { routes } from './routes';
 import { asyncMiddleware } from './middleware';
 import { mobxRouterPlugin } from './plugins';
 
-const router: Router = createRouter(routes, {
+export interface RouterType extends Router {}
+
+const router: RouterType = createRouter(routes, {
 	allowNotFound: true,
 });
 
@@ -17,4 +19,5 @@ router.useMiddleware(asyncMiddleware(routes));
 export default router;
 
 export * from './filter';
+export * from './helper';
 export * from './store';
