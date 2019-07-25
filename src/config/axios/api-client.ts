@@ -21,17 +21,17 @@ export class ApiClient {
 		}) as Promise<E>;
 	}
 
-	public put(url: string, body?: {}, params: {} = {}, options?: {}): Promise<{}> {
+	public put<E = {}>(url: string, body?: {}, params: {} = {}, options?: {}): Promise<E> {
 		return this.request({
 			url,
 			body,
 			params,
 			options,
 			method: 'put',
-		});
+		}) as Promise<E>;
 	}
 
-	public patch<E>(url: string, body: {} = {}): Promise<E> {
+	public patch<E = {}>(url: string, body: {} = {}): Promise<E> {
 		return this.request({
 			url,
 			body,
