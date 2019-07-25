@@ -3,7 +3,7 @@ import React from 'react';
 import cx from 'classnames';
 
 /* root imports: common */
-import router from 'utils/services/router';
+import router from 'config/router';
 
 /* local imports: common */
 import { LinkWrapper } from './styles';
