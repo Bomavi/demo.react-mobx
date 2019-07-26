@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { configure } from 'mobx';
 import { Provider } from 'mobx-react';
-import { enableLogging } from 'mobx-logger';
+import { RouterProvider } from 'react-router5';
 
 /* root imports: view components */
 import { App } from 'views/layouts/App';
@@ -15,21 +15,13 @@ import { authStore } from 'features/Login/store';
 
 configure({ enforceActions: 'observed' });
 
-if (localStorage.getItem('debug') === 'true') {
-	enableLogging({
-		predicate: (): boolean => true,
-		action: true,
-		reaction: true,
-		transaction: true,
-		compute: true,
-	});
-}
-
-router.start((_err: any, _state: any) => {
+router.start(() => {
 	ReactDOM.render(
-		<Provider routerStore={routerStore} globalStore={globalStore} authStore={authStore}>
-			<App />
-		</Provider>,
+		<RouterProvider router={router}>
+			<Provider routerStore={routerStore} globalStore={globalStore} authStore={authStore}>
+				<App />
+			</Provider>
+		</RouterProvider>,
 		document.getElementById('root') as HTMLElement
 	);
 });
