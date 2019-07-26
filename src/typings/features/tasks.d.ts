@@ -1,11 +1,3 @@
-declare interface TaskType {
-	_id: string;
-	description: string;
-	isCompleted: boolean;
-	createdAt: string;
-	updatedAt: string;
-}
-
 declare type TasksSearchKeys = 'q';
 
 declare interface TasksSearchType {
@@ -14,4 +6,17 @@ declare interface TasksSearchType {
 	// ? pagination options
 	size?: number;
 	page?: number;
+}
+
+declare interface TaskType {
+	_id: string;
+	description: string;
+	completed: boolean;
+	createdAt: string;
+	updatedAt: string;
+}
+
+declare interface TaskUpdateSchema {
+	description?: string;
+	completed?: boolean;
 }
