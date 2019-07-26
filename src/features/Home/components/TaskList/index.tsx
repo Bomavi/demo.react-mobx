@@ -1,6 +1,6 @@
 /* npm imports: common */
 import React from 'react';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 // import { observable, action } from 'mobx';
 
 /* npm imports: material-ui/core */
@@ -11,23 +11,31 @@ import Typography from '@material-ui/core/Typography';
 /* root imports: view components */
 import { Task } from 'features/Home/components';
 
+/* root imports: common */
+import { HomeStore } from 'features/Home/store';
+
 /* local imports: common */
 import { styles } from './styles';
 
-interface TaskListProps extends WithStyles<typeof styles> {}
+interface TaskListProps extends WithStyles<typeof styles> {
+	store?: HomeStore;
+}
 
+@inject('store')
 @observer
 class TaskListComponent extends React.Component<TaskListProps> {
 	public render() {
 		const { classes } = this.props;
+		const { tasksList } = this.props.store!;
 
 		return (
 			<Paper className={classes.root}>
 				<Typography className={classes.title} noWrap variant="subtitle2">
 					Task List
 				</Typography>
-				<Task task={{ description: 'Task num. 1' }} />
-				<Task task={{ description: 'Task num. 2' }} />
+				{tasksList.map(task => (
+					<Task key={task.id} task={task} />
+				))}
 			</Paper>
 		);
 	}
