@@ -11,7 +11,7 @@ import { UserModel } from 'features/Login/user.model';
 import { lightTheme, darkTheme } from 'utils/themes';
 
 export class AuthStore extends BaseStore {
-	private router = new RouterHelper();
+	private readonly router: RouterHelper = new RouterHelper();
 
 	@observable public user: UserModel | null = null;
 	@observable public isInitialized: boolean = false;
@@ -51,7 +51,7 @@ export class AuthStore extends BaseStore {
 	@action public switchTheme = async () => {
 		try {
 			const themeType = await this.update({ theme: this.themeNameToSwitch });
-			if (!themeType) throw Error("Theme wasn't switched!");
+			if (typeof themeType !== 'string') throw Error("Theme wasn't switched!");
 			this.changeSelectedThemeType(themeType);
 		} catch (e) {
 			console.error(e);
@@ -142,7 +142,7 @@ export class AuthStore extends BaseStore {
 		}
 	};
 
-	public update = async (userData: UserUpdateSchema) => {
+	public update = async (userData: UserUpdateSchema): Promise<MUIThemeType | boolean> => {
 		try {
 			if (!this.user) throw Error('no user found');
 
