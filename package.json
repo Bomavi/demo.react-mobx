@@ -24,6 +24,7 @@
     "react-router5": "^7.1.0",
     "router5": "^7.0.2",
     "router5-plugin-browser": "^7.0.2",
+    "serializr": "^1.5.1",
     "styled-components": "^4.3.2",
     "styled-normalize": "^8.0.6"
   },
