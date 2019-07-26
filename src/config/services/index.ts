@@ -7,6 +7,6 @@ import { AuthService } from './auth';
 import { ApiService } from './api';
 
 export class Services {
-	public auth: AuthService = new AuthService(new ApiClient({ apiPrefix: AUTH_URL }));
-	public api: ApiService = new ApiService(new ApiClient({ apiPrefix: API_URL }));
+	public readonly auth: AuthService = new AuthService(new ApiClient({ apiPrefix: AUTH_URL }));
+	public readonly api: ApiService = new ApiService(new ApiClient({ apiPrefix: API_URL }));
 }

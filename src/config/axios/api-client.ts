@@ -2,7 +2,7 @@
 import { axios } from './axios';
 
 export class ApiClient {
-	private prefix: string;
+	private readonly prefix: string;
 
 	public constructor({ apiPrefix }: { apiPrefix: string }) {
 		if (!apiPrefix) {

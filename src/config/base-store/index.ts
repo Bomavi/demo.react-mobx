@@ -2,5 +2,5 @@
 import { Services } from 'config/services';
 
 export class BaseStore {
-	public services = new Services();
+	public readonly services = new Services();
 }
