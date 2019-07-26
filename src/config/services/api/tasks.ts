@@ -7,18 +7,15 @@ export class TasksApi extends Base {
 		return await this.apiClient.get<TaskType[]>(`/tasks/search${queryString(params)}`);
 	}
 
-	public async getById(id: string) {
-		return await this.apiClient.get<TaskType>(`/tasks/${id}`);
+	public async create(task: TaskUpdateSchema) {
+		return await this.apiClient.post<TaskType>('/tasks', task);
 	}
 
-	public async update(id: string, task: TaskType) {
-		return await this.apiClient.post(`/tasks/${id}`, task);
+	public async update(id: string, task: TaskUpdateSchema) {
+		return await this.apiClient.put<TaskType>(`/tasks/${id}`, task);
 	}
 
-	public async test() {
-		return await this.apiClient.post(`/validate/user`, {
-			username: 'guest',
-			password: 'guestPassword',
-		});
+	public async delete(id: string) {
+		return await this.apiClient.delete(`/tasks/${id}`);
 	}
 }
