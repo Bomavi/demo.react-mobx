@@ -58,9 +58,9 @@ class CustomInputComponent extends React.Component<CustomInputProps> {
 	private keyPressHandler = (e: React.KeyboardEvent) => {
 		const { onClick, onCancel } = this.props;
 		if (e.key === 'Enter' && onClick) {
-			onClick(this.inputValue);
+			if (this.inputValue) onClick(this.inputValue);
 			if (onCancel) onCancel();
-			this.clearInputValue();
+			if (!onCancel) this.clearInputValue();
 		}
 	};
 
