@@ -26,16 +26,16 @@ interface TaskListProps extends WithStyles<typeof styles> {
 class TaskListComponent extends React.Component<TaskListProps> {
 	public render() {
 		const { classes } = this.props;
-		const { tasksList } = this.props.store!;
+		const { taskList, isEmpty } = this.props.store!;
 
 		return (
 			<Paper className={classes.root}>
 				<Typography className={classes.title} noWrap variant="subtitle2">
 					Task List
 				</Typography>
-				{tasksList.map(task => (
-					<Task key={task.id} task={task} />
-				))}
+				{!isEmpty
+					? taskList.map(task => <Task key={task.id} task={task} />)
+					: 'No tasks found!'}
 			</Paper>
 		);
 	}
