@@ -3,6 +3,7 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 
 /* npm imports: material-ui/core */
+import CircularProgress from '@material-ui/core/CircularProgress';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -21,12 +22,16 @@ interface ThemeSwitcherProps {
 @observer
 class ThemeSwitcher extends React.Component<ThemeSwitcherProps> {
 	public render() {
-		const { switchTheme, themeNameToSwitch } = this.props.authStore!;
+		const { user, switchTheme, themeNameToSwitch } = this.props.authStore!;
 
 		return (
 			<ListItem button onClick={switchTheme}>
 				<ListItemIcon>
-					<Icon name="compare" svgSize="md" />
+					{user!.switchThemeInProgress ? (
+						<CircularProgress size={18} thickness={4} color="inherit" />
+					) : (
+						<Icon name="compare" svgSize="md" />
+					)}
 				</ListItemIcon>
 				<ListItemText primary={`Switch to ${themeNameToSwitch} theme`} />
 			</ListItem>
