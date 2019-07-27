@@ -1,6 +1,6 @@
 /* npm imports: common */
 import React from 'react';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { observable, action } from 'mobx';
 
 /* npm imports: material-ui/core */
@@ -10,6 +10,10 @@ import Divider from '@material-ui/core/Divider';
 /* root imports: view components */
 import { TaskCheckbox, TaskActions } from 'features/Home/components';
 
+/* root imports: common */
+import { HomeStore } from 'features/Home/store';
+import { TaskModel } from 'features/Home/task.model';
+
 /* local imports: common */
 import { Description } from './Description';
 import { EditInput } from './EditInput';
@@ -17,18 +21,15 @@ import { Backdrop } from './Backdrop';
 import { styles } from './styles';
 
 export interface TaskProps extends WithStyles<typeof styles> {
-	task: any;
+	store?: HomeStore;
+	task: TaskModel;
 }
 
+@inject('store')
 @observer
 class TaskComponent extends React.Component<TaskProps> {
 	@observable private isHovered: boolean = false;
 	@observable private isEditable: boolean = false;
-	@observable private isComplete: boolean = false;
-
-	@action private completeHandler = () => {
-		this.isComplete = !this.isComplete;
-	};
 
 	@action private mouseEnterHandler = () => {
 		this.isHovered = true;
@@ -43,8 +44,22 @@ class TaskComponent extends React.Component<TaskProps> {
 		this.mouseLeaveHandler();
 	};
 
+	private completeHandler = () => {
+		const { task } = this.props;
+		task.setActionInProgress('updateInProgress', true);
+		this.props.store!.updateTask(task.id, { ...task, completed: !task.completed });
+	};
+
 	private saveHandler = (value: string) => {
-		console.warn('saveHandler: ', value);
+		const { task } = this.props;
+		task.setActionInProgress('updateInProgress', true);
+		this.props.store!.updateTask(task.id, { ...task, description: value });
+	};
+
+	private deleteHandler = () => {
+		const { task } = this.props;
+		task.setActionInProgress('deleteInProgress', true);
+		this.props.store!.deleteTask(task.id);
 	};
 
 	public render() {
@@ -56,15 +71,28 @@ class TaskComponent extends React.Component<TaskProps> {
 				onMouseEnter={this.mouseEnterHandler}
 				onMouseLeave={this.mouseLeaveHandler}
 			>
-				<TaskCheckbox value={this.isComplete} onChange={this.completeHandler} />
+				<TaskCheckbox
+					value={task.completed}
+					isFetching={task.updateInProgress}
+					onChange={this.completeHandler}
+				/>
 				<Divider className={classes.divider} />
 				<Description>{task.description}</Description>
-				{this.isHovered && <Divider className={classes.divider} />}
-				{this.isHovered && <TaskActions onEdit={this.editHandler} />}
+				{this.isHovered && !task.deleteInProgress && (
+					<Divider className={classes.divider} />
+				)}
+				{(this.isHovered || task.deleteInProgress) && (
+					<TaskActions
+						onEdit={this.editHandler}
+						isFetching={task.deleteInProgress}
+						onDelete={this.deleteHandler}
+					/>
+				)}
 				<Backdrop fadeIn={this.isEditable} onClick={this.editHandler} />
 				{this.isEditable && (
 					<EditInput
 						autoFocus
+						isFetching={task.updateInProgress}
 						defaultValue={task.description}
 						onClick={this.saveHandler}
 						onCancel={this.editHandler}
