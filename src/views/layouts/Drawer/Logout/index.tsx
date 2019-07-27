@@ -4,6 +4,7 @@ import { observer, inject } from 'mobx-react';
 import { observable, action } from 'mobx';
 
 /* npm imports: material-ui/core */
+import CircularProgress from '@material-ui/core/CircularProgress';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -28,10 +29,15 @@ class Logout extends React.Component<LogoutProps> {
 	};
 
 	public render() {
+		const { inProgress } = this.props.authStore!;
 		return (
 			<ListItem button onClick={this.logoutHandler}>
 				<ListItemIcon>
-					<Icon name="logout-variant" svgSize="md" />
+					{inProgress ? (
+						<CircularProgress size={18} thickness={4} color="inherit" />
+					) : (
+						<Icon name="logout-variant" svgSize="md" />
+					)}
 				</ListItemIcon>
 				<ListItemText primary="Logout" />
 			</ListItem>
