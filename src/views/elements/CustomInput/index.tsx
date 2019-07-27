@@ -19,6 +19,7 @@ export interface CustomInputProps extends WithStyles<typeof styles> {
 	placeholder?: string;
 	defaultValue?: string;
 	autoFocus?: boolean;
+	isFetching?: boolean;
 	onClick?: (value: string) => void;
 	onChange?: (value: string) => void;
 	onCancel?: () => void;
@@ -75,6 +76,7 @@ class CustomInputComponent extends React.Component<CustomInputProps> {
 			icon,
 			placeholder,
 			defaultValue,
+			isFetching = false,
 			autoFocus = false,
 			onClick,
 			onCancel,
@@ -87,7 +89,7 @@ class CustomInputComponent extends React.Component<CustomInputProps> {
 				{icon && (
 					<InputButton
 						icon={icon}
-						// isFetching={!this.isEmpty}
+						isFetching={isFetching}
 						color={onClick ? 'primary' : 'inherit'}
 						disabled={onClick && this.isEmpty}
 						onClick={onClick && this.actionClickHandler}
