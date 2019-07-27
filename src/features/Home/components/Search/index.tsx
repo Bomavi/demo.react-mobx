@@ -1,6 +1,6 @@
 /* npm imports: common */
 import React from 'react';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { action } from 'mobx';
 
 /* npm imports: material-ui/core */
@@ -10,21 +10,27 @@ import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { CustomInput } from 'views/elements';
 
 /* root imports: common */
+import { HomeStore } from 'features/Home/store';
 import { debounce, debounceTiming } from 'utils/helpers';
 
 /* local imports: common */
 import { styles } from './styles';
 
-interface SearchProps extends WithStyles<typeof styles> {}
+interface SearchProps extends WithStyles<typeof styles> {
+	store?: HomeStore;
+}
 
+@inject('store')
 @observer
 class SearchComponent extends React.Component<SearchProps> {
 	@action public changeHandler = debounce((value: string) => {
-		console.warn('changeHandler: ', value);
+		this.props.store!.search.onChange('q', value);
+		this.props.store!.searchTasks();
 	}, debounceTiming.input);
 
 	public render() {
 		// const { classes } = this.props;
+		const { isFetching } = this.props.store!;
 
 		return (
 			<CustomInput
@@ -32,6 +38,7 @@ class SearchComponent extends React.Component<SearchProps> {
 					name: 'magnify',
 					svgSize: 'md',
 				}}
+				isFetching={isFetching}
 				placeholder="Type to search tasks..."
 				onChange={this.changeHandler}
 			/>
