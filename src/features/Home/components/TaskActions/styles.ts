@@ -9,6 +9,9 @@ export const useStyles = makeStyles((theme: Theme) =>
 			height: 60,
 			justifyContent: 'center',
 			alignItems: 'center',
+			'&.small': {
+				width: 60,
+			},
 		},
 		iconButton: {
 			'&:disabled': {
