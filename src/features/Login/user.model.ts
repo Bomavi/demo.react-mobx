@@ -1,5 +1,5 @@
 /* npm imports: common */
-// import { computed } from 'mobx';
+import { observable, action } from 'mobx';
 
 export class UserModel {
 	public readonly id: string = '';
@@ -16,7 +16,13 @@ export class UserModel {
 		if (props.updatedAt) this.updatedAt = props.updatedAt;
 	}
 
+	@observable public switchThemeInProgress: boolean = false;
+
 	// @computed public get created_at() {
 	// 	return moment(this.createdAt).format();
 	// }
+
+	@action public setSwitchThemeState = (state: boolean) => {
+		this.switchThemeInProgress = state;
+	};
 }
