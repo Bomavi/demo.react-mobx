@@ -28,6 +28,7 @@ class AddTaskComponent extends React.Component<AddTaskProps> {
 
 	public render() {
 		// const { classes } = this.props;
+		const { inProgress } = this.props.store!;
 
 		return (
 			<CustomInput
@@ -35,6 +36,7 @@ class AddTaskComponent extends React.Component<AddTaskProps> {
 					name: 'plus',
 					svgSize: 'md',
 				}}
+				isFetching={inProgress}
 				placeholder="Type task description..."
 				onClick={this.actionHandler}
 			/>
