@@ -15,6 +15,7 @@ export class AuthStore extends BaseStore {
 
 	@observable public user: UserModel | null = null;
 	@observable public isInitialized: boolean = false;
+	@observable public inProgress: boolean = false;
 
 	@observable public selectedThemeType: MUIThemeType = 'light';
 
@@ -50,6 +51,7 @@ export class AuthStore extends BaseStore {
 
 	@action public switchTheme = async () => {
 		try {
+			this.user!.setSwitchThemeState(true);
 			const themeType = await this.update({ theme: this.themeNameToSwitch });
 			if (typeof themeType !== 'string') throw Error("Theme wasn't switched!");
 			this.changeSelectedThemeType(themeType);
@@ -61,6 +63,10 @@ export class AuthStore extends BaseStore {
 	@action private changeSelectedThemeType = (themeType: MUIThemeType) => {
 		this.selectedThemeType = themeType;
 		localStorage.setItem('theme', themeType);
+	};
+
+	@action public setInProgress = (state: boolean) => {
+		this.inProgress = state;
 	};
 
 	@action private setUser = (user: UserType) => {
@@ -131,6 +137,7 @@ export class AuthStore extends BaseStore {
 
 	public logout = async () => {
 		try {
+			this.setInProgress(true);
 			const res = await this.services.auth.logout();
 
 			if (!res) throw Error('logout failed');
@@ -139,6 +146,8 @@ export class AuthStore extends BaseStore {
 			this.router.navigate('login');
 		} catch (e) {
 			console.error(e);
+		} finally {
+			this.setInProgress(false);
 		}
 	};
 
