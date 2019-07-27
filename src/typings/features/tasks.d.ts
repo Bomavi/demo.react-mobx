@@ -8,6 +8,10 @@ declare interface TasksSearchType {
 	page?: number;
 }
 
+declare type TaskActionInProgress = 'updateInProgress' | 'deleteInProgress';
+
+declare type TaskFetchingState = 'inProgress' | 'isFetching';
+
 declare interface TaskType {
 	_id: string;
 	description: string;
