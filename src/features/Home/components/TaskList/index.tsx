@@ -32,9 +32,7 @@ class TaskListComponent extends React.Component<TaskListProps> {
 				<Typography className={classes.title} noWrap variant="subtitle2">
 					Task List
 				</Typography>
-				{!isEmpty
-					? taskList.map(task => <Task key={task.id} task={task} />)
-					: 'No tasks found!'}
+				{!isEmpty ? taskList.map(task => <Task key={task.id} task={task} />) : 'no tasks'}
 			</Paper>
 		);
 	}
