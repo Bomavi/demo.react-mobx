@@ -6,11 +6,11 @@ export class RouterStore {
 	@observable public current: State | null = null;
 	@observable public pageName: string = '';
 
-	@action public setCurrent = (state: State): void => {
+	@action public setCurrent = (state: State) => {
 		this.current = state;
 	};
 
-	@action public setPageName = (name: string): void => {
+	@action public setPageName = (name: string) => {
 		this.pageName = name;
 	};
 }

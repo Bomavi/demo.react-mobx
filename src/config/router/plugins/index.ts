@@ -6,11 +6,11 @@ import { routerStore } from 'config/router/store';
 
 const factory = (_router: Router): Plugin => {
 	return {
-		onTransitionError: (_nextState: State, _prevState: State, error: any): void => {
-			console.error(error);
+		onTransitionError: (_nextState: State, _prevState: State, error: any) => {
+			// console.error(error);
 		},
 
-		onTransitionSuccess: (nextState: State): void => {
+		onTransitionSuccess: (nextState: State) => {
 			routerStore.setCurrent(nextState);
 		},
 	};

@@ -10,7 +10,7 @@ export const onlyAuthorized = (_router: Router) => (
 	done: Function
 ) => {
 	const { name: nextName } = nextState;
-	const { isAuthenticated, isInitialized } = authStore!;
+	const { isAuthenticated, isInitialized } = authStore;
 
 	const acceptable = !isAuthenticated && nextName === 'login';
 

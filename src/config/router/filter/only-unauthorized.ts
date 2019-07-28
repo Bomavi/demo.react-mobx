@@ -10,7 +10,7 @@ export const onlyUnauthorized = (_router: Router) => (
 	done: Function
 ) => {
 	const { name: nextName } = nextState;
-	const { isAuthenticated, isInitialized } = authStore!;
+	const { isAuthenticated, isInitialized } = authStore;
 
 	if (!prevState && nextName === 'login' && !isInitialized && !isAuthenticated) {
 		return done({ redirect: { name: 'home' } });
