@@ -2,7 +2,6 @@ declare type TasksSearchKeys = 'q';
 
 declare interface TasksSearchType {
 	q?: TasksSearchKeys;
-
 	// ? pagination options
 	size?: number;
 	page?: number;
