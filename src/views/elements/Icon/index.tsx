@@ -3,7 +3,7 @@ import React, { Suspense } from 'react';
 import cx from 'classnames';
 
 /* root imports: common */
-import FQ from 'assets/icons/file-question';
+import HELP from 'assets/icons/help';
 
 /* local imports: common */
 import { useStyles, IconParams } from './styles';
@@ -42,7 +42,7 @@ const Icon: React.FC<IconProps> = ({ name, size = 'sm', svgSize = 'sm', color })
 	return (
 		<div className={cx(classes.iconWrapper, size)}>
 			<div className={cx(classes.svgWrapper, svgSize)}>
-				<Suspense fallback={<FQ />}>
+				<Suspense fallback={<HELP style={{ width: 16, height: 16 }} />}>
 					<SVG />
 				</Suspense>
 			</div>

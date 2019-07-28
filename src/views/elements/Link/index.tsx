@@ -2,13 +2,16 @@
 import React from 'react';
 import cx from 'classnames';
 
+/* npm imports: material-ui/core */
+import { withStyles, WithStyles } from '@material-ui/core/styles';
+
 /* root imports: common */
 import router from 'config/router';
 
 /* local imports: common */
-import { LinkWrapper } from './styles';
+import { styles } from './styles';
 
-interface LinkProps {
+interface LinkProps extends WithStyles<typeof styles> {
 	name: string;
 	block?: boolean;
 	params?: object;
@@ -18,14 +21,14 @@ interface LinkProps {
 	};
 }
 
-class Link extends React.Component<LinkProps> {
-	protected static defaultProps = {
+class LinkComponent extends React.Component<LinkProps> {
+	public static defaultProps = {
 		block: false,
 		options: {},
 		params: {},
 	};
 
-	private handleClick = (event: React.MouseEvent<HTMLAnchorElement>): void => {
+	private handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
 		const { name, params, options } = this.props;
 		const comboKey = event.metaKey || event.altKey || event.ctrlKey || event.shiftKey;
 
@@ -36,21 +39,25 @@ class Link extends React.Component<LinkProps> {
 	};
 
 	public render() {
-		const { children, name, block, params } = this.props;
+		const { children, classes, name, block, params } = this.props;
 		const href = router.buildPath(name, params as any);
 
 		if (href === null) console.error("<Link> Couldn't make URL for", name, params);
 
+		const rootClass = {
+			[classes.root]: !block,
+			[classes.block]: block,
+			[classes.active]: router.isActive(name),
+		};
+
 		return (
-			<LinkWrapper
-				href={href}
-				className={cx({ block, active: router.isActive(name) })}
-				onClick={this.handleClick}
-			>
-				<div className="icon-wrapper">{children}</div>
-			</LinkWrapper>
+			<a href={href} className={cx(rootClass)} onClick={this.handleClick}>
+				<div className={classes.iconWrapper}>{children}</div>
+			</a>
 		);
 	}
 }
+
+const Link = withStyles(styles)(LinkComponent);
 
 export { Link };

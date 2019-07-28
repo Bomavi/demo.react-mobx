@@ -1,29 +1,30 @@
-import styled from 'styled-components';
+/* npm imports: material-ui/core */
+import { createStyles, Theme } from '@material-ui/core/styles';
 
-export const LinkWrapper = styled.a`
-	display: inline-block;
+export const styles = (theme: Theme) =>
+	createStyles({
+		root: {
+			display: 'inline-block',
+		},
+		block: {
+			position: 'absolute',
+			top: 0,
+			left: 0,
+			display: 'flex',
+			alignItems: 'center',
+			width: '100%',
+			height: '100%',
+		},
+		iconWrapper: {
+			width: '100%',
+			height: 20,
+		},
+		active: {
+			backgroundColor: 'rgba(0, 0, 0, 0.1)',
+			boxShadow: 'inset 0 5px 10px rgba(0, 0, 0, 0.1), inset 0 -5px 15px rgba(0, 0, 0, 0.05)',
 
-	&.block {
-		position: absolute;
-		top: 0;
-		left: 0;
-		display: flex;
-		align-items: center;
-		width: 100%;
-		height: 100%;
-
-		.icon-wrapper {
-			width: 100%;
-			height: 20px;
-		}
-
-		&.active {
-			background-color: rgba(0, 0, 0, 0.1);
-			box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.1), inset 0 -5px 15px rgba(0, 0, 0, 0.05);
-
-			.icon-wrapper {
-				box-shadow: inset 4px 0 0 #fff;
-			}
-		}
-	}
-`;
+			'& .icon-wrapper': {
+				boxShadow: 'inset 4px 0 0 #fff',
+			},
+		},
+	});
