@@ -33,7 +33,6 @@ class HeaderComponent extends React.Component<HeaderProps> {
 
 	public render() {
 		const { classes } = this.props;
-
 		const { user } = this.props.authStore!;
 
 		return (
