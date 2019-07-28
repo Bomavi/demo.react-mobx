@@ -1,6 +1,6 @@
 /* npm imports: common */
-import { observable, action } from 'mobx';
-// import { format } from 'date-fns';
+import { observable, computed, action } from 'mobx';
+import { format } from 'date-fns';
 
 export class UserModel {
 	public readonly id: string = '';
@@ -19,9 +19,9 @@ export class UserModel {
 
 	@observable public switchThemeInProgress: boolean = false;
 
-	// @computed public get created_at() {
-	// 	return format(this.createdAt, 'D MMMM, YYYY HH:mm:ss');
-	// }
+	@computed public get created() {
+		return format(this.createdAt, 'D MMMM, YYYY HH:mm:ss');
+	}
 
 	@action public setSwitchThemeState = (state: boolean) => {
 		this.switchThemeInProgress = state;
