@@ -21,9 +21,7 @@ interface GuestFormProps extends WithStyles<typeof styles> {
 @observer
 class GuestFormComponent extends React.Component<GuestFormProps> {
 	public loginHandler = () => {
-		const { login } = this.props.store!;
-
-		login({ isGuest: true });
+		this.props.store!.login({ isGuest: true });
 	};
 
 	public render() {

@@ -14,6 +14,7 @@ export class AuthStore extends BaseStore {
 	private readonly router: RouterHelper = new RouterHelper();
 
 	@observable public user: UserModel | null = null;
+
 	@observable public isInitialized: boolean = false;
 	@observable public inProgress: boolean = false;
 
@@ -53,7 +54,7 @@ export class AuthStore extends BaseStore {
 		try {
 			this.user!.setSwitchThemeState(true);
 			const themeType = await this.update({ theme: this.themeNameToSwitch });
-			if (typeof themeType !== 'string') throw Error("Theme wasn't switched!");
+			if (typeof themeType !== 'string') throw Error('theme switch failed');
 			this.changeSelectedThemeType(themeType);
 		} catch (e) {
 			console.error(e);
@@ -111,6 +112,7 @@ export class AuthStore extends BaseStore {
 
 	public login = async (userData: LoginType) => {
 		try {
+			this.setInProgress(true);
 			const user = await this.services.auth.login(userData);
 
 			if (!user) throw Error('login failed');
@@ -119,11 +121,14 @@ export class AuthStore extends BaseStore {
 			this.router.navigate('home');
 		} catch (e) {
 			console.error(e);
+		} finally {
+			this.setInProgress(false);
 		}
 	};
 
 	public register = async (userData: RegisterType) => {
 		try {
+			this.setInProgress(true);
 			const user = await this.services.auth.register(userData);
 
 			if (!user) throw Error('registration failed');
@@ -132,6 +137,8 @@ export class AuthStore extends BaseStore {
 			this.router.navigate('home');
 		} catch (e) {
 			console.error(e);
+		} finally {
+			this.setInProgress(false);
 		}
 	};
 
@@ -159,6 +166,7 @@ export class AuthStore extends BaseStore {
 			const user = await this.services.api.users.update(id, userData);
 
 			if (!user) throw Error('no user returned');
+
 			this.updateUser(user);
 			return user.theme;
 		} catch (e) {
