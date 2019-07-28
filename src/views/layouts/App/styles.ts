@@ -3,7 +3,7 @@ import { createStyles, Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) =>
 	createStyles({
-		root: {
+		app: {
 			position: 'relative',
 			width: '100vw',
 			minHeight: '100vh',

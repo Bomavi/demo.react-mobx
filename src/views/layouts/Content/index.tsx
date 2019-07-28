@@ -30,7 +30,7 @@ class ContentComponent extends React.Component<ContentProps> {
 				<Header />
 				<div className={classes.toolbar} />
 				{isAuthenticated && <Drawer />}
-				<main className={classes.root}>{children}</main>
+				<main className={classes.main}>{children}</main>
 				<Footer />
 			</>
 		);

@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
 	const classes = useStyles();
 
 	return (
-		<footer className={classes.root}>
+		<footer className={classes.footer}>
 			<Typography className={classes.title} noWrap variant="body1" align="center">
 				Created by Maksym Bozhenov for DEMO purpose
 			</Typography>

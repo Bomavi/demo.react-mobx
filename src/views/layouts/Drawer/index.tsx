@@ -28,8 +28,7 @@ class DrawerComponent extends React.Component<DrawerProps> {
 	}
 
 	private hideDrawer = () => {
-		const { toggleDrawer } = this.props.globalStore!;
-		toggleDrawer(false);
+		this.props.globalStore!.toggleDrawer(false);
 	};
 
 	public render() {

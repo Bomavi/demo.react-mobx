@@ -59,7 +59,7 @@ class AppComponent extends React.Component<AppProps> {
 			<ThemeProvider theme={selectedTheme}>
 				<>
 					<CssBaseline />
-					<div className={classes.root}>
+					<div className={classes.app}>
 						<Content>{!whileNotAuthenticated && component}</Content>
 					</div>
 				</>

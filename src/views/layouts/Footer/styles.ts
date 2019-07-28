@@ -3,7 +3,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
-		root: {
+		footer: {
 			position: 'absolute',
 			bottom: 0,
 			left: 0,
