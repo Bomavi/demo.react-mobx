@@ -6,13 +6,13 @@ export class ApiClient {
 
 	public constructor({ apiPrefix }: { apiPrefix: string }) {
 		if (!apiPrefix) {
-			throw new Error('[apiPrefix] required');
+			throw Error('[apiPrefix] required');
 		}
 
 		this.prefix = apiPrefix;
 	}
 
-	public get<E>(url: string, params?: {}, options?: {}): Promise<E> {
+	public get<E = {}>(url: string, params?: {}, options?: {}): Promise<E> {
 		return this.request({
 			url,
 			params,
@@ -21,7 +21,7 @@ export class ApiClient {
 		}) as Promise<E>;
 	}
 
-	public put<E = {}>(url: string, body?: {}, params: {} = {}, options?: {}): Promise<E> {
+	public put<E = {}>(url: string, body: {} = {}, params?: {}, options?: {}): Promise<E> {
 		return this.request({
 			url,
 			body,
@@ -31,15 +31,17 @@ export class ApiClient {
 		}) as Promise<E>;
 	}
 
-	public patch<E = {}>(url: string, body: {} = {}): Promise<E> {
+	public patch<E = {}>(url: string, body: {} = {}, params?: {}, options?: {}): Promise<E> {
 		return this.request({
 			url,
 			body,
+			params,
+			options,
 			method: 'patch',
 		}) as Promise<E>;
 	}
 
-	public post<E = {}>(url: string, body?: {}, params: {} = {}, options?: {}): Promise<E> {
+	public post<E = {}>(url: string, body: {} = {}, params?: {}, options?: {}): Promise<E> {
 		return this.request({
 			url,
 			body,
@@ -49,51 +51,49 @@ export class ApiClient {
 		}) as Promise<E>;
 	}
 
-	public delete(url: string, params: {} = {}): Promise<{}> {
+	public delete<E = {}>(url: string, params?: {}): Promise<E> {
 		return this.request({
 			url,
 			params,
 			method: 'delete',
-		});
+		}) as Promise<E>;
 	}
 
-	public async request({
+	private async request({
 		url,
 		method,
-		params,
 		body,
+		params,
 		options,
 	}: {
 		url: string;
 		method: 'delete' | 'get' | 'patch' | 'post' | 'put';
-		params?: {};
 		body?: {};
+		params?: {};
 		options?: {};
 	}): Promise<{}> {
-		return axios({
-			method,
-			url,
-			params,
-			baseURL: this.prefix,
-			data: body,
-			...(options || {}),
-		})
-			.then((response: any) => {
-				return response.data;
-			})
-			.catch((error: any) => {
-				const res = error.response;
-				if (!res) {
-					console.error(error);
-					throw new Error(error);
-				}
-				if (res.status >= 400) {
-					const serverError = new Error(error) as CustomServerError;
-
-					serverError.res = res;
-
-					throw serverError;
-				}
+		try {
+			const response = await axios({
+				method,
+				url,
+				params,
+				baseURL: this.prefix,
+				data: body,
+				...options,
 			});
+			return response.data;
+		} catch (e) {
+			const response = e.response;
+			if (!response) {
+				console.error(e);
+				throw Error(e);
+			}
+			if (response.status >= 400) {
+				const serverError = e as CustomServerError;
+				serverError.res = response;
+				throw serverError;
+			}
+			return e;
+		}
 	}
 }
