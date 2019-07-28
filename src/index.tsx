@@ -13,8 +13,10 @@ import router, { routerStore } from 'config/router';
 import { globalStore } from 'config/global-store';
 import { authStore } from 'features/Login/store';
 
+/* mobx configuration */
 configure({ enforceActions: 'observed' });
 
+/* start router with react app */
 router.start(() => {
 	ReactDOM.render(
 		<RouterProvider router={router}>
