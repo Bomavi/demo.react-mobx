@@ -27,6 +27,11 @@ export interface CustomInputProps extends WithStyles<typeof styles> {
 
 @observer
 class CustomInputComponent extends React.Component<CustomInputProps> {
+	public static defaultProps = {
+		isFetching: false,
+		autoFocus: false,
+	};
+
 	@observable private inputValue: string = '';
 
 	@computed private get isEmpty() {
@@ -76,8 +81,8 @@ class CustomInputComponent extends React.Component<CustomInputProps> {
 			icon,
 			placeholder,
 			defaultValue,
-			isFetching = false,
-			autoFocus = false,
+			isFetching,
+			autoFocus,
 			onClick,
 			onCancel,
 		} = this.props;
