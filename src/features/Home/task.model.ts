@@ -1,5 +1,6 @@
 /* npm imports: common */
 import { observable, action } from 'mobx';
+// import { format } from 'date-fns';
 
 import { BaseStore } from 'config/base-store';
 
@@ -24,7 +25,7 @@ export class TaskModel extends BaseStore {
 	@observable public deleteInProgress: boolean = false;
 
 	// @computed public get created_at() {
-	// 	return moment(this.createdAt).format();
+	// 	return format(this.createdAt, 'D MMMM, YYYY HH:mm:ss');
 	// }
 
 	@action public setActionInProgress = (action: TaskActionInProgress, state: boolean) => {

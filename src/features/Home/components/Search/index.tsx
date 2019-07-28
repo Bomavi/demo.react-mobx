@@ -1,7 +1,6 @@
 /* npm imports: common */
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { action } from 'mobx';
 
 /* npm imports: material-ui/core */
 import { withStyles, WithStyles } from '@material-ui/core/styles';
@@ -23,7 +22,7 @@ interface SearchProps extends WithStyles<typeof styles> {
 @inject('store')
 @observer
 class SearchComponent extends React.Component<SearchProps> {
-	@action public changeHandler = debounce((value: string) => {
+	public changeHandler = debounce((value: string) => {
 		this.props.store!.search.onChange('q', value);
 		this.props.store!.searchTasks();
 	}, debounceTiming.input);

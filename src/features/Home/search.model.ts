@@ -12,7 +12,7 @@ export class Search {
 			if (this[name] === undefined) throw Error(`${name} - field not found`);
 			this[name] = value;
 		} catch (e) {
-			console.error(e.message);
+			console.error(e);
 		}
 	};
 

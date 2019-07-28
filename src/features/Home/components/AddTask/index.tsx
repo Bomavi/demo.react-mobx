@@ -1,7 +1,6 @@
 /* npm imports: common */
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-// import { action } from 'mobx';
 
 /* npm imports: material-ui/core */
 import { withStyles, WithStyles } from '@material-ui/core/styles';
