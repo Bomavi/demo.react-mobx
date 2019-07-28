@@ -16,7 +16,6 @@
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "mobx": "^5.10.1",
-    "mobx-logger": "^0.7.1",
     "mobx-react": "^6.1.1",
     "query-string": "^6.8.1",
     "react": "^16.8.6",
@@ -24,9 +23,7 @@
     "react-router5": "^7.1.0",
     "router5": "^7.0.2",
     "router5-plugin-browser": "^7.0.2",
-    "serializr": "^1.5.1",
-    "styled-components": "^4.3.2",
-    "styled-normalize": "^8.0.6"
+    "serializr": "^1.5.1"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.8",
@@ -34,7 +31,6 @@
     "@types/node": "^12.0.10",
     "@types/react": "16.8.22",
     "@types/react-dom": "16.8.4",
-    "@types/styled-components": "^4.1.16",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",
     "eslint-config-prettier": "^6.0.0",
