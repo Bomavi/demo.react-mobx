@@ -22,7 +22,16 @@ interface SearchProps extends WithStyles<typeof styles> {
 @inject('store')
 @observer
 class SearchComponent extends React.Component<SearchProps> {
-	public changeHandler = debounce((value: string) => {
+	public componentWillUnmount() {
+		const { search } = this.props.store!;
+
+		if (search.q.length > 0) {
+			this.props.store!.search.onChange('q', '');
+			this.props.store!.searchTasks();
+		}
+	}
+
+	private changeHandler = debounce((value: string) => {
 		this.props.store!.search.onChange('q', value);
 		this.props.store!.searchTasks();
 	}, debounceTiming.input);
