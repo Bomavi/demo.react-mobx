@@ -12,7 +12,8 @@ export const styles = (theme: Theme) =>
 			marginBottom: 10,
 			backgroundColor: theme.palette.background.default,
 			borderRadius: 4,
-			'&:last-child': {
+
+			'&.isLastChild': {
 				marginBottom: 0,
 			},
 		},

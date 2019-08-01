@@ -47,7 +47,7 @@ class SearchComponent extends React.Component<SearchProps> {
 					svgSize: 'md',
 				}}
 				isFetching={isFetching}
-				placeholder="Type to search tasks..."
+				placeholder="Type to search..."
 				onChange={this.changeHandler}
 			/>
 		);

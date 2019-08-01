@@ -2,6 +2,7 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { observable, action } from 'mobx';
+import cx from 'classnames';
 
 /* npm imports: material-ui/core */
 import { withStyles, WithStyles } from '@material-ui/core/styles';
@@ -23,6 +24,7 @@ import { styles } from './styles';
 export interface TaskProps extends WithStyles<typeof styles> {
 	store?: HomeStore;
 	task: TaskModel;
+	isLastChild: boolean;
 }
 
 @inject('store')
@@ -63,11 +65,11 @@ class TaskComponent extends React.Component<TaskProps> {
 	};
 
 	public render() {
-		const { classes, task } = this.props;
+		const { classes, task, isLastChild = false } = this.props;
 
 		return (
 			<div
-				className={classes.root}
+				className={cx(classes.root, { isLastChild })}
 				onMouseEnter={this.mouseEnterHandler}
 				onMouseLeave={this.mouseLeaveHandler}
 			>

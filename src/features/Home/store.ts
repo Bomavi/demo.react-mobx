@@ -16,8 +16,12 @@ export class HomeStore extends BaseStore {
 
 	@observable.ref public readonly search: Search = new Search();
 
-	@computed public get isEmpty() {
-		return this.tasks.length === 0;
+	@computed public get tasksLength(): number {
+		return this.tasks.length;
+	}
+
+	@computed public get isEmpty(): boolean {
+		return this.tasksLength === 0;
 	}
 
 	@computed public get taskList() {
@@ -52,7 +56,9 @@ export class HomeStore extends BaseStore {
 	};
 
 	@action private replaceTask = (task: TaskType) => {
-		this.tasks.replace(this.taskList.map(t => (t.id === task._id ? new TaskModel(task) : t)));
+		this.tasks.replace(
+			this.taskList.map(t => (t.id === task._id ? new TaskModel(task) : t))
+		);
 	};
 
 	public searchTasks = async () => {

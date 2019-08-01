@@ -1,6 +1,7 @@
 /* npm imports: common */
 import React from 'react';
 import { inject, observer } from 'mobx-react';
+import { motion } from 'framer-motion';
 
 /* npm imports: material-ui/core */
 import { withStyles, WithStyles } from '@material-ui/core/styles';
@@ -25,14 +26,20 @@ interface TaskListProps extends WithStyles<typeof styles> {
 class TaskListComponent extends React.Component<TaskListProps> {
 	public render() {
 		const { classes } = this.props;
-		const { taskList, isEmpty } = this.props.store!;
+		const { taskList, isEmpty, tasksLength } = this.props.store!;
 
 		return (
 			<Paper className={classes.root}>
 				<Typography className={classes.title} noWrap variant="subtitle2">
 					Task List
 				</Typography>
-				{!isEmpty ? taskList.map(task => <Task key={task.id} task={task} />) : 'no tasks'}
+				{!isEmpty
+					? taskList.map((task, i) => (
+							<motion.div key={task.id} positionTransition>
+								<Task task={task} isLastChild={tasksLength === i + 1} />
+							</motion.div>
+					  ))
+					: 'no tasks'}
 			</Paper>
 		);
 	}
