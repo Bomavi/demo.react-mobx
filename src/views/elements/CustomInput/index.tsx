@@ -11,6 +11,9 @@ import Divider from '@material-ui/core/Divider';
 /* root imports: view components */
 import { IconProps, InputButton } from 'views/elements';
 
+/* root imports: common */
+import { removeSpaces } from 'utils/helpers';
+
 /* local imports: common */
 import { styles } from './styles';
 
@@ -39,40 +42,44 @@ class CustomInputComponent extends React.Component<CustomInputProps> {
 		return !this.inputValue || this.inputValue === defaultValue;
 	}
 
+	@computed private get trimedValue(): string {
+		return removeSpaces(this.inputValue).trim();
+	}
+
 	@action private changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
 		this.inputValue = value;
-		this.changeCallbackHandler(value);
+		this.changeCallbackHandler();
 	};
 
 	@action private actionClickHandler = () => {
 		const { onClick, onCancel } = this.props;
-		if (onClick) onClick(this.inputValue);
+		if (onClick) onClick(this.trimedValue);
 		if (onCancel) onCancel();
 		this.clearInputValue();
 	};
 
 	@action private clearHandler = () => {
 		this.clearInputValue();
-		this.changeCallbackHandler(this.inputValue);
 	};
 
 	@action private clearInputValue = () => {
 		this.inputValue = '';
+		this.changeCallbackHandler();
 	};
 
 	private keyPressHandler = (e: React.KeyboardEvent) => {
 		const { onClick, onCancel } = this.props;
 		if (e.key === 'Enter' && onClick) {
-			if (this.inputValue) onClick(this.inputValue);
+			if (this.trimedValue) onClick(this.trimedValue);
 			if (onCancel) onCancel();
 			if (!onCancel) this.clearInputValue();
 		}
 	};
 
-	private changeCallbackHandler = (value: string) => {
+	private changeCallbackHandler = () => {
 		const { onChange } = this.props;
-		if (onChange) onChange(value);
+		if (onChange) onChange(this.trimedValue);
 	};
 
 	public render() {
