@@ -14,18 +14,33 @@ export class HomeStore extends BaseStore {
 	@observable public isFetching: boolean = false;
 	@observable public inProgress: boolean = false;
 
+	@observable public sortKey: SortKey = 'desc';
 	@observable.ref public readonly search: Search = new Search();
 
+	@computed public get taskList(): TaskModel[] {
+		return this.tasks.slice();
+	}
+
 	@computed public get tasksLength(): number {
-		return this.tasks.length;
+		return this.taskList.length;
 	}
 
 	@computed public get isEmpty(): boolean {
 		return this.tasksLength === 0;
 	}
 
-	@computed public get taskList() {
-		return this.tasks.slice();
+	@computed public get sortedByDate(): TaskModel[] {
+		return this.taskList.sort((a, b) => {
+			const aDate = Number(new Date(a.createdAt));
+			const bDate = Number(new Date(b.createdAt));
+			return this.sortKey === 'desc' ? bDate - aDate : aDate - bDate;
+		});
+	}
+
+	@computed public get sortedByComplete(): TaskModel[] {
+		return this.sortKey
+			? this.sortedByDate.sort((a, b) => Number(a.completed) - Number(b.completed))
+			: this.taskList;
 	}
 
 	@computed private get fetchParams() {
@@ -59,6 +74,10 @@ export class HomeStore extends BaseStore {
 		this.tasks.replace(
 			this.taskList.map(t => (t.id === task._id ? new TaskModel(task) : t))
 		);
+	};
+
+	@action public sortTasks = (value: SortKey) => {
+		this.sortKey = value;
 	};
 
 	public searchTasks = async () => {

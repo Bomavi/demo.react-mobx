@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 /* root imports: view components */
-import { Task } from 'features/Home/components';
+import { Task, SortButton } from 'features/Home/components';
 
 /* root imports: common */
 import { HomeStore } from 'features/Home/store';
@@ -24,17 +24,33 @@ interface TaskListProps extends WithStyles<typeof styles> {
 @inject('store')
 @observer
 class TaskListComponent extends React.Component<TaskListProps> {
+	private sortTasksHandler = () => {
+		const { sortKey, sortTasks } = this.props.store!;
+		if (sortKey === 'asc') sortTasks('desc');
+		if (sortKey === 'desc') sortTasks('asc');
+	};
+
 	public render() {
 		const { classes } = this.props;
-		const { taskList, isEmpty, tasksLength } = this.props.store!;
+		const { sortedByComplete, isEmpty, tasksLength, sortKey } = this.props.store!;
 
 		return (
 			<Paper className={classes.root}>
-				<Typography className={classes.title} noWrap variant="subtitle2">
-					Task List
-				</Typography>
+				<div className={classes.header}>
+					<Typography className={classes.title} noWrap variant="subtitle2">
+						Task List &nbsp;&nbsp;
+						{!isEmpty && '|'}
+						&nbsp;&nbsp;&nbsp;
+						{!isEmpty && `${tasksLength}`}
+					</Typography>
+					<SortButton
+						sortKey={sortKey}
+						disabled={isEmpty}
+						onClick={this.sortTasksHandler}
+					/>
+				</div>
 				{!isEmpty
-					? taskList.map((task, i) => (
+					? sortedByComplete.map((task, i) => (
 							<motion.div key={task.id} positionTransition>
 								<Task task={task} isLastChild={tasksLength === i + 1} />
 							</motion.div>

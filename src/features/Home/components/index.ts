@@ -5,3 +5,4 @@ export * from './TaskList';
 export * from './Task';
 export * from './TaskCheckbox';
 export * from './TaskActions';
+export * from './SortButton';
