@@ -33,7 +33,13 @@ const TaskCheckbox: React.FC<TaskCheckboxProps> = ({
 
 	return (
 		<div className={classes.root}>
-			<Checkbox checked={value} color="primary" disabled={disabled} onChange={onChange} />
+			<Checkbox
+				checked={value}
+				color="primary"
+				title={value ? 'Uncomplete' : 'Complete'}
+				disabled={disabled}
+				onChange={onChange}
+			/>
 		</div>
 	);
 };

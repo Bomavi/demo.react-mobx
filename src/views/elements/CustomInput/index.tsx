@@ -37,13 +37,13 @@ class CustomInputComponent extends React.Component<CustomInputProps> {
 
 	@observable private inputValue: string = '';
 
-	@computed private get isEmpty() {
-		const { defaultValue } = this.props;
-		return !this.inputValue || this.inputValue === defaultValue;
-	}
-
 	@computed private get trimedValue(): string {
 		return removeSpaces(this.inputValue).trim();
+	}
+
+	@computed private get isEmpty() {
+		const { defaultValue } = this.props;
+		return !this.trimedValue || this.trimedValue === defaultValue;
 	}
 
 	@action private changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,6 +75,8 @@ class CustomInputComponent extends React.Component<CustomInputProps> {
 			if (onCancel) onCancel();
 			if (!onCancel) this.clearInputValue();
 		}
+
+		if (e.key === 'Escape' && onCancel) onCancel();
 	};
 
 	private changeCallbackHandler = () => {
@@ -103,6 +105,7 @@ class CustomInputComponent extends React.Component<CustomInputProps> {
 						icon={icon}
 						isFetching={isFetching}
 						color={onClick ? 'primary' : 'inherit'}
+						title={icon.title}
 						disabled={onClick && this.isEmpty}
 						onClick={onClick && this.actionClickHandler}
 					/>
@@ -114,13 +117,23 @@ class CustomInputComponent extends React.Component<CustomInputProps> {
 					value={value}
 					autoFocus={autoFocus}
 					onChange={this.changeHandler}
-					onKeyPress={this.keyPressHandler}
+					onKeyUp={this.keyPressHandler}
 				/>
 				{(!this.isEmpty || onCancel) && <Divider className={classes.divider} />}
 				{!this.isEmpty && !onCancel && (
-					<InputButton icon={{ name: 'close' }} onClick={this.clearHandler} />
+					<InputButton
+						icon={{ name: 'close' }}
+						title="Clear"
+						onClick={this.clearHandler}
+					/>
 				)}
-				{onCancel && <InputButton icon={{ name: 'close' }} onClick={onCancel} />}
+				{onCancel && (
+					<InputButton
+						icon={{ name: 'close' }}
+						title="Cancel"
+						onClick={onCancel}
+					/>
+				)}
 			</div>
 		);
 	}

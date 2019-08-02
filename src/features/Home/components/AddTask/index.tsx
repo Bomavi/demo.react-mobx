@@ -22,7 +22,9 @@ interface AddTaskProps extends WithStyles<typeof styles> {
 @observer
 class AddTaskComponent extends React.Component<AddTaskProps> {
 	public actionHandler = (value: string) => {
-		this.props.store!.addTask({ description: value, completed: false });
+		if (value) {
+			this.props.store!.addTask({ description: value, completed: false });
+		}
 	};
 
 	public render() {
@@ -34,6 +36,7 @@ class AddTaskComponent extends React.Component<AddTaskProps> {
 				icon={{
 					name: 'plus',
 					svgSize: 'md',
+					title: 'Add',
 				}}
 				isFetching={inProgress}
 				placeholder="Type task description..."

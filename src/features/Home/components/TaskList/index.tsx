@@ -24,6 +24,10 @@ interface TaskListProps extends WithStyles<typeof styles> {
 @inject('store')
 @observer
 class TaskListComponent extends React.Component<TaskListProps> {
+	public componentDidMount() {
+		this.props.store!.searchTasks();
+	}
+
 	private sortTasksHandler = () => {
 		const { sortKey, sortTasks } = this.props.store!;
 		if (sortKey === 'asc') sortTasks('desc');
