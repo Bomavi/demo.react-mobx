@@ -20,7 +20,7 @@ export class AuthStore extends BaseStore {
 
 	@observable public selectedThemeType: MUIThemeType = 'light';
 
-	@computed public get isAuthenticated() {
+	@computed public get isAuthenticated(): boolean {
 		return !!this.user;
 	}
 
@@ -51,8 +51,9 @@ export class AuthStore extends BaseStore {
 	}
 
 	@action public switchTheme = async () => {
+		this.user!.setSwitchThemeState(true);
+
 		try {
-			this.user!.setSwitchThemeState(true);
 			const themeType = await this.update({ theme: this.themeNameToSwitch });
 			if (typeof themeType !== 'string') throw Error('theme switch failed');
 			this.changeSelectedThemeType(themeType);
@@ -111,8 +112,9 @@ export class AuthStore extends BaseStore {
 	};
 
 	public login = async (userData: LoginType) => {
+		this.setInProgress(true);
+
 		try {
-			this.setInProgress(true);
 			const user = await this.services.auth.login(userData);
 
 			if (!user) throw Error('login failed');
@@ -127,8 +129,9 @@ export class AuthStore extends BaseStore {
 	};
 
 	public register = async (userData: RegisterType) => {
+		this.setInProgress(true);
+
 		try {
-			this.setInProgress(true);
 			const user = await this.services.auth.register(userData);
 
 			if (!user) throw Error('registration failed');
@@ -143,8 +146,9 @@ export class AuthStore extends BaseStore {
 	};
 
 	public logout = async () => {
+		this.setInProgress(true);
+
 		try {
-			this.setInProgress(true);
 			const res = await this.services.auth.logout();
 
 			if (!res) throw Error('logout failed');
@@ -158,7 +162,9 @@ export class AuthStore extends BaseStore {
 		}
 	};
 
-	public update = async (userData: UserUpdateSchema): Promise<MUIThemeType | boolean> => {
+	public update = async (
+		userData: UserUpdateSchema
+	): Promise<MUIThemeType | boolean> => {
 		try {
 			if (!this.user) throw Error('no user found');
 

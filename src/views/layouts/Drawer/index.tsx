@@ -10,17 +10,18 @@ import Divider from '@material-ui/core/Divider';
 
 /* root imports: common */
 import { GlobalStore } from 'config/global-store';
+import { AuthStore } from 'features/Login/store';
 
 /* local imports: common */
 import { styles } from './styles';
-import { Logout } from './Logout';
-import { ThemeSwitcher } from './ThemeSwitcher';
+import { DrawerItem } from './DrawerItem';
 
 interface DrawerProps extends WithStyles<typeof styles> {
 	globalStore?: GlobalStore;
+	authStore?: AuthStore;
 }
 
-@inject('globalStore')
+@inject('globalStore', 'authStore')
 @observer
 class DrawerComponent extends React.Component<DrawerProps> {
 	public componentWillUnmount() {
@@ -34,16 +35,33 @@ class DrawerComponent extends React.Component<DrawerProps> {
 	public render() {
 		const { classes } = this.props;
 		const { isDrawerOpen } = this.props.globalStore!;
+		const {
+			switchTheme,
+			themeNameToSwitch,
+			user,
+			inProgress,
+			logout,
+		} = this.props.authStore!;
 
 		return (
 			<MUIDrawer anchor="right" variant="persistent" open={isDrawerOpen}>
 				<div className={classes.toolbar} />
 				<List>
-					<ThemeSwitcher />
+					<DrawerItem
+						text={`Switch to ${themeNameToSwitch} theme`}
+						iconName="compare"
+						inProgress={user!.switchThemeInProgress}
+						onClick={switchTheme}
+					/>
 				</List>
 				<Divider />
 				<List>
-					<Logout />
+					<DrawerItem
+						text="Logout"
+						iconName="logout-variant"
+						inProgress={inProgress}
+						onClick={logout}
+					/>
 				</List>
 			</MUIDrawer>
 		);

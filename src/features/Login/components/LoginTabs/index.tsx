@@ -17,7 +17,12 @@ const LoginTabs: React.FC<LoginTabsProps> = ({ tabIndex, onChange }) => {
 	// const classes = useStyles();
 
 	return (
-		<Tabs variant="fullWidth" indicatorColor="secondary" value={tabIndex} onChange={onChange}>
+		<Tabs
+			variant="fullWidth"
+			indicatorColor="secondary"
+			value={tabIndex}
+			onChange={onChange}
+		>
 			<Tab label="Login" />
 			<Tab label="Register" />
 		</Tabs>

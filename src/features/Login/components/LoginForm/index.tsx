@@ -7,8 +7,15 @@ import { observable, computed, action } from 'mobx';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 
+/* root imports: view components */
+import {
+	UsernameInput,
+	PasswordInput,
+	LoginTabs,
+	LoginButton,
+} from 'features/Login/components';
+
 /* root imports: common */
-import { UsernameInput, PasswordInput, LoginTabs, LoginButton } from 'features/Login/components';
 import { AuthStore } from 'features/Login/store';
 
 /* local imports: common */
@@ -53,7 +60,9 @@ class LoginFormComponent extends React.Component<LoginFormProps> {
 		this.password = value;
 	};
 
-	@action public repeatPasswordChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+	@action public repeatPasswordChangeHandler = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
 		const { value } = e.target;
 		this.repeatPassword = value;
 	};
@@ -85,8 +94,14 @@ class LoginFormComponent extends React.Component<LoginFormProps> {
 			<Paper className={classes.paper}>
 				<LoginTabs tabIndex={this.tabIndex} onChange={this.tabClickHandler} />
 				<div className={classes.wrapper}>
-					<UsernameInput value={this.username} onChange={this.usernameChangeHandler} />
-					<PasswordInput value={this.password} onChange={this.passwordChangeHandler} />
+					<UsernameInput
+						value={this.username}
+						onChange={this.usernameChangeHandler}
+					/>
+					<PasswordInput
+						value={this.password}
+						onChange={this.passwordChangeHandler}
+					/>
 					{this.tabIndex === 0 && (
 						<LoginButton
 							marginTop={14}

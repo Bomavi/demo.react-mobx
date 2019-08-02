@@ -24,11 +24,14 @@ export class TaskModel extends BaseStore {
 	@observable public updateInProgress: boolean = false;
 	@observable public deleteInProgress: boolean = false;
 
-	@computed public get created() {
+	@computed public get created(): string {
 		return format(this.createdAt, 'D MMMM, YYYY HH:mm:ss');
 	}
 
-	@action public setActionInProgress = (action: TaskActionInProgress, state: boolean) => {
+	@action public setActionInProgress = (
+		action: TaskActionInProgress,
+		state: boolean
+	) => {
 		try {
 			if (!action) throw Error('action not found');
 			this[action] = state;

@@ -37,7 +37,6 @@ class SearchComponent extends React.Component<SearchProps> {
 	}, debounceTiming.input);
 
 	public render() {
-		// const { classes } = this.props;
 		const { isFetching } = this.props.store!;
 
 		return (

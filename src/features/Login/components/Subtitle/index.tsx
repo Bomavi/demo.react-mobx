@@ -11,7 +11,12 @@ const Subtitle: React.FC = ({ children }) => {
 	const classes = useStyles();
 
 	return (
-		<Typography className={classes.subtitle} noWrap variant="subtitle2" align="center">
+		<Typography
+			className={classes.subtitle}
+			noWrap
+			variant="subtitle2"
+			align="center"
+		>
 			{children}
 		</Typography>
 	);

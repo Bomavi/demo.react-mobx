@@ -1,6 +1,6 @@
 /* npm imports: common */
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import { configure } from 'mobx';
 import { Provider } from 'mobx-react';
 import { RouterProvider } from 'react-router5';
@@ -18,9 +18,13 @@ configure({ enforceActions: 'observed' });
 
 /* start router with react app */
 router.start(() => {
-	ReactDOM.render(
+	render(
 		<RouterProvider router={router}>
-			<Provider routerStore={routerStore} globalStore={globalStore} authStore={authStore}>
+			<Provider
+				routerStore={routerStore}
+				globalStore={globalStore}
+				authStore={authStore}
+			>
 				<App />
 			</Provider>
 		</RouterProvider>,

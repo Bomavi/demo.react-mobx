@@ -19,7 +19,7 @@ export class UserModel {
 
 	@observable public switchThemeInProgress: boolean = false;
 
-	@computed public get created() {
+	@computed public get created(): string {
 		return format(this.createdAt, 'D MMMM, YYYY HH:mm:ss');
 	}
 

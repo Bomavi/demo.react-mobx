@@ -48,7 +48,12 @@ class HeaderComponent extends React.Component<HeaderProps> {
 					)}
 					{user && (
 						<IconButton color="inherit" onClick={this.toggleDrawer}>
-							<Icon name="account-circle" color="white" size="md" svgSize="lg" />
+							<Icon
+								name="account-circle"
+								color="white"
+								size="md"
+								svgSize="lg"
+							/>
 						</IconButton>
 					)}
 				</Toolbar>

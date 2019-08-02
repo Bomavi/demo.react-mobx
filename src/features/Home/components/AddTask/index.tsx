@@ -28,7 +28,6 @@ class AddTaskComponent extends React.Component<AddTaskProps> {
 	};
 
 	public render() {
-		// const { classes } = this.props;
 		const { inProgress } = this.props.store!;
 
 		return (

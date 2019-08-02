@@ -81,8 +81,9 @@ export class HomeStore extends BaseStore {
 	};
 
 	public searchTasks = async () => {
+		this.setFetchingState('isFetching', true);
+
 		try {
-			this.setFetchingState('isFetching', true);
 			const tasks = await this.services.api.tasks.search(this.fetchParams);
 			this.setTasks(tasks);
 		} catch (e) {
@@ -93,8 +94,9 @@ export class HomeStore extends BaseStore {
 	};
 
 	public addTask = async (taskData: TaskUpdateSchema) => {
+		this.setFetchingState('inProgress', true);
+
 		try {
-			this.setFetchingState('inProgress', true);
 			const task = await this.services.api.tasks.create(taskData);
 			this.setTask(task);
 		} catch (e) {

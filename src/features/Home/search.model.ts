@@ -2,12 +2,10 @@ import { observable, action } from 'mobx';
 import { serializable } from 'serializr';
 import { maybe } from 'utils/helpers';
 
-type SearchFieldType = string;
-
 export class Search {
-	@serializable @observable public q: SearchFieldType = '';
+	@serializable @observable public q: string = '';
 
-	@action public onChange = (name: TasksSearchKeys, value: SearchFieldType) => {
+	@action public onChange = (name: TasksSearchKeys, value: string) => {
 		try {
 			if (this[name] === undefined) throw Error(`${name} - field not found`);
 			this[name] = value;

@@ -21,7 +21,8 @@ export const styles = (theme: Theme) =>
 		},
 		active: {
 			backgroundColor: 'rgba(0, 0, 0, 0.1)',
-			boxShadow: 'inset 0 5px 10px rgba(0, 0, 0, 0.1), inset 0 -5px 15px rgba(0, 0, 0, 0.05)',
+			boxShadow:
+				'inset 0 5px 10px rgba(0, 0, 0, 0.1), inset 0 -5px 15px rgba(0, 0, 0, 0.05)',
 
 			'& .icon-wrapper': {
 				boxShadow: 'inset 4px 0 0 #fff',

@@ -4,7 +4,9 @@ import { queryString } from 'utils/helpers';
 
 export class TasksApi extends Base {
 	public async search(params: Partial<TasksSearchType>) {
-		return await this.apiClient.get<TaskType[]>(`/tasks/search${queryString(params)}`);
+		return await this.apiClient.get<TaskType[]>(
+			`/tasks/search${queryString(params)}`
+		);
 	}
 
 	public async create(task: TaskUpdateSchema) {
