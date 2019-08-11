@@ -6,8 +6,8 @@ export class UserModel {
 	public readonly id: string = '';
 	public readonly username: string = '';
 	public readonly theme: MUIThemeType = 'light';
-	public readonly createdAt: string = '';
-	public readonly updatedAt: string = '';
+	public readonly createdAt: string | number = '';
+	public readonly updatedAt: string | number = '';
 
 	public constructor(props: Partial<UserType>) {
 		if (props._id) this.id = props._id;
