@@ -50,6 +50,7 @@ class TaskComponent extends React.Component<TaskProps> {
 		const { task } = this.props;
 		task.setActionInProgress('updateInProgress', true);
 		this.props.store!.updateTask(task.id, { ...task, completed: !task.completed });
+		this.mouseLeaveHandler();
 	};
 
 	private saveHandler = (value: string) => {
@@ -79,7 +80,7 @@ class TaskComponent extends React.Component<TaskProps> {
 					onChange={this.completeHandler}
 				/>
 				<Divider className={classes.divider} />
-				<Description>{task.description}</Description>
+				<Description completed={task.completed}>{task.description}</Description>
 				{this.isHovered && !task.deleteInProgress && (
 					<Divider className={classes.divider} />
 				)}
