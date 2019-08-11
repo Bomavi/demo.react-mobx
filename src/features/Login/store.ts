@@ -50,28 +50,15 @@ export class AuthStore extends BaseStore {
 		}
 	}
 
-	@action public switchTheme = async () => {
-		this.user!.setSwitchThemeState(true);
-
-		try {
-			const themeType = await this.update({ theme: this.themeNameToSwitch });
-			if (typeof themeType !== 'string') throw Error('theme switch failed');
-			this.changeSelectedThemeType(themeType);
-		} catch (e) {
-			console.error(e);
-		}
-	};
-
-	@action private changeSelectedThemeType = (themeType: MUIThemeType) => {
+	@action public changeSelectedThemeType = (themeType: MUIThemeType) => {
 		this.selectedThemeType = themeType;
-		localStorage.setItem('theme', themeType);
 	};
 
 	@action public setInProgress = (state: boolean) => {
 		this.inProgress = state;
 	};
 
-	@action private setUser = (user: UserType) => {
+	@action public setUser = (user: UserType) => {
 		this.user = new UserModel(user);
 		this.changeSelectedThemeType(user.theme);
 	};
@@ -82,17 +69,22 @@ export class AuthStore extends BaseStore {
 
 	@action private updateUser = (user: UserType) => {
 		this.user = new UserModel(user);
+		this.changeSelectedThemeType(user.theme);
 	};
 
 	@action private initialize = () => {
 		this.isInitialized = true;
+	};
 
-		const localThemeType = localStorage.getItem('theme');
+	public switchTheme = async () => {
+		try {
+			if (!this.user) throw new Error('no user found');
 
-		if (localThemeType && (localThemeType === 'light' || localThemeType === 'dark')) {
-			this.selectedThemeType = localThemeType;
-		} else {
-			localStorage.setItem('theme', this.selectedThemeType);
+			this.user.setSwitchThemeState(true);
+			await this.update({ theme: this.themeNameToSwitch });
+		} catch (e) {
+			if (e === 'Network Error') throw e;
+			console.error(e);
 		}
 	};
 
@@ -100,14 +92,13 @@ export class AuthStore extends BaseStore {
 		try {
 			const user = await this.services.auth.authenticate();
 
-			if (!user) throw Error('authentication failed');
-
 			this.setUser(user);
-			this.initialize();
-		} catch (e) {
-			console.error(e);
-			this.initialize();
+		} catch ({ message }) {
+			if (message === 'Network Error') throw message;
+			console.error(message);
 			this.router.navigate('login');
+		} finally {
+			this.initialize();
 		}
 	};
 
@@ -117,12 +108,11 @@ export class AuthStore extends BaseStore {
 		try {
 			const user = await this.services.auth.login(userData);
 
-			if (!user) throw Error('login failed');
-
 			this.setUser(user);
 			this.router.navigate('home');
-		} catch (e) {
-			console.error(e);
+		} catch ({ message }) {
+			if (message === 'Network Error') throw message;
+			console.error(message);
 		} finally {
 			this.setInProgress(false);
 		}
@@ -134,12 +124,11 @@ export class AuthStore extends BaseStore {
 		try {
 			const user = await this.services.auth.register(userData);
 
-			if (!user) throw Error('registration failed');
-
 			this.setUser(user);
 			this.router.navigate('home');
-		} catch (e) {
-			console.error(e);
+		} catch ({ message }) {
+			if (message === 'Network Error') throw message;
+			console.error(message);
 		} finally {
 			this.setInProgress(false);
 		}
@@ -149,34 +138,29 @@ export class AuthStore extends BaseStore {
 		this.setInProgress(true);
 
 		try {
-			const res = await this.services.auth.logout();
-
-			if (!res) throw Error('logout failed');
+			await this.services.auth.logout();
 
 			this.unsetUser();
 			this.router.navigate('login');
-		} catch (e) {
-			console.error(e);
+		} catch ({ message }) {
+			if (message === 'Network Error') throw message;
+			console.error(message);
 		} finally {
 			this.setInProgress(false);
 		}
 	};
 
-	public update = async (
-		userData: UserUpdateSchema
-	): Promise<MUIThemeType | boolean> => {
+	public update = async (userData: UserUpdateSchema) => {
 		try {
-			if (!this.user) throw Error('no user found');
+			if (!this.user) throw new Error('no user found');
 
 			const { id } = this.user;
 			const user = await this.services.api.users.update(id, userData);
 
-			if (!user) throw Error('no user returned');
-
 			this.updateUser(user);
-			return user.theme;
-		} catch (e) {
-			return false;
+		} catch ({ message }) {
+			if (message === 'Network Error') throw message;
+			console.error(message);
 		}
 	};
 }
