@@ -58,7 +58,7 @@ export class HomeStore extends BaseStore {
 		}
 	};
 
-	@action private setTasks = (tasks: TaskType[]) => {
+	@action public setTasks = (tasks: TaskType[]) => {
 		this.tasks.replace(tasks.map(t => new TaskModel(t)));
 	};
 
@@ -86,8 +86,9 @@ export class HomeStore extends BaseStore {
 		try {
 			const tasks = await this.services.api.tasks.search(this.fetchParams);
 			this.setTasks(tasks);
-		} catch (e) {
-			console.error(e);
+		} catch ({ message }) {
+			if (message === 'Network Error') throw message;
+			console.error(message);
 		} finally {
 			this.setFetchingState('isFetching', false);
 		}
@@ -99,8 +100,9 @@ export class HomeStore extends BaseStore {
 		try {
 			const task = await this.services.api.tasks.create(taskData);
 			this.setTask(task);
-		} catch (e) {
-			console.error(e);
+		} catch ({ message }) {
+			if (message === 'Network Error') throw message;
+			console.error(message);
 		} finally {
 			this.setFetchingState('inProgress', false);
 		}
@@ -110,8 +112,9 @@ export class HomeStore extends BaseStore {
 		try {
 			const task = await this.services.api.tasks.update(id, taskData);
 			this.replaceTask(task);
-		} catch (e) {
-			console.error(e);
+		} catch ({ message }) {
+			if (message === 'Network Error') throw message;
+			console.error(message);
 		}
 	};
 
@@ -119,8 +122,9 @@ export class HomeStore extends BaseStore {
 		try {
 			await this.services.api.tasks.delete(id);
 			this.unsetTask(id);
-		} catch (e) {
-			console.error(e);
+		} catch ({ message }) {
+			if (message === 'Network Error') throw message;
+			console.error(message);
 		}
 	};
 }
