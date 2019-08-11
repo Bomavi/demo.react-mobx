@@ -2,18 +2,14 @@
 import { observable, computed, action } from 'mobx';
 import { format } from 'date-fns';
 
-import { BaseStore } from 'config/base-store';
-
-export class TaskModel extends BaseStore {
+export class TaskModel {
 	public readonly id: string = '';
 	public readonly description: string = '';
 	public readonly completed: boolean = false;
-	public readonly createdAt: string = '';
-	public readonly updatedAt: string = '';
+	public readonly createdAt: string | number = '';
+	public readonly updatedAt: string | number = '';
 
 	public constructor(props: Partial<TaskType>) {
-		super();
-
 		if (props._id) this.id = props._id;
 		if (props.description) this.description = props.description;
 		if (props.completed) this.completed = props.completed;
