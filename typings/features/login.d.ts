@@ -13,16 +13,11 @@ declare interface UserType {
 	_id: string;
 	username: string;
 	theme: MUIThemeType;
-	createdAt: string;
-	updatedAt: string;
+	createdAt: string | number;
+	updatedAt: string | number;
 }
 
 declare interface UserUpdateSchema {
 	username?: string;
 	theme?: MUIThemeType;
 }
-
-declare type AuthenticateResponseType = UserType | null;
-declare type LoginResponseType = UserType | null;
-declare type RegisterResponseType = UserType | null;
-declare type UserUpdateResponse = UserType | null;

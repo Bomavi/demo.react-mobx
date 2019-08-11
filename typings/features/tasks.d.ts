@@ -15,8 +15,8 @@ declare interface TaskType {
 	_id: string;
 	description: string;
 	completed: boolean;
-	createdAt: string;
-	updatedAt: string;
+	createdAt: string | number;
+	updatedAt: string | number;
 }
 
 declare interface TaskUpdateSchema {
