@@ -17,6 +17,12 @@ import { HomeStore } from 'features/Home/store';
 /* local imports: common */
 import { styles } from './styles';
 
+const spring = {
+	type: 'spring',
+	damping: 50,
+	stiffness: 500,
+};
+
 interface TaskListProps extends WithStyles<typeof styles> {
 	store?: HomeStore;
 }
@@ -55,7 +61,7 @@ class TaskListComponent extends React.Component<TaskListProps> {
 				</div>
 				{!isEmpty
 					? sortedByComplete.map((task, i) => (
-							<motion.div key={task.id} positionTransition>
+							<motion.div key={task.id} positionTransition={spring}>
 								<Task task={task} isLastChild={tasksLength === i + 1} />
 							</motion.div>
 					  ))
