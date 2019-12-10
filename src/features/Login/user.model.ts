@@ -17,10 +17,10 @@ export class UserModel {
 		if (props.updatedAt) this.updatedAt = props.updatedAt;
 	}
 
-	@observable public switchThemeInProgress: boolean = false;
+	@observable public switchThemeInProgress = false;
 
 	@computed public get created(): string {
-		return format(this.createdAt, 'D MMMM, YYYY HH:mm:ss');
+		return format(this.createdAt as number, 'D MMMM, YYYY HH:mm:ss');
 	}
 
 	@action public setSwitchThemeState = (state: boolean) => {

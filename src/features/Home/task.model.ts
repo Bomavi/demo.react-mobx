@@ -17,11 +17,11 @@ export class TaskModel {
 		if (props.updatedAt) this.updatedAt = props.updatedAt;
 	}
 
-	@observable public updateInProgress: boolean = false;
-	@observable public deleteInProgress: boolean = false;
+	@observable public updateInProgress = false;
+	@observable public deleteInProgress = false;
 
 	@computed public get created(): string {
-		return format(this.createdAt, 'D MMMM, YYYY HH:mm:ss');
+		return format(this.createdAt as number, 'D MMMM, YYYY HH:mm:ss');
 	}
 
 	@action public setActionInProgress = (
