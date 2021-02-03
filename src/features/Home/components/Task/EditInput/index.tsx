@@ -11,7 +11,7 @@ export interface EditInputProps extends Partial<CustomInputProps> {
 	isFetching?: boolean;
 }
 
-const EditInput: React.FC<EditInputProps> = props => {
+const EditInput: React.FC<EditInputProps> = (props) => {
 	const classes = useStyles();
 
 	return (

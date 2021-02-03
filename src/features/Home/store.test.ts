@@ -144,7 +144,7 @@ describe('HomeStore', () => {
 		const mockedStore = new MockedHomeStore();
 
 		store.setTasks(tasks);
-		mockedStore.setTasks(tasks.filter(t => t._id !== task._id));
+		mockedStore.setTasks(tasks.filter((t) => t._id !== task._id));
 
 		await store.deleteTask(task._id);
 

@@ -28,11 +28,11 @@ interface LoginFormProps extends WithStyles<typeof styles> {
 @inject('store')
 @observer
 class LoginFormComponent extends React.Component<LoginFormProps> {
-	@observable private tabIndex: number = 0;
+	@observable private tabIndex = 0;
 
-	@observable public username: string = '';
-	@observable public password: string = '';
-	@observable public repeatPassword: string = '';
+	@observable public username = '';
+	@observable public password = '';
+	@observable public repeatPassword = '';
 
 	@computed public get isPasswordCorrect() {
 		return this.password === this.repeatPassword;
@@ -46,7 +46,10 @@ class LoginFormComponent extends React.Component<LoginFormProps> {
 		return this.isLoginReady && this.isPasswordCorrect;
 	}
 
-	@action private tabClickHandler = (e: React.ChangeEvent<{}>, value: number) => {
+	@action private tabClickHandler = (
+		_e: React.ChangeEvent<Record<string, never>>,
+		value: number
+	) => {
 		this.tabIndex = value;
 	};
 

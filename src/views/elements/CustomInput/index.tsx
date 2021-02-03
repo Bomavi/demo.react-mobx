@@ -35,7 +35,7 @@ class CustomInputComponent extends React.Component<CustomInputProps> {
 		autoFocus: false,
 	};
 
-	@observable private inputValue: string = '';
+	@observable private inputValue = '';
 
 	@computed private get trimedValue(): string {
 		return removeSpaces(this.inputValue).trim();

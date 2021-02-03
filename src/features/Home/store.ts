@@ -11,8 +11,8 @@ import { TaskModel } from './task.model';
 export class HomeStore extends BaseStore {
 	@observable public tasks: IObservableArray<TaskModel> = observable([]);
 
-	@observable public isFetching: boolean = false;
-	@observable public inProgress: boolean = false;
+	@observable public isFetching = false;
+	@observable public inProgress = false;
 
 	@observable public sortKey: SortKey = 'desc';
 	@observable.ref public readonly search: Search = new Search();
@@ -49,7 +49,10 @@ export class HomeStore extends BaseStore {
 		};
 	}
 
-	@action public setFetchingState = (action: TaskFetchingState, state: boolean) => {
+	@action public setFetchingState = (
+		action: TaskFetchingState,
+		state: boolean
+	): void => {
 		try {
 			if (!action) throw Error('action not found');
 			this[action] = state;
@@ -58,8 +61,8 @@ export class HomeStore extends BaseStore {
 		}
 	};
 
-	@action public setTasks = (tasks: TaskType[]) => {
-		this.tasks.replace(tasks.map(t => new TaskModel(t)));
+	@action public setTasks = (tasks: TaskType[]): void => {
+		this.tasks.replace(tasks.map((t) => new TaskModel(t)));
 	};
 
 	@action private setTask = (task: TaskType) => {
@@ -67,20 +70,20 @@ export class HomeStore extends BaseStore {
 	};
 
 	@action private unsetTask = (id: string) => {
-		this.tasks.replace(this.taskList.filter(t => t.id !== id));
+		this.tasks.replace(this.taskList.filter((t) => t.id !== id));
 	};
 
 	@action private replaceTask = (task: TaskType) => {
 		this.tasks.replace(
-			this.taskList.map(t => (t.id === task._id ? new TaskModel(task) : t))
+			this.taskList.map((t) => (t.id === task._id ? new TaskModel(task) : t))
 		);
 	};
 
-	@action public sortTasks = (value: SortKey) => {
+	@action public sortTasks = (value: SortKey): void => {
 		this.sortKey = value;
 	};
 
-	public searchTasks = async () => {
+	public searchTasks = async (): Promise<void> => {
 		this.setFetchingState('isFetching', true);
 
 		try {
@@ -94,7 +97,7 @@ export class HomeStore extends BaseStore {
 		}
 	};
 
-	public addTask = async (taskData: TaskUpdateSchema) => {
+	public addTask = async (taskData: TaskUpdateSchema): Promise<void> => {
 		this.setFetchingState('inProgress', true);
 
 		try {
@@ -108,7 +111,7 @@ export class HomeStore extends BaseStore {
 		}
 	};
 
-	public updateTask = async (id: string, taskData: TaskUpdateSchema) => {
+	public updateTask = async (id: string, taskData: TaskUpdateSchema): Promise<void> => {
 		try {
 			const task = await this.services.api.tasks.update(id, taskData);
 			this.replaceTask(task);
@@ -118,7 +121,7 @@ export class HomeStore extends BaseStore {
 		}
 	};
 
-	public deleteTask = async (id: string) => {
+	public deleteTask = async (id: string): Promise<void> => {
 		try {
 			await this.services.api.tasks.delete(id);
 			this.unsetTask(id);

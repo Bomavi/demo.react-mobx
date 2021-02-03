@@ -3,11 +3,14 @@ export const debounceTiming = {
 	button: 1000,
 };
 
-export const debounce = (func: Function, wait: number, immediate?: boolean) => {
+export const debounce = (
+	func: (value: any) => any | void,
+	wait: number,
+	immediate?: boolean
+): ((args: any) => void) => {
 	let timeout: ReturnType<typeof setTimeout> | null;
 
-	return function() {
-		const args = arguments;
+	return (args: any) => {
 		const later = () => {
 			timeout = null;
 			if (!immediate) func.apply(this, args);

@@ -19,9 +19,12 @@ interface ActionTabsProps extends WithStyles<typeof styles> {}
 
 @observer
 class ActionTabsComponent extends React.Component<ActionTabsProps> {
-	@observable private tabIndex: number = 0;
+	@observable private tabIndex = 0;
 
-	@action private tabClickHandler = (e: React.ChangeEvent<{}>, value: number) => {
+	@action private tabClickHandler = (
+		_e: React.ChangeEvent<Record<string, never>>,
+		value: number
+	) => {
 		this.tabIndex = value;
 	};
 

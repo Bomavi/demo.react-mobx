@@ -3,9 +3,9 @@ import { serializable } from 'serializr';
 import { maybe } from 'utils/helpers';
 
 export class Search {
-	@serializable @observable public q: string = '';
+	@serializable @observable public q = '';
 
-	@action public onChange = (name: TasksSearchKeys, value: string) => {
+	@action public onChange = (name: TasksSearchKeys, value: string): void => {
 		try {
 			if (this[name] === undefined) throw Error(`${name} - field not found`);
 			this[name] = value;
@@ -14,11 +14,11 @@ export class Search {
 		}
 	};
 
-	@action public reset = () => {
+	@action public reset = (): void => {
 		this.q = '';
 	};
 
-	public toJSON = () => ({
+	public toJSON = (): Record<string, any> => ({
 		q: maybe(this.q),
 	});
 }

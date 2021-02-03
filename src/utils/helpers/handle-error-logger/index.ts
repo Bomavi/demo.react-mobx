@@ -1,7 +1,7 @@
 export const handleErrorLogger = Object.freeze({
 	origin: console.error,
 	turnOff() {
-		console.error = () => {};
+		console.error = () => ({});
 	},
 	turnOn() {
 		console.error = this.origin;

@@ -10,7 +10,7 @@ import Tab from '@material-ui/core/Tab';
 
 export interface LoginTabsProps {
 	tabIndex: number;
-	onChange: (e: React.ChangeEvent<{}>, v: number) => void;
+	onChange: (e: React.ChangeEvent<Record<string, never>>, v: number) => void;
 }
 
 const LoginTabs: React.FC<LoginTabsProps> = React.memo(({ tabIndex, onChange }) => {

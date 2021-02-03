@@ -27,7 +27,7 @@ export class TaskModel {
 	@action public setActionInProgress = (
 		action: TaskActionInProgress,
 		state: boolean
-	) => {
+	): void => {
 		try {
 			if (!action) throw Error('action not found');
 			this[action] = state;

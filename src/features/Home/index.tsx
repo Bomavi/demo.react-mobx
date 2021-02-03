@@ -18,7 +18,7 @@ const HomePage: React.FC<HomePageProps> = () => (
 	</Container>
 );
 
-export const Home = () => (
+export const Home: React.FC = () => (
 	<Provider store={homeStore}>
 		<HomePage />
 	</Provider>

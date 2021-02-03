@@ -30,8 +30,8 @@ export interface TaskProps extends WithStyles<typeof styles> {
 @inject('store')
 @observer
 class TaskComponent extends Component<TaskProps> {
-	@observable private isHovered: boolean = false;
-	@observable private isEditable: boolean = false;
+	@observable private isHovered = false;
+	@observable private isEditable = false;
 
 	@action private mouseEnterHandler = () => {
 		this.isHovered = true;

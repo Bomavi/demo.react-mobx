@@ -7,8 +7,8 @@ import { authStore } from 'features/Login/store';
 export const onlyUnauthorized = (_router: Router) => (
 	nextState: State,
 	prevState: State,
-	done: Function
-) => {
+	done: (data: { redirect: { name: string } }) => void
+): boolean | void => {
 	const { name: nextName } = nextState;
 	const { isAuthenticated, isInitialized } = authStore;
 

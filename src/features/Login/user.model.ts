@@ -23,7 +23,7 @@ export class UserModel {
 		return format(this.createdAt as number, 'D MMMM, YYYY HH:mm:ss');
 	}
 
-	@action public setSwitchThemeState = (state: boolean) => {
+	@action public setSwitchThemeState = (state: boolean): void => {
 		this.switchThemeInProgress = state;
 	};
 }

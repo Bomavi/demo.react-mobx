@@ -15,8 +15,8 @@ export class AuthStore extends BaseStore {
 
 	@observable public user: UserModel | null = null;
 
-	@observable public isInitialized: boolean = false;
-	@observable public inProgress: boolean = false;
+	@observable public isInitialized = false;
+	@observable public inProgress = false;
 
 	@observable public selectedThemeType: MUIThemeType = 'light';
 
@@ -50,15 +50,15 @@ export class AuthStore extends BaseStore {
 		}
 	}
 
-	@action public changeSelectedThemeType = (themeType: MUIThemeType) => {
+	@action public changeSelectedThemeType = (themeType: MUIThemeType): void => {
 		this.selectedThemeType = themeType;
 	};
 
-	@action public setInProgress = (state: boolean) => {
+	@action public setInProgress = (state: boolean): void => {
 		this.inProgress = state;
 	};
 
-	@action public setUser = (user: UserType) => {
+	@action public setUser = (user: UserType): void => {
 		this.user = new UserModel(user);
 		this.changeSelectedThemeType(user.theme);
 	};
@@ -76,7 +76,7 @@ export class AuthStore extends BaseStore {
 		this.isInitialized = true;
 	};
 
-	public switchTheme = async () => {
+	public switchTheme = async (): Promise<void> => {
 		try {
 			if (!this.user) throw new Error('no user found');
 
@@ -88,7 +88,7 @@ export class AuthStore extends BaseStore {
 		}
 	};
 
-	public authenticate = async () => {
+	public authenticate = async (): Promise<void> => {
 		try {
 			const user = await this.services.auth.authenticate();
 
@@ -102,7 +102,7 @@ export class AuthStore extends BaseStore {
 		}
 	};
 
-	public login = async (userData: LoginType) => {
+	public login = async (userData: LoginType): Promise<void> => {
 		this.setInProgress(true);
 
 		try {
@@ -118,7 +118,7 @@ export class AuthStore extends BaseStore {
 		}
 	};
 
-	public register = async (userData: RegisterType) => {
+	public register = async (userData: RegisterType): Promise<void> => {
 		this.setInProgress(true);
 
 		try {
@@ -134,7 +134,7 @@ export class AuthStore extends BaseStore {
 		}
 	};
 
-	public logout = async () => {
+	public logout = async (): Promise<void> => {
 		this.setInProgress(true);
 
 		try {
@@ -150,7 +150,7 @@ export class AuthStore extends BaseStore {
 		}
 	};
 
-	public update = async (userData: UserUpdateSchema) => {
+	public update = async (userData: UserUpdateSchema): Promise<void> => {
 		try {
 			if (!this.user) throw new Error('no user found');
 

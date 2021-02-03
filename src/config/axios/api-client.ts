@@ -12,7 +12,11 @@ export class ApiClient {
 		this.prefix = apiPrefix;
 	}
 
-	public get<E = {}>(url: string, params?: {}, options?: {}): Promise<E> {
+	public get<E = Record<string, any>>(
+		url: string,
+		params?: Record<string, any>,
+		options?: Record<string, any>
+	): Promise<E> {
 		return this.request({
 			url,
 			params,
@@ -21,11 +25,11 @@ export class ApiClient {
 		}) as Promise<E>;
 	}
 
-	public put<E = {}>(
+	public put<E = Record<string, any>>(
 		url: string,
-		body: {} = {},
-		params?: {},
-		options?: {}
+		body: Record<string, any> = {},
+		params?: Record<string, any>,
+		options?: Record<string, any>
 	): Promise<E> {
 		return this.request({
 			url,
@@ -36,11 +40,11 @@ export class ApiClient {
 		}) as Promise<E>;
 	}
 
-	public patch<E = {}>(
+	public patch<E = Record<string, any>>(
 		url: string,
-		body: {} = {},
-		params?: {},
-		options?: {}
+		body: Record<string, any> = {},
+		params?: Record<string, any>,
+		options?: Record<string, any>
 	): Promise<E> {
 		return this.request({
 			url,
@@ -51,11 +55,11 @@ export class ApiClient {
 		}) as Promise<E>;
 	}
 
-	public post<E = {}>(
+	public post<E = Record<string, any>>(
 		url: string,
-		body: {} = {},
-		params?: {},
-		options?: {}
+		body: Record<string, any> = {},
+		params?: Record<string, any>,
+		options?: Record<string, any>
 	): Promise<E> {
 		return this.request({
 			url,
@@ -66,7 +70,10 @@ export class ApiClient {
 		}) as Promise<E>;
 	}
 
-	public delete<E = {}>(url: string, params?: {}): Promise<E> {
+	public delete<E = Record<string, any>>(
+		url: string,
+		params?: Record<string, any>
+	): Promise<E> {
 		return this.request({
 			url,
 			params,
@@ -83,22 +90,18 @@ export class ApiClient {
 	}: {
 		url: string;
 		method: 'delete' | 'get' | 'patch' | 'post' | 'put';
-		body?: {};
-		params?: {};
-		options?: {};
-	}): Promise<{}> {
-		try {
-			const response = await axios({
-				method,
-				url,
-				params,
-				baseURL: this.prefix,
-				data: body,
-				...options,
-			});
-			return response.data;
-		} catch (e) {
-			throw e;
-		}
+		body?: Record<string, any>;
+		params?: Record<string, any>;
+		options?: Record<string, any>;
+	}): Promise<Record<string, any>> {
+		const response = await axios({
+			method,
+			url,
+			params,
+			baseURL: this.prefix,
+			data: body,
+			...options,
+		});
+		return response.data;
 	}
 }

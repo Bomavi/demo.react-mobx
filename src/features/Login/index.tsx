@@ -27,7 +27,7 @@ const LoginPage: React.FC<LoginPageProps> = () => {
 	);
 };
 
-export const Login = () => (
+export const Login: React.FC = () => (
 	<Provider store={authStore}>
 		<LoginPage />
 	</Provider>

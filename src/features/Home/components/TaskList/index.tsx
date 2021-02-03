@@ -61,7 +61,7 @@ class TaskListComponent extends Component<TaskListProps> {
 				</div>
 				{!isEmpty
 					? sortedByComplete.map((task, i) => (
-							<motion.div key={task.id} positionTransition={spring}>
+							<motion.div key={task.id} transition={spring}>
 								<Task task={task} isLastChild={tasksLength === i + 1} />
 							</motion.div>
 					  ))
