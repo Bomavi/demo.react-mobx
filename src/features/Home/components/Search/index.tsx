@@ -1,5 +1,5 @@
 /* npm imports: common */
-import React from 'react';
+import { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
 /* npm imports: material-ui/core */
@@ -21,7 +21,7 @@ interface SearchProps extends WithStyles<typeof styles> {
 
 @inject('store')
 @observer
-class SearchComponent extends React.Component<SearchProps> {
+class SearchComponent extends Component<SearchProps> {
 	public componentWillUnmount() {
 		const { search } = this.props.store!;
 

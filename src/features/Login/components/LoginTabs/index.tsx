@@ -1,5 +1,5 @@
 /* npm imports: common */
-import React from 'react';
+import * as React from 'react';
 
 /* npm imports: material-ui/core */
 import Tabs from '@material-ui/core/Tabs';

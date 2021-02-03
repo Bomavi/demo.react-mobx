@@ -1,5 +1,5 @@
 /* npm imports: common */
-import React from 'react';
+import * as React from 'react';
 
 /* npm imports: material-ui/core */
 import TextField, { TextFieldProps } from '@material-ui/core/TextField';

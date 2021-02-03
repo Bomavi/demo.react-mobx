@@ -1,5 +1,5 @@
 /* npm imports: common */
-import React from 'react';
+import * as React from 'react';
 import cx from 'classnames';
 
 /* npm imports: material-ui/core */

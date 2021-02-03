@@ -1,5 +1,5 @@
 /* npm imports: common */
-import React from 'react';
+import { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 
 /* npm imports: material-ui/core */
@@ -20,7 +20,7 @@ interface ContentProps extends WithStyles<typeof styles> {
 
 @inject('authStore')
 @observer
-class ContentComponent extends React.Component<ContentProps> {
+class ContentComponent extends Component<ContentProps> {
 	public render() {
 		const { children, classes } = this.props;
 		const { isAuthenticated } = this.props.authStore!;

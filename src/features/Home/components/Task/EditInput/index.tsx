@@ -1,5 +1,5 @@
 /* npm imports: common */
-import React from 'react';
+import * as React from 'react';
 
 /* root imports: view components */
 import { CustomInput, CustomInputProps } from 'views/elements';

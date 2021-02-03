@@ -1,5 +1,7 @@
 /* npm imports: common */
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
+
+import * as React from 'react';
 import cx from 'classnames';
 
 /* root imports: common */

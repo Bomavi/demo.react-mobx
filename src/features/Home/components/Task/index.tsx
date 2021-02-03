@@ -1,5 +1,5 @@
 /* npm imports: common */
-import React from 'react';
+import { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { observable, action } from 'mobx';
 import cx from 'classnames';
@@ -29,7 +29,7 @@ export interface TaskProps extends WithStyles<typeof styles> {
 
 @inject('store')
 @observer
-class TaskComponent extends React.Component<TaskProps> {
+class TaskComponent extends Component<TaskProps> {
 	@observable private isHovered: boolean = false;
 	@observable private isEditable: boolean = false;
 

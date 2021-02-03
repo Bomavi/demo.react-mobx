@@ -1,5 +1,5 @@
 /* npm imports: common */
-import React from 'react';
+import { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 
 /* npm imports: material-ui/core */
@@ -19,7 +19,7 @@ interface GuestFormProps extends WithStyles<typeof styles> {
 
 @inject('store')
 @observer
-class GuestFormComponent extends React.Component<GuestFormProps> {
+class GuestFormComponent extends Component<GuestFormProps> {
 	public loginHandler = () => {
 		this.props.store!.login({ isGuest: true });
 	};

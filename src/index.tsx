@@ -1,5 +1,4 @@
 /* npm imports: common */
-import React from 'react';
 import { render } from 'react-dom';
 import { configure } from 'mobx';
 import { Provider } from 'mobx-react';

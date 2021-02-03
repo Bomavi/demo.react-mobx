@@ -1,5 +1,5 @@
 /* npm imports: common */
-import React from 'react';
+import { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { motion } from 'framer-motion';
 
@@ -29,7 +29,7 @@ interface TaskListProps extends WithStyles<typeof styles> {
 
 @inject('store')
 @observer
-class TaskListComponent extends React.Component<TaskListProps> {
+class TaskListComponent extends Component<TaskListProps> {
 	public componentDidMount() {
 		this.props.store!.searchTasks();
 	}

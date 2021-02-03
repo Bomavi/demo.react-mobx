@@ -1,5 +1,5 @@
 /* npm imports: common */
-import React from 'react';
+import { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
 /* npm imports: material-ui/core */
@@ -20,7 +20,7 @@ interface AddTaskProps extends WithStyles<typeof styles> {
 
 @inject('store')
 @observer
-class AddTaskComponent extends React.Component<AddTaskProps> {
+class AddTaskComponent extends Component<AddTaskProps> {
 	public actionHandler = (value: string) => {
 		if (value) {
 			this.props.store!.addTask({ description: value, completed: false });

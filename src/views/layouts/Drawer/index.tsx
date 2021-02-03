@@ -1,5 +1,5 @@
 /* npm imports: common */
-import React from 'react';
+import { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 
 /* npm imports: material-ui/core */
@@ -23,7 +23,7 @@ interface DrawerProps extends WithStyles<typeof styles> {
 
 @inject('globalStore', 'authStore')
 @observer
-class DrawerComponent extends React.Component<DrawerProps> {
+class DrawerComponent extends Component<DrawerProps> {
 	public componentWillUnmount() {
 		this.hideDrawer();
 	}

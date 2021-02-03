@@ -1,5 +1,5 @@
 /* npm imports: common */
-import React from 'react';
+import { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
 /* npm imports: material-ui/core */
@@ -28,7 +28,7 @@ interface AppProps extends WithStyles<typeof styles> {
 
 @inject('routerStore', 'globalStore', 'authStore')
 @observer
-class AppComponent extends React.Component<AppProps> {
+class AppComponent extends Component<AppProps> {
 	public async componentDidMount() {
 		await this.props.authStore!.authenticate();
 	}

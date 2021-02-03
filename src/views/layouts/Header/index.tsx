@@ -1,5 +1,5 @@
 /* npm imports: common */
-import React from 'react';
+import { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 
 /* npm imports: material-ui/core */
@@ -26,7 +26,7 @@ interface HeaderProps extends WithStyles<typeof styles> {
 
 @inject('globalStore', 'authStore')
 @observer
-class HeaderComponent extends React.Component<HeaderProps> {
+class HeaderComponent extends Component<HeaderProps> {
 	public toggleDrawer = () => {
 		this.props.globalStore!.toggleDrawer();
 	};

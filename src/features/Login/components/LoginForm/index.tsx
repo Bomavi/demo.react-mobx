@@ -1,5 +1,5 @@
 /* npm imports: common */
-import React from 'react';
+import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 import { observable, computed, action } from 'mobx';
 
