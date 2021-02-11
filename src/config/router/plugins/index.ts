@@ -6,7 +6,7 @@ import { routerStore } from 'config/router/store';
 
 const factory = (_router: Router): Plugin => {
 	return {
-		onTransitionError: (_nextState: State, _prevState: State, error: any) => {
+		onTransitionError: (_nextState: State, _prevState: State, _error: any) => {
 			// console.error(error);
 		},
 
