@@ -1,35 +1,40 @@
-/* npm imports: common */
-import { observable, computed, action, IObservableArray } from 'mobx';
+import { observable, IObservableArray, makeAutoObservable } from 'mobx';
 
-/* root imports: common */
-import { BaseStore } from 'config/base-store';
+import { RootStore } from 'config/store';
 
-/* local imports: common */
 import { Search } from './search.model';
 import { TaskModel } from './task.model';
 
-export class HomeStore extends BaseStore {
-	@observable public tasks: IObservableArray<TaskModel> = observable([]);
+export class HomeStore {
+	public readonly rootStore: RootStore;
 
-	@observable public isFetching = false;
-	@observable public inProgress = false;
+	public tasks: IObservableArray<TaskModel> = observable([]);
 
-	@observable public sortKey: SortKey = 'desc';
-	@observable.ref public readonly search: Search = new Search();
+	public isFetching = false;
+	public inProgress = false;
 
-	@computed public get taskList(): TaskModel[] {
+	public sortKey: SortKey = 'desc';
+	public readonly search: Search = new Search();
+
+	constructor(rootStore: RootStore) {
+		makeAutoObservable(this, { rootStore: false });
+
+		this.rootStore = rootStore;
+	}
+
+	public get taskList(): TaskModel[] {
 		return this.tasks.slice();
 	}
 
-	@computed public get tasksLength(): number {
+	public get tasksLength(): number {
 		return this.taskList.length;
 	}
 
-	@computed public get isEmpty(): boolean {
+	public get isEmpty(): boolean {
 		return this.tasksLength === 0;
 	}
 
-	@computed public get sortedByDate(): TaskModel[] {
+	public get sortedByDate(): TaskModel[] {
 		return this.taskList.sort((a, b) => {
 			const aDate = Number(new Date(a.createdAt));
 			const bDate = Number(new Date(b.createdAt));
@@ -37,57 +42,56 @@ export class HomeStore extends BaseStore {
 		});
 	}
 
-	@computed public get sortedByComplete(): TaskModel[] {
+	public get sortedByComplete(): TaskModel[] {
 		return this.sortKey
 			? this.sortedByDate.sort((a, b) => Number(a.completed) - Number(b.completed))
 			: this.taskList;
 	}
 
-	@computed private get fetchParams() {
+	private get fetchParams() {
 		return {
 			...this.search.toJSON(),
 		};
 	}
 
-	@action public setFetchingState = (
-		action: TaskFetchingState,
-		state: boolean
-	): void => {
+	public setFetchingState(action: TaskFetchingState, state: boolean): void {
 		try {
 			if (!action) throw Error('action not found');
 			this[action] = state;
 		} catch (e) {
 			console.error(e);
 		}
-	};
+	}
 
-	@action public setTasks = (tasks: TaskType[]): void => {
+	public setTasks(tasks: TaskType[]): void {
 		this.tasks.replace(tasks.map((t) => new TaskModel(t)));
-	};
+	}
 
-	@action private setTask = (task: TaskType) => {
+	private setTask(task: TaskType): void {
 		this.tasks.replace([...this.tasks, new TaskModel(task)]);
-	};
+	}
 
-	@action private unsetTask = (id: string) => {
+	private unsetTask(id: string): void {
 		this.tasks.replace(this.taskList.filter((t) => t.id !== id));
-	};
+	}
 
-	@action private replaceTask = (task: TaskType) => {
+	private replaceTask(task: TaskType): void {
 		this.tasks.replace(
 			this.taskList.map((t) => (t.id === task._id ? new TaskModel(task) : t))
 		);
-	};
+	}
 
-	@action public sortTasks = (value: SortKey): void => {
+	public sortTasks = (value: SortKey): void => {
 		this.sortKey = value;
 	};
 
-	public searchTasks = async (): Promise<void> => {
+	public async searchTasks(): Promise<void> {
 		this.setFetchingState('isFetching', true);
 
 		try {
-			const tasks = await this.services.api.tasks.search(this.fetchParams);
+			const tasks = await this.rootStore.services.api.tasks.search(
+				this.fetchParams
+			);
 			this.setTasks(tasks);
 		} catch ({ message }) {
 			if (message === 'Network Error') throw message;
@@ -95,13 +99,13 @@ export class HomeStore extends BaseStore {
 		} finally {
 			this.setFetchingState('isFetching', false);
 		}
-	};
+	}
 
-	public addTask = async (taskData: TaskUpdateSchema): Promise<void> => {
+	public async addTask(taskData: TaskUpdateSchema): Promise<void> {
 		this.setFetchingState('inProgress', true);
 
 		try {
-			const task = await this.services.api.tasks.create(taskData);
+			const task = await this.rootStore.services.api.tasks.create(taskData);
 			this.setTask(task);
 		} catch ({ message }) {
 			if (message === 'Network Error') throw message;
@@ -109,27 +113,25 @@ export class HomeStore extends BaseStore {
 		} finally {
 			this.setFetchingState('inProgress', false);
 		}
-	};
+	}
 
-	public updateTask = async (id: string, taskData: TaskUpdateSchema): Promise<void> => {
+	public async updateTask(id: string, taskData: TaskUpdateSchema): Promise<void> {
 		try {
-			const task = await this.services.api.tasks.update(id, taskData);
+			const task = await this.rootStore.services.api.tasks.update(id, taskData);
 			this.replaceTask(task);
 		} catch ({ message }) {
 			if (message === 'Network Error') throw message;
 			console.error(message);
 		}
-	};
+	}
 
-	public deleteTask = async (id: string): Promise<void> => {
+	public async deleteTask(id: string): Promise<void> {
 		try {
-			await this.services.api.tasks.delete(id);
+			await this.rootStore.services.api.tasks.delete(id);
 			this.unsetTask(id);
 		} catch ({ message }) {
 			if (message === 'Network Error') throw message;
 			console.error(message);
 		}
-	};
+	}
 }
-
-export const homeStore = new HomeStore();
