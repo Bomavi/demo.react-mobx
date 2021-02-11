@@ -1,30 +1,35 @@
-/* npm imports: common */
-import { observable, computed, action } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 
-/* npm imports: material-ui/core */
 import { Theme } from '@material-ui/core/styles';
 
-/* root imports: common */
-import { BaseStore } from 'config/base-store';
+import { RootStore } from 'config/store';
 import { RouterHelper } from 'config/router';
 import { UserModel } from 'features/Login/user.model';
 import { lightTheme, darkTheme } from 'utils/themes';
 
-export class AuthStore extends BaseStore {
-	private readonly router: RouterHelper = new RouterHelper();
+export class AuthStore {
+	public readonly rootStore: RootStore;
+	public readonly router: RouterHelper;
 
-	@observable public user: UserModel | null = null;
+	public user: UserModel | null = null;
 
-	@observable public isInitialized = false;
-	@observable public inProgress = false;
+	public isInitialized = false;
+	public inProgress = false;
 
-	@observable public selectedThemeType: MUIThemeType = 'light';
+	public selectedThemeType: MUIThemeType = 'light';
 
-	@computed public get isAuthenticated(): boolean {
+	constructor(rootStore: RootStore) {
+		makeAutoObservable(this, { rootStore: false });
+
+		this.rootStore = rootStore;
+		this.router = new RouterHelper();
+	}
+
+	public get isAuthenticated(): boolean {
 		return !!this.user;
 	}
 
-	@computed public get themeNameToSwitch(): MUIThemeType {
+	public get themeNameToSwitch(): MUIThemeType {
 		switch (this.selectedThemeType) {
 			case 'light':
 				return 'dark';
@@ -37,7 +42,7 @@ export class AuthStore extends BaseStore {
 		}
 	}
 
-	@computed public get selectedTheme(): Theme {
+	public get selectedTheme(): Theme {
 		switch (this.selectedThemeType) {
 			case 'light':
 				return lightTheme;
@@ -50,33 +55,33 @@ export class AuthStore extends BaseStore {
 		}
 	}
 
-	@action public changeSelectedThemeType = (themeType: MUIThemeType): void => {
+	public changeSelectedThemeType(themeType: MUIThemeType): void {
 		this.selectedThemeType = themeType;
-	};
+	}
 
-	@action public setInProgress = (state: boolean): void => {
+	public setInProgress(state: boolean): void {
 		this.inProgress = state;
-	};
+	}
 
-	@action public setUser = (user: UserType): void => {
+	public setUser(user: UserType): void {
 		this.user = new UserModel(user);
 		this.changeSelectedThemeType(user.theme);
-	};
+	}
 
-	@action private unsetUser = () => {
+	private unsetUser(): void {
 		this.user = null;
-	};
+	}
 
-	@action private updateUser = (user: UserType) => {
+	private updateUser(user: UserType): void {
 		this.user = new UserModel(user);
 		this.changeSelectedThemeType(user.theme);
-	};
+	}
 
-	@action private initialize = () => {
+	private initialize(): void {
 		this.isInitialized = true;
-	};
+	}
 
-	public switchTheme = async (): Promise<void> => {
+	public async switchTheme(): Promise<void> {
 		try {
 			if (!this.user) throw new Error('no user found');
 
@@ -86,11 +91,11 @@ export class AuthStore extends BaseStore {
 			if (e === 'Network Error') throw e;
 			console.error(e);
 		}
-	};
+	}
 
-	public authenticate = async (): Promise<void> => {
+	public async authenticate(): Promise<void> {
 		try {
-			const user = await this.services.auth.authenticate();
+			const user = await this.rootStore.services.auth.authenticate();
 
 			this.setUser(user);
 		} catch ({ message }) {
@@ -100,13 +105,13 @@ export class AuthStore extends BaseStore {
 		} finally {
 			this.initialize();
 		}
-	};
+	}
 
-	public login = async (userData: LoginType): Promise<void> => {
+	public async login(userData: LoginType): Promise<void> {
 		this.setInProgress(true);
 
 		try {
-			const user = await this.services.auth.login(userData);
+			const user = await this.rootStore.services.auth.login(userData);
 
 			this.setUser(user);
 			this.router.navigate('home');
@@ -116,13 +121,13 @@ export class AuthStore extends BaseStore {
 		} finally {
 			this.setInProgress(false);
 		}
-	};
+	}
 
-	public register = async (userData: RegisterType): Promise<void> => {
+	public async register(userData: RegisterType): Promise<void> {
 		this.setInProgress(true);
 
 		try {
-			const user = await this.services.auth.register(userData);
+			const user = await this.rootStore.services.auth.register(userData);
 
 			this.setUser(user);
 			this.router.navigate('home');
@@ -132,13 +137,13 @@ export class AuthStore extends BaseStore {
 		} finally {
 			this.setInProgress(false);
 		}
-	};
+	}
 
-	public logout = async (): Promise<void> => {
+	public async logout(): Promise<void> {
 		this.setInProgress(true);
 
 		try {
-			await this.services.auth.logout();
+			await this.rootStore.services.auth.logout();
 
 			this.unsetUser();
 			this.router.navigate('login');
@@ -148,21 +153,19 @@ export class AuthStore extends BaseStore {
 		} finally {
 			this.setInProgress(false);
 		}
-	};
+	}
 
-	public update = async (userData: UserUpdateSchema): Promise<void> => {
+	public async update(userData: UserUpdateSchema): Promise<void> {
 		try {
 			if (!this.user) throw new Error('no user found');
 
 			const { id } = this.user;
-			const user = await this.services.api.users.update(id, userData);
+			const user = await this.rootStore.services.api.users.update(id, userData);
 
 			this.updateUser(user);
 		} catch ({ message }) {
 			if (message === 'Network Error') throw message;
 			console.error(message);
 		}
-	};
+	}
 }
-
-export const authStore = new AuthStore();
