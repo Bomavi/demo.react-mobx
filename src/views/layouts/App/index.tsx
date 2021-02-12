@@ -1,73 +1,65 @@
-/* npm imports: common */
-import { Component } from 'react';
-import { inject, observer } from 'mobx-react';
+import { FC, useState, useEffect, useMemo, ReactElement } from 'react';
+import { observer } from 'mobx-react-lite';
 
-/* npm imports: material-ui/core */
 import { ThemeProvider } from '@material-ui/styles';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-/* root imports: view components */
 import { Content } from 'views/layouts';
 import { Home } from 'features/Home';
 import { Login } from 'features/Login';
 
-/* root imports: common */
-import { RouterStore } from 'config/router';
-import { GlobalStore } from 'config/global-store';
-import { AuthStore } from 'features/Login/store';
+import { useRouterStore } from 'config/router';
+import { useRootStore } from 'config/store';
 
-/* local imports: common */
-import { styles } from './styles';
+import { useStyles } from './styles';
 
-interface AppProps extends WithStyles<typeof styles> {
-	routerStore?: RouterStore;
-	globalStore?: GlobalStore;
-	authStore?: AuthStore;
-}
+const App: FC = observer(() => {
+	const classes = useStyles();
 
-@inject('routerStore', 'globalStore', 'authStore')
-@observer
-class AppComponent extends Component<AppProps> {
-	public async componentDidMount() {
-		await this.props.authStore!.authenticate();
-	}
+	const { current } = useRouterStore();
+	const {
+		featureAuth: { isAuthenticated, selectedTheme, authenticate },
+	} = useRootStore();
 
-	public render() {
-		const { classes } = this.props;
-		const { current } = this.props.routerStore!;
-		const { isAuthenticated, selectedTheme } = this.props.authStore!;
+	const [component, setComponent] = useState<ReactElement | null>(null);
 
-		if (current === null) return null;
+	useEffect(() => {
+		authenticate();
+	}, [authenticate]);
 
-		const whileNotAuthenticated = !isAuthenticated && current.name !== 'login';
-
-		let component = null;
-		switch (current.name) {
-			case 'home':
-				component = <Home />;
-				break;
-			case 'login':
-				component = <Login />;
-				break;
-			default:
-				component = <h1>Page 404</h1>;
-				break;
+	useEffect(() => {
+		if (current) {
+			switch (current.name) {
+				case 'home':
+					setComponent(<Home />);
+					break;
+				case 'login':
+					setComponent(<Login />);
+					break;
+				default:
+					setComponent(<h1>Page 404</h1>);
+					break;
+			}
 		}
+	}, [current]);
 
-		return (
-			<ThemeProvider theme={selectedTheme}>
-				<>
-					<CssBaseline />
-					<div className={classes.app}>
-						<Content>{!whileNotAuthenticated && component}</Content>
-					</div>
-				</>
-			</ThemeProvider>
-		);
-	}
-}
+	const whileNotAuthenticated = useMemo(
+		() => !isAuthenticated && current && current.name !== 'login',
+		[current, isAuthenticated]
+	);
 
-const App = withStyles(styles)(AppComponent);
+	if (current === null) return null;
+
+	return (
+		<ThemeProvider theme={selectedTheme}>
+			<>
+				<CssBaseline />
+				<div className={classes.app}>
+					<Content>{!whileNotAuthenticated && component}</Content>
+				</div>
+			</>
+		</ThemeProvider>
+	);
+});
 
 export { App };
