@@ -1,7 +1,6 @@
-/* npm imports: material-ui/core */
-import { createStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 
-export const styles = (theme: Theme): Record<string, any> =>
+export const useStyles = makeStyles((theme) =>
 	createStyles({
 		main: {
 			display: 'flex',
@@ -10,4 +9,5 @@ export const styles = (theme: Theme): Record<string, any> =>
 			paddingBottom: theme.sizes.footer + 30,
 		},
 		toolbar: theme.mixins.toolbar,
-	});
+	})
+);

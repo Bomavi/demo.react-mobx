@@ -1,42 +1,26 @@
-/* npm imports: common */
-import { Component } from 'react';
-import { observer, inject } from 'mobx-react';
+import { FC } from 'react';
+import { observer } from 'mobx-react-lite';
 
-/* npm imports: material-ui/core */
-import { withStyles, WithStyles } from '@material-ui/core/styles';
-
-/* root imports: view components */
 import { Header, Footer, Drawer } from 'views/layouts';
+import { useRootStore } from 'config/store';
 
-/* root imports: common */
-import { AuthStore } from 'features/Login/store';
+import { useStyles } from './styles';
 
-/* local imports: common */
-import { styles } from './styles';
+const Content: FC = observer(({ children }) => {
+	const classes = useStyles();
+	const {
+		featureAuth: { isAuthenticated },
+	} = useRootStore();
 
-interface ContentProps extends WithStyles<typeof styles> {
-	authStore?: AuthStore;
-}
-
-@inject('authStore')
-@observer
-class ContentComponent extends Component<ContentProps> {
-	public render() {
-		const { children, classes } = this.props;
-		const { isAuthenticated } = this.props.authStore!;
-
-		return (
-			<>
-				<Header />
-				<div className={classes.toolbar} />
-				{isAuthenticated && <Drawer />}
-				<main className={classes.main}>{children}</main>
-				<Footer />
-			</>
-		);
-	}
-}
-
-const Content = withStyles(styles)(ContentComponent);
+	return (
+		<>
+			<Header />
+			<div className={classes.toolbar} />
+			{isAuthenticated && <Drawer />}
+			<main className={classes.main}>{children}</main>
+			<Footer />
+		</>
+	);
+});
 
 export { Content };
