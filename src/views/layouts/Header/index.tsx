@@ -1,67 +1,51 @@
-/* npm imports: common */
-import { Component } from 'react';
-import { observer, inject } from 'mobx-react';
+import { FC } from 'react';
+import { observer } from 'mobx-react-light';
 
-/* npm imports: material-ui/core */
-import { withStyles, WithStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 
-/* root imports: view components */
 import { Icon } from 'views/elements';
+import { useRootStore, useUiStore } from 'config/store';
 
-/* root imports: common */
-import { GlobalStore } from 'config/global-store';
-import { AuthStore } from 'features/Login/store';
+import { useStyles } from './styles';
 
-/* local imports: common */
-import { styles } from './styles';
+const Header: FC = observer(() => {
+	const classes = useStyles();
+	const { toggleDrawer } = useUiStore();
+	const {
+		featureAuth: { user },
+	} = useRootStore();
 
-interface HeaderProps extends WithStyles<typeof styles> {
-	globalStore?: GlobalStore;
-	authStore?: AuthStore;
-}
-
-@inject('globalStore', 'authStore')
-@observer
-class HeaderComponent extends Component<HeaderProps> {
-	public toggleDrawer = () => {
-		this.props.globalStore!.toggleDrawer();
+	const toggleDrawerHandler = () => {
+		toggleDrawer();
 	};
 
-	public render() {
-		const { classes } = this.props;
-		const { user } = this.props.authStore!;
-
-		return (
-			<AppBar position="fixed" className={classes.appBar}>
-				<Toolbar>
-					<Typography variant="h6" noWrap className={classes.title}>
-						TODO'SHER
+	return (
+		<AppBar position="fixed" className={classes.appBar}>
+			<Toolbar>
+				<Typography variant="h6" noWrap className={classes.title}>
+					TODO'SHER
+				</Typography>
+				{user && (
+					<Typography variant="subtitle2" noWrap className={classes.hello}>
+						Hello, {user.username}
 					</Typography>
-					{user && (
-						<Typography variant="subtitle2" noWrap className={classes.hello}>
-							Hello, {user.username}
-						</Typography>
-					)}
-					{user && (
-						<IconButton color="inherit" onClick={this.toggleDrawer}>
-							<Icon
-								name="account-circle"
-								color="white"
-								size="md"
-								svgSize="lg"
-							/>
-						</IconButton>
-					)}
-				</Toolbar>
-			</AppBar>
-		);
-	}
-}
-
-const Header = withStyles(styles)(HeaderComponent);
+				)}
+				{user && (
+					<IconButton color="inherit" onClick={toggleDrawerHandler}>
+						<Icon
+							name="account-circle"
+							color="white"
+							size="md"
+							svgSize="lg"
+						/>
+					</IconButton>
+				)}
+			</Toolbar>
+		</AppBar>
+	);
+});
 
 export { Header };

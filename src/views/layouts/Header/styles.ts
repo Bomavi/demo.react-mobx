@@ -1,7 +1,6 @@
-/* npm imports: material-ui/core */
-import { createStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 
-export const styles = (theme: Theme): Record<string, any> =>
+export const useStyles = makeStyles((theme) =>
 	createStyles({
 		appBar: {
 			flexGrow: 1,
@@ -13,4 +12,5 @@ export const styles = (theme: Theme): Record<string, any> =>
 		hello: {
 			marginRight: 10,
 		},
-	});
+	})
+);
