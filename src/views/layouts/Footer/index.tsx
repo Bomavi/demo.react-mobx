@@ -1,13 +1,10 @@
-/* npm imports: common */
-import * as React from 'react';
+import { FC } from 'react';
 
-/* npm imports: material-ui/core */
 import Typography from '@material-ui/core/Typography';
 
-/* local imports: common */
 import { useStyles } from './styles';
 
-const Footer: React.FC = () => {
+const Footer: FC = () => {
 	const classes = useStyles();
 
 	return (
