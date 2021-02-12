@@ -1,5 +1,5 @@
 import { FC, useEffect, useCallback } from 'react';
-import { observer } from 'mobx-react-light';
+import { observer } from 'mobx-react-lite';
 
 import MUIDrawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -12,7 +12,9 @@ import { useStyles } from './styles';
 
 const Drawer: FC = observer(() => {
 	const classes = useStyles();
+
 	const { isDrawerOpen, toggleDrawer } = useUiStore();
+
 	const {
 		featureAuth: { switchTheme, themeNameToSwitch, user, inProgress, logout },
 	} = useRootStore();

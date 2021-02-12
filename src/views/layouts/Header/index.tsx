@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { observer } from 'mobx-react-light';
+import { observer } from 'mobx-react-lite';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -13,7 +13,9 @@ import { useStyles } from './styles';
 
 const Header: FC = observer(() => {
 	const classes = useStyles();
+
 	const { toggleDrawer } = useUiStore();
+
 	const {
 		featureAuth: { user },
 	} = useRootStore();
