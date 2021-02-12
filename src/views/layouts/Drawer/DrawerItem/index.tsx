@@ -1,13 +1,10 @@
-/* npm imports: common */
-import * as React from 'react';
+import { FC, memo } from 'react';
 
-/* npm imports: material-ui/core */
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-/* root imports: view components */
 import { Icon, IconName } from 'views/elements';
 
 interface DrawerItemProps {
@@ -18,7 +15,7 @@ interface DrawerItemProps {
 	onClick: () => void;
 }
 
-const DrawerItem: React.FC<DrawerItemProps> = React.memo(
+const DrawerItem: FC<DrawerItemProps> = memo(
 	({ iconName, text, caption, inProgress = false, onClick }) => {
 		return (
 			<ListItem button onClick={onClick}>

@@ -1,73 +1,54 @@
-/* npm imports: common */
-import { Component } from 'react';
-import { observer, inject } from 'mobx-react';
+import { FC, useEffect, useCallback } from 'react';
+import { observer } from 'mobx-react-light';
 
-/* npm imports: material-ui/core */
-import { withStyles, WithStyles } from '@material-ui/core/styles';
 import MUIDrawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 
-/* root imports: common */
-import { GlobalStore } from 'config/global-store';
-import { AuthStore } from 'features/Login/store';
+import { useRootStore, useUiStore } from 'config/store';
 
-/* local imports: common */
-import { styles } from './styles';
 import { DrawerItem } from './DrawerItem';
+import { useStyles } from './styles';
 
-interface DrawerProps extends WithStyles<typeof styles> {
-	globalStore?: GlobalStore;
-	authStore?: AuthStore;
-}
+const Drawer: FC = observer(() => {
+	const classes = useStyles();
+	const { isDrawerOpen, toggleDrawer } = useUiStore();
+	const {
+		featureAuth: { switchTheme, themeNameToSwitch, user, inProgress, logout },
+	} = useRootStore();
 
-@inject('globalStore', 'authStore')
-@observer
-class DrawerComponent extends Component<DrawerProps> {
-	public componentWillUnmount() {
-		this.hideDrawer();
-	}
+	const hideDrawer = useCallback(() => {
+		toggleDrawer(false);
+	}, [toggleDrawer]);
 
-	private hideDrawer = () => {
-		this.props.globalStore!.toggleDrawer(false);
-	};
+	useEffect(() => {
+		return () => {
+			hideDrawer();
+		};
+	}, [hideDrawer]);
 
-	public render() {
-		const { classes } = this.props;
-		const { isDrawerOpen } = this.props.globalStore!;
-		const {
-			switchTheme,
-			themeNameToSwitch,
-			user,
-			inProgress,
-			logout,
-		} = this.props.authStore!;
-
-		return (
-			<MUIDrawer anchor="right" variant="persistent" open={isDrawerOpen}>
-				<div className={classes.toolbar} />
-				<List>
-					<DrawerItem
-						text={`Switch to ${themeNameToSwitch} theme`}
-						iconName="compare"
-						inProgress={user!.switchThemeInProgress}
-						onClick={switchTheme}
-					/>
-				</List>
-				<Divider />
-				<List>
-					<DrawerItem
-						text="Logout"
-						iconName="logout-variant"
-						inProgress={inProgress}
-						onClick={logout}
-					/>
-				</List>
-			</MUIDrawer>
-		);
-	}
-}
-
-const Drawer = withStyles(styles)(DrawerComponent);
+	return (
+		<MUIDrawer anchor="right" variant="persistent" open={isDrawerOpen}>
+			<div className={classes.toolbar} />
+			<List>
+				<DrawerItem
+					text={`Switch to ${themeNameToSwitch} theme`}
+					iconName="compare"
+					inProgress={user!.switchThemeInProgress}
+					onClick={switchTheme}
+				/>
+			</List>
+			<Divider />
+			<List>
+				<DrawerItem
+					text="Logout"
+					iconName="logout-variant"
+					inProgress={inProgress}
+					onClick={logout}
+				/>
+			</List>
+		</MUIDrawer>
+	);
+});
 
 export { Drawer };
