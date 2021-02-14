@@ -1,15 +1,11 @@
-/* npm imports: common */
-import * as React from 'react';
+import { FC, memo } from 'react';
 import cx from 'classnames';
 
-/* npm imports: material-ui/core */
 import IconButton from '@material-ui/core/IconButton';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-/* root imports: view components */
 import { Icon, IconProps } from 'views/elements';
 
-/* local imports: common */
 import { useStyles } from './styles';
 
 export interface InputButtonProps {
@@ -21,7 +17,7 @@ export interface InputButtonProps {
 	onClick?: () => void;
 }
 
-const InputButton: React.FC<InputButtonProps> = React.memo(
+const InputButton: FC<InputButtonProps> = memo(
 	({
 		icon: { name: iconName, svgSize = 'sm' },
 		title,
