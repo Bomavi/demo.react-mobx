@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import { State } from 'router5';
 
-export class RouterStore {
+class RouterStore {
 	public current: State | null = null;
 	public pageName = '';
 
@@ -17,3 +17,7 @@ export class RouterStore {
 		this.pageName = name;
 	};
 }
+
+export const routerStore = new RouterStore();
+
+export type TRouterStore = RouterStore;

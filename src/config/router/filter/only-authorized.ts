@@ -1,8 +1,6 @@
-/* npm imports: common */
 import { State, Router } from 'router5';
 
-/* root imports: common */
-import { authStore } from 'features/Login/store';
+import { rootStore } from 'config/store';
 
 export const onlyAuthorized = (_router: Router) => (
 	nextState: State,
@@ -10,7 +8,9 @@ export const onlyAuthorized = (_router: Router) => (
 	done: (data: { redirect: { name: string } }) => void
 ): boolean | void => {
 	const { name: nextName } = nextState;
-	const { isAuthenticated, isInitialized } = authStore;
+	const {
+		featureAuth: { isAuthenticated, isInitialized },
+	} = rootStore;
 
 	const acceptable = !isAuthenticated && nextName === 'login';
 

@@ -1,16 +1,16 @@
-import React, { createContext, useContext } from 'react';
+import { createContext, useContext, FC } from 'react';
 
-import { RouterStore } from './store';
+import { routerStore, TRouterStore } from './store';
 
-const RouterStoreContext = createContext<RouterStore | null>(null);
+const RouterStoreContext = createContext<TRouterStore | null>(null);
 
-export const RouterStoreProvider: React.FC = ({ children }) => (
-	<RouterStoreContext.Provider value={new RouterStore()}>
+export const RouterStoreProvider: FC = ({ children }) => (
+	<RouterStoreContext.Provider value={routerStore}>
 		{children}
 	</RouterStoreContext.Provider>
 );
 
-export const useRouterStore = (): RouterStore => {
+export const useRouterStore = (): TRouterStore => {
 	const routerStore = useContext(RouterStoreContext);
 
 	if (!routerStore) {

@@ -14,8 +14,6 @@ const router: RouterType = createRouter(routes, {
 router.usePlugin(browserPlugin(), mobxRouterPlugin);
 router.useMiddleware(asyncMiddleware(routes));
 
-router.start();
-
 export * from './filter';
 export * from './helper';
 export * from './store';
