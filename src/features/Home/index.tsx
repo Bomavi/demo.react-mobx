@@ -1,25 +1,14 @@
-/* npm imports: common */
-import * as React from 'react';
-import { Provider } from 'mobx-react';
+import { FC } from 'react';
 
-/* npm imports: material-ui/core */
 import Container from '@material-ui/core/Container';
 
-/* local imports: common */
 import { ActionTabs, TaskList } from './components';
-import { homeStore } from './store';
 
-interface HomePageProps {}
-
-const HomePage: React.FC<HomePageProps> = () => (
+const Home: FC = () => (
 	<Container maxWidth="md">
 		<ActionTabs />
 		<TaskList />
 	</Container>
 );
 
-export const Home: React.FC = () => (
-	<Provider store={homeStore}>
-		<HomePage />
-	</Provider>
-);
+export { Home };
