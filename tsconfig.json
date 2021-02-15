@@ -1,15 +1,17 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "esnext",
     "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
+      "DOM",
+      "DOM.Iterable",
+      "ESNEXT",
+      "esnext.intl",
+      "es2017.intl",
+      "es2018.intl"
     ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -26,5 +28,10 @@
   "include": [
     "src",
     "typings"
+  ],
+  "exclude": [
+    "node_modules",
+    "__mocks__",
+    "__tests__"
   ]
 }
