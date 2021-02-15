@@ -1,11 +1,11 @@
 import React, { createContext, useContext } from 'react';
 
-import { UiStore } from './store';
+import { uiStore, UiStore } from './store';
 
 const UiStoreContext = createContext<UiStore | null>(null);
 
 export const UiStoreProvider: React.FC = ({ children }) => (
-	<UiStoreContext.Provider value={new UiStore()}>{children}</UiStoreContext.Provider>
+	<UiStoreContext.Provider value={uiStore}>{children}</UiStoreContext.Provider>
 );
 
 export const useUiStore = (): UiStore => {
