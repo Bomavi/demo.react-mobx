@@ -1,7 +1,5 @@
-/* mock imports: common */
 import { task } from '__mocks__/data';
 
-/* local imports: common */
 import { TaskModel } from './task.model';
 
 const model = new TaskModel(task);

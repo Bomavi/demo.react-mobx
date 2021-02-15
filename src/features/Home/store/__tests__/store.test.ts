@@ -1,9 +1,9 @@
-/* mock imports: common */
 import { task, tasks } from '__mocks__/data';
 import { MockedHomeStore } from '__mocks__/store/home';
 import { mockedTasksServerResponse } from '__mocks__/services/tasks';
 
-/* local imports: common */
+import { rootStore } from 'config/store';
+
 import { HomeStore } from './store';
 
 describe('HomeStore', () => {
@@ -16,13 +16,13 @@ describe('HomeStore', () => {
 	});
 
 	it('should be empty', () => {
-		const store = new HomeStore();
+		const store = new HomeStore(rootStore);
 
 		expect(store.isEmpty).toBe(true);
 	});
 
 	it('should set fetching state', () => {
-		const store = new HomeStore();
+		const store = new HomeStore(rootStore);
 
 		store.setFetchingState('isFetching', true);
 		store.setFetchingState('inProgress', true);
@@ -34,7 +34,7 @@ describe('HomeStore', () => {
 	it('should search tasks (failed response)', async () => {
 		mockedTasksServerResponse.initFailResponse();
 
-		const store = new HomeStore();
+		const store = new HomeStore(rootStore);
 
 		try {
 			await store.searchTasks();
@@ -48,7 +48,7 @@ describe('HomeStore', () => {
 	it('should search tasks (success response)', async () => {
 		mockedTasksServerResponse.initSuccessResponse();
 
-		const store = new HomeStore();
+		const store = new HomeStore(rootStore);
 		const mockedStore = new MockedHomeStore();
 
 		mockedStore.setTasks(tasks);
@@ -62,7 +62,7 @@ describe('HomeStore', () => {
 	it('should add new task (failed response)', async () => {
 		mockedTasksServerResponse.initFailResponse();
 
-		const store = new HomeStore();
+		const store = new HomeStore(rootStore);
 
 		try {
 			await store.addTask({
@@ -79,7 +79,7 @@ describe('HomeStore', () => {
 	it('should add new task (success response)', async () => {
 		mockedTasksServerResponse.initSuccessResponse();
 
-		const store = new HomeStore();
+		const store = new HomeStore(rootStore);
 		const mockedStore = new MockedHomeStore();
 
 		mockedStore.setTask(task);
@@ -92,7 +92,7 @@ describe('HomeStore', () => {
 	it('should update task (failed response)', async () => {
 		mockedTasksServerResponse.initFailResponse();
 
-		const store = new HomeStore();
+		const store = new HomeStore(rootStore);
 
 		store.setTasks(tasks);
 
@@ -109,7 +109,7 @@ describe('HomeStore', () => {
 	it('should update task (success response)', async () => {
 		mockedTasksServerResponse.initSuccessResponse();
 
-		const store = new HomeStore();
+		const store = new HomeStore(rootStore);
 		const mockedStore = new MockedHomeStore();
 
 		store.setTasks(tasks);
@@ -126,7 +126,7 @@ describe('HomeStore', () => {
 	it('should delete task (failed response)', async () => {
 		mockedTasksServerResponse.initFailResponse();
 
-		const store = new HomeStore();
+		const store = new HomeStore(rootStore);
 
 		store.setTasks(tasks);
 
@@ -140,7 +140,7 @@ describe('HomeStore', () => {
 	it('should delete task (success response)', async () => {
 		mockedTasksServerResponse.initSuccessResponse();
 
-		const store = new HomeStore();
+		const store = new HomeStore(rootStore);
 		const mockedStore = new MockedHomeStore();
 
 		store.setTasks(tasks);

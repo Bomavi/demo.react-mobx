@@ -1,4 +1,3 @@
-/* local imports: common */
 import { Search } from './search.model';
 
 const model = new Search();
