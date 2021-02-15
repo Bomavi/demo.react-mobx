@@ -1,13 +1,11 @@
-/* mock imports: common */
 import { user } from '__mocks__/data';
 import { MockedAuthStore } from '__mocks__/store/auth';
 import { mockedAuthServerResponse } from '__mocks__/services/auth';
 import { mockedUsersServerResponse } from '__mocks__/services/users';
 
-/* root imports: common */
+import { rootStore } from 'config/store';
 import { lightTheme, darkTheme } from 'utils/themes';
 
-/* local imports: common */
 import { AuthStore } from './store';
 
 describe('AuthStore', () => {
@@ -20,13 +18,13 @@ describe('AuthStore', () => {
 	});
 
 	it('should be empty', () => {
-		const store = new AuthStore();
+		const store = new AuthStore(rootStore);
 
 		expect(store.user).toBe(null);
 	});
 
 	it('should set inProgress to true', () => {
-		const store = new AuthStore();
+		const store = new AuthStore(rootStore);
 
 		store.setInProgress(true);
 
@@ -34,7 +32,7 @@ describe('AuthStore', () => {
 	});
 
 	it('should change selected theme type', () => {
-		const store = new AuthStore();
+		const store = new AuthStore(rootStore);
 
 		store.changeSelectedThemeType('light');
 
@@ -50,7 +48,7 @@ describe('AuthStore', () => {
 	it('should request user authentication (failed response)', async () => {
 		mockedAuthServerResponse.initFailResponse();
 
-		const store = new AuthStore();
+		const store = new AuthStore(rootStore);
 
 		try {
 			await store.authenticate();
@@ -65,7 +63,7 @@ describe('AuthStore', () => {
 	it('should request user authentication (success response)', async () => {
 		mockedAuthServerResponse.initSuccessResponse();
 
-		const store = new AuthStore();
+		const store = new AuthStore(rootStore);
 		const mockedStore = new MockedAuthStore();
 
 		mockedStore.setUser(user);
@@ -80,7 +78,7 @@ describe('AuthStore', () => {
 	it('should request user login (failed response)', async () => {
 		mockedAuthServerResponse.initFailResponse();
 
-		const store = new AuthStore();
+		const store = new AuthStore(rootStore);
 
 		try {
 			await store.login({});
@@ -94,7 +92,7 @@ describe('AuthStore', () => {
 	it('should request user login (success response)', async () => {
 		mockedAuthServerResponse.initSuccessResponse();
 
-		const store = new AuthStore();
+		const store = new AuthStore(rootStore);
 		const mockedStore = new MockedAuthStore();
 
 		mockedStore.setUser(user);
@@ -108,7 +106,7 @@ describe('AuthStore', () => {
 	it('should request user registration (failed response)', async () => {
 		mockedAuthServerResponse.initFailResponse();
 
-		const store = new AuthStore();
+		const store = new AuthStore(rootStore);
 
 		try {
 			await store.register({ username: 'username', password: 'password' });
@@ -122,7 +120,7 @@ describe('AuthStore', () => {
 	it('should request user registration (success response)', async () => {
 		mockedAuthServerResponse.initSuccessResponse();
 
-		const store = new AuthStore();
+		const store = new AuthStore(rootStore);
 		const mockedStore = new MockedAuthStore();
 
 		mockedStore.setUser(user);
@@ -136,7 +134,7 @@ describe('AuthStore', () => {
 	it('should request user logout (failed response)', async () => {
 		mockedAuthServerResponse.initFailResponse();
 
-		const store = new AuthStore();
+		const store = new AuthStore(rootStore);
 
 		try {
 			await store.logout();
@@ -148,7 +146,7 @@ describe('AuthStore', () => {
 	it('should request user logout (success response)', async () => {
 		mockedAuthServerResponse.initSuccessResponse();
 
-		const store = new AuthStore();
+		const store = new AuthStore(rootStore);
 
 		await store.authenticate();
 		await store.logout();
@@ -159,7 +157,7 @@ describe('AuthStore', () => {
 	it('should request user update (failed response)', async () => {
 		mockedUsersServerResponse.initFailResponse();
 
-		const store = new AuthStore();
+		const store = new AuthStore(rootStore);
 
 		try {
 			await store.setUser(user);
@@ -172,7 +170,7 @@ describe('AuthStore', () => {
 	it('should request user update (success response)', async () => {
 		mockedUsersServerResponse.initSuccessResponse();
 
-		const store = new AuthStore();
+		const store = new AuthStore(rootStore);
 		const mockedStore = new MockedAuthStore();
 
 		mockedStore.setUser(user);
@@ -186,7 +184,7 @@ describe('AuthStore', () => {
 	it('should switch theme and request user update (failed response)', async () => {
 		mockedUsersServerResponse.initFailResponse();
 
-		const store = new AuthStore();
+		const store = new AuthStore(rootStore);
 
 		store.setUser(user);
 
@@ -200,7 +198,7 @@ describe('AuthStore', () => {
 	it('should switch theme and request user update (success response)', async () => {
 		mockedUsersServerResponse.initSuccessResponse();
 
-		const store = new AuthStore();
+		const store = new AuthStore(rootStore);
 
 		await store.setUser(user);
 		await store.switchTheme();

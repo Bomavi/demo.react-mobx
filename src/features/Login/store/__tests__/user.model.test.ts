@@ -1,7 +1,5 @@
-/* mock imports: common */
 import { user } from '__mocks__/data';
 
-/* local imports: common */
 import { UserModel } from './user.model';
 
 const model = new UserModel(user);
