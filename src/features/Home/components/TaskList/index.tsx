@@ -1,76 +1,61 @@
-/* npm imports: common */
-import { Component } from 'react';
-import { inject, observer } from 'mobx-react';
+import { FC, useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
 import { motion } from 'framer-motion';
 
-/* npm imports: material-ui/core */
-import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
-/* root imports: view components */
+import { useHomeStore } from 'features/Home/store';
 import { Task, SortButton } from 'features/Home/components';
 
-/* root imports: common */
-import { HomeStore } from 'features/Home/store';
+import { SPRING_TRANSITION } from './constants';
+import { useStyles } from './styles';
 
-/* local imports: common */
-import { styles } from './styles';
+const TaskList: FC = observer(() => {
+	const classes = useStyles();
 
-const spring = {
-	type: 'spring',
-	damping: 50,
-	stiffness: 500,
-};
+	const {
+		sortedByComplete,
+		isEmpty,
+		tasksLength,
+		sortKey,
+		searchTasks,
+		sortTasks,
+	} = useHomeStore();
 
-interface TaskListProps extends WithStyles<typeof styles> {
-	store?: HomeStore;
-}
+	useEffect(() => {
+		searchTasks();
+	}, [searchTasks]);
 
-@inject('store')
-@observer
-class TaskListComponent extends Component<TaskListProps> {
-	public componentDidMount() {
-		this.props.store!.searchTasks();
-	}
-
-	private sortTasksHandler = () => {
-		const { sortKey, sortTasks } = this.props.store!;
+	const sortTasksHandler = () => {
 		if (sortKey === 'asc') sortTasks('desc');
 		if (sortKey === 'desc') sortTasks('asc');
 	};
 
-	public render() {
-		const { classes } = this.props;
-		const { sortedByComplete, isEmpty, tasksLength, sortKey } = this.props.store!;
-
-		return (
-			<Paper className={classes.root}>
-				<div className={classes.header}>
-					<Typography className={classes.title} noWrap variant="subtitle2">
-						Task List &nbsp;&nbsp;
-						{!isEmpty && '|'}
-						&nbsp;&nbsp;&nbsp;
-						{!isEmpty && `${tasksLength}`}
-					</Typography>
-					<SortButton
-						sortKey={sortKey}
-						disabled={isEmpty}
-						onClick={this.sortTasksHandler}
-					/>
-				</div>
-				{!isEmpty
-					? sortedByComplete.map((task, i) => (
-							<motion.div key={task.id} transition={spring}>
-								<Task task={task} isLastChild={tasksLength === i + 1} />
-							</motion.div>
-					  ))
-					: 'no tasks'}
-			</Paper>
-		);
-	}
-}
-
-const TaskList = withStyles(styles)(TaskListComponent);
+	return (
+		<Paper className={classes.root}>
+			<div className={classes.header}>
+				<Typography className={classes.title} noWrap variant="subtitle2">
+					Task List &nbsp;&nbsp;
+					{!isEmpty && '|'}
+					&nbsp;&nbsp;&nbsp;
+					{!isEmpty && `${tasksLength}`}
+				</Typography>
+				<SortButton
+					sortKey={sortKey}
+					disabled={isEmpty}
+					onClick={sortTasksHandler}
+				/>
+			</div>
+			{!isEmpty
+				? sortedByComplete.map((task, i) => (
+						<motion.div key={task.id} transition={SPRING_TRANSITION}>
+							<Task task={task} isLastChild={tasksLength === i + 1} />
+						</motion.div>
+				  ))
+				: 'no tasks'}
+		</Paper>
+	);
+});
 
 export { TaskList };

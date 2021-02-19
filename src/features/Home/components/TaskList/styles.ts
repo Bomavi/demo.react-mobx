@@ -1,7 +1,6 @@
-/* npm imports: material-ui/core */
-import { createStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 
-export const styles = (_theme: Theme): Record<string, any> =>
+export const useStyles = makeStyles((_theme) =>
 	createStyles({
 		root: {
 			flexGrow: 1,
@@ -18,4 +17,5 @@ export const styles = (_theme: Theme): Record<string, any> =>
 			flexBasis: '100%',
 			lineHeight: '60px',
 		},
-	});
+	})
+);
