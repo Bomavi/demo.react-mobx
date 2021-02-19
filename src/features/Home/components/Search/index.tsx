@@ -1,58 +1,38 @@
-/* npm imports: common */
-import { Component } from 'react';
-import { inject, observer } from 'mobx-react';
+import { FC, useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
 
-/* npm imports: material-ui/core */
-import { withStyles, WithStyles } from '@material-ui/core/styles';
-
-/* root imports: view components */
-import { CustomInput } from 'views/elements';
-
-/* root imports: common */
-import { HomeStore } from 'features/Home/store';
 import { debounce, debounceTiming } from 'utils/helpers';
+import { CustomInput } from 'views/elements';
+import { useHomeStore } from 'features/Home/store';
 
-/* local imports: common */
-import { styles } from './styles';
+const Search: FC = observer(() => {
+	const { isFetching, search, searchTasks } = useHomeStore();
 
-interface SearchProps extends WithStyles<typeof styles> {
-	store?: HomeStore;
-}
+	useEffect(() => {
+		return () => {
+			if (search.q.length > 0) {
+				search.onChange('q', '');
+				searchTasks();
+			}
+		};
+	}, [search, searchTasks]);
 
-@inject('store')
-@observer
-class SearchComponent extends Component<SearchProps> {
-	public componentWillUnmount() {
-		const { search } = this.props.store!;
-
-		if (search.q.length > 0) {
-			this.props.store!.search.onChange('q', '');
-			this.props.store!.searchTasks();
-		}
-	}
-
-	private changeHandler = debounce((value: string) => {
-		this.props.store!.search.onChange('q', value);
-		this.props.store!.searchTasks();
+	const changeHandler = debounce((value: string) => {
+		search.onChange('q', value);
+		searchTasks();
 	}, debounceTiming.input);
 
-	public render() {
-		const { isFetching } = this.props.store!;
-
-		return (
-			<CustomInput
-				icon={{
-					name: 'magnify',
-					svgSize: 'md',
-				}}
-				isFetching={isFetching}
-				placeholder="Type to search..."
-				onChange={this.changeHandler}
-			/>
-		);
-	}
-}
-
-const Search = withStyles(styles)(SearchComponent);
+	return (
+		<CustomInput
+			icon={{
+				name: 'magnify',
+				svgSize: 'md',
+			}}
+			isFetching={isFetching}
+			placeholder="Type to search..."
+			onChange={changeHandler}
+		/>
+	);
+});
 
 export { Search };
