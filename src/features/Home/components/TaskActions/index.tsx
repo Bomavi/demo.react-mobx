@@ -1,15 +1,11 @@
-/* npm imports: common */
-import * as React from 'react';
+import { FC, memo } from 'react';
 import cx from 'classnames';
 
-/* npm imports: material-ui/core */
 import IconButton from '@material-ui/core/IconButton';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-/* root imports: view components */
 import { Icon } from 'views/elements';
 
-/* local imports: common */
 import { useStyles } from './styles';
 
 export interface TaskActionsProps {
@@ -19,8 +15,8 @@ export interface TaskActionsProps {
 	onEdit: () => void;
 }
 
-const TaskActions: React.FC<TaskActionsProps> = React.memo(
-	({ children, disabled, onDelete, onEdit, isFetching = false }) => {
+const TaskActions: FC<TaskActionsProps> = memo(
+	({ children, disabled, isFetching = false, onDelete, onEdit }) => {
 		const classes = useStyles();
 
 		if (isFetching) {
