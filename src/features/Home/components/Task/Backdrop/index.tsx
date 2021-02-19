@@ -1,11 +1,8 @@
-/* npm imports: common */
-import * as React from 'react';
+import { FC, memo } from 'react';
 
-/* npm imports: material-ui/core */
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Fade from '@material-ui/core/Fade';
 
-/* local imports: common */
 import { useStyles } from './styles';
 
 export interface BackdropProps {
@@ -13,7 +10,7 @@ export interface BackdropProps {
 	onClick?: () => void;
 }
 
-const Backdrop: React.FC<BackdropProps> = React.memo(({ fadeIn, onClick }) => {
+const Backdrop: FC<BackdropProps> = memo(({ fadeIn, onClick }) => {
 	const classes = useStyles();
 
 	return (
