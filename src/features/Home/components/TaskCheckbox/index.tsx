@@ -1,11 +1,8 @@
-/* npm imports: common */
-import * as React from 'react';
+import { FC, memo } from 'react';
 
-/* npm imports: material-ui/core */
 import Checkbox from '@material-ui/core/Checkbox';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-/* local imports: common */
 import { useStyles } from './styles';
 
 export interface TaskCheckboxProps {
@@ -15,8 +12,8 @@ export interface TaskCheckboxProps {
 	onChange: () => void;
 }
 
-const TaskCheckbox: React.FC<TaskCheckboxProps> = React.memo(
-	({ value, disabled, onChange, isFetching = false }) => {
+const TaskCheckbox: FC<TaskCheckboxProps> = memo(
+	({ value, disabled, isFetching = false, onChange }) => {
 		const classes = useStyles();
 
 		if (isFetching) {
