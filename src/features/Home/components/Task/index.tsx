@@ -1,111 +1,95 @@
-/* npm imports: common */
-import { Component } from 'react';
-import { inject, observer } from 'mobx-react';
-import { observable, action } from 'mobx';
+import { FC, useState } from 'react';
+import { observer } from 'mobx-react-lite';
 import cx from 'classnames';
 
-/* npm imports: material-ui/core */
-import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 
-/* root imports: view components */
+import { useHomeStore } from 'features/Home/store';
 import { TaskCheckbox, TaskActions } from 'features/Home/components';
+import { TaskModel } from 'features/Home/store/task.model';
 
-/* root imports: common */
-import { HomeStore } from 'features/Home/store';
-import { TaskModel } from 'features/Home/task.model';
-
-/* local imports: common */
 import { Description } from './Description';
 import { EditInput } from './EditInput';
 import { Backdrop } from './Backdrop';
-import { styles } from './styles';
+import { useStyles } from './styles';
 
-export interface TaskProps extends WithStyles<typeof styles> {
-	store?: HomeStore;
+interface Props {
 	task: TaskModel;
 	isLastChild: boolean;
 }
 
-@inject('store')
-@observer
-class TaskComponent extends Component<TaskProps> {
-	@observable private isHovered = false;
-	@observable private isEditable = false;
+const Task: FC<Props> = observer(({ task, isLastChild = false }) => {
+	const classes = useStyles();
 
-	@action private mouseEnterHandler = () => {
-		this.isHovered = true;
+	const [isHovered, setIsHovered] = useState(false);
+	const [isEditable, setIsEditable] = useState(false);
+
+	const { updateTask, deleteTask } = useHomeStore();
+
+	const mouseEnterHandler = () => {
+		setIsHovered(true);
 	};
 
-	@action private mouseLeaveHandler = () => {
-		this.isHovered = false;
+	const mouseLeaveHandler = () => {
+		setIsHovered(false);
 	};
 
-	@action private editHandler = () => {
-		this.isEditable = !this.isEditable;
-		this.mouseLeaveHandler();
+	const editHandler = () => {
+		setIsEditable(!isEditable);
+		mouseLeaveHandler();
 	};
 
-	private completeHandler = () => {
-		const { task } = this.props;
+	const completeHandler = () => {
 		task.setActionInProgress('updateInProgress', true);
-		this.props.store!.updateTask(task.id, { ...task, completed: !task.completed });
-		this.mouseLeaveHandler();
+		updateTask(task.id, { ...task, completed: !task.completed });
+		mouseLeaveHandler();
 	};
 
-	private saveHandler = (value: string) => {
-		const { task } = this.props;
+	const saveHandler = (value: string) => {
 		task.setActionInProgress('updateInProgress', true);
-		this.props.store!.updateTask(task.id, { ...task, description: value });
+		updateTask(task.id, { ...task, description: value });
 	};
 
-	private deleteHandler = () => {
-		const { task } = this.props;
+	const deleteHandler = () => {
 		task.setActionInProgress('deleteInProgress', true);
-		this.props.store!.deleteTask(task.id);
+		deleteTask(task.id);
 	};
 
-	public render() {
-		const { classes, task, isLastChild = false } = this.props;
-
-		return (
-			<div
-				className={cx(classes.root, { isLastChild })}
-				onMouseEnter={this.mouseEnterHandler}
-				onMouseLeave={this.mouseLeaveHandler}
-			>
-				<TaskCheckbox
-					value={task.completed}
-					isFetching={task.updateInProgress}
-					onChange={this.completeHandler}
-				/>
+	return (
+		<div
+			className={cx(classes.root, { isLastChild })}
+			onMouseEnter={mouseEnterHandler}
+			onMouseLeave={mouseLeaveHandler}
+		>
+			<TaskCheckbox
+				value={task.completed}
+				isFetching={task.updateInProgress}
+				onChange={completeHandler}
+			/>
+			<Divider className={classes.divider} />
+			<Description completed={task.completed}>{task.description}</Description>
+			{isHovered && !task.deleteInProgress && (
 				<Divider className={classes.divider} />
-				<Description completed={task.completed}>{task.description}</Description>
-				{this.isHovered && !task.deleteInProgress && (
-					<Divider className={classes.divider} />
-				)}
-				{(this.isHovered || task.deleteInProgress) && (
-					<TaskActions
-						onEdit={this.editHandler}
-						isFetching={task.deleteInProgress}
-						onDelete={this.deleteHandler}
-					/>
-				)}
-				<Backdrop fadeIn={this.isEditable} onClick={this.editHandler} />
-				{this.isEditable && (
-					<EditInput
-						autoFocus
-						isFetching={task.updateInProgress}
-						defaultValue={task.description}
-						onClick={this.saveHandler}
-						onCancel={this.editHandler}
-					/>
-				)}
-			</div>
-		);
-	}
-}
-
-const Task = withStyles(styles)(TaskComponent);
+			)}
+			{(isHovered || task.deleteInProgress) && (
+				<TaskActions
+					onEdit={editHandler}
+					isFetching={task.deleteInProgress}
+					onDelete={deleteHandler}
+				/>
+			)}
+			<Backdrop fadeIn={isEditable} onClick={editHandler} />
+			{isEditable && (
+				<EditInput
+					autoFocus
+					isFetching={task.updateInProgress}
+					defaultValue={task.description}
+					onClick={saveHandler}
+					onCancel={editHandler}
+				/>
+			)}
+		</div>
+	);
+});
 
 export { Task };
