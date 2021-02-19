@@ -1,18 +1,15 @@
-/* npm imports: common */
-import * as React from 'react';
+import { FC, memo } from 'react';
 import cx from 'classnames';
 
-/* npm imports: material-ui/core */
 import Typography from '@material-ui/core/Typography';
 
-/* local imports: common */
 import { useStyles } from './styles';
 
 export interface DescriptionProps {
 	completed: boolean;
 }
 
-const Description: React.FC<DescriptionProps> = React.memo(({ children, completed }) => {
+const Description: FC<DescriptionProps> = memo(({ children, completed }) => {
 	const classes = useStyles();
 
 	return (
