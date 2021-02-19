@@ -1,56 +1,39 @@
-/* npm imports: common */
-import * as React from 'react';
-import { observer } from 'mobx-react';
-import { observable, action } from 'mobx';
+import { FC, useState, ChangeEvent } from 'react';
 
-/* npm imports: material-ui/core */
-import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-/* root imports: view components */
 import { AddTask, Search } from 'features/Home/components';
 
-/* local imports: common */
-import { styles } from './styles';
+import { useStyles } from './styles';
 
-interface ActionTabsProps extends WithStyles<typeof styles> {}
+const ActionTabs: FC = () => {
+	const classes = useStyles();
 
-@observer
-class ActionTabsComponent extends React.Component<ActionTabsProps> {
-	@observable private tabIndex = 0;
+	const [tabIndex, setTabIndex] = useState(0);
 
-	@action private tabClickHandler = (
-		_e: React.ChangeEvent<Record<string, never>>,
-		value: number
-	) => {
-		this.tabIndex = value;
+	const tabClickHandler = (_e: ChangeEvent<Record<string, never>>, value: number) => {
+		setTabIndex(value);
 	};
 
-	public render() {
-		const { classes } = this.props;
-
-		return (
-			<Paper className={classes.root}>
-				<Tabs
-					value={this.tabIndex}
-					onChange={this.tabClickHandler}
-					indicatorColor="primary"
-					textColor="primary"
-				>
-					<Tab label="Add new task" />
-					<Tab label="Search tasks" />
-				</Tabs>
-				<div className={classes.tabContent}>
-					{this.tabIndex === 0 && <AddTask />}
-					{this.tabIndex === 1 && <Search />}
-				</div>
-			</Paper>
-		);
-	}
-}
-
-const ActionTabs = withStyles(styles)(ActionTabsComponent);
+	return (
+		<Paper className={classes.root}>
+			<Tabs
+				value={tabIndex}
+				onChange={tabClickHandler}
+				indicatorColor="primary"
+				textColor="primary"
+			>
+				<Tab label="Add new task" />
+				<Tab label="Search tasks" />
+			</Tabs>
+			<div className={classes.tabContent}>
+				{tabIndex === 0 && <AddTask />}
+				{tabIndex === 1 && <Search />}
+			</div>
+		</Paper>
+	);
+};
 
 export { ActionTabs };
