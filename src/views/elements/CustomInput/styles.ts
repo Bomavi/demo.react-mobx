@@ -1,7 +1,6 @@
-/* npm imports: material-ui/core */
-import { createStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 
-export const styles = (theme: Theme): Record<string, any> =>
+export const useStyles = makeStyles((theme) =>
 	createStyles({
 		root: {
 			display: 'flex',
@@ -24,4 +23,5 @@ export const styles = (theme: Theme): Record<string, any> =>
 			height: 30,
 			margin: '15px 0',
 		},
-	});
+	})
+);

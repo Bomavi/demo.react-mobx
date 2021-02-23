@@ -1,23 +1,23 @@
-/* npm imports: common */
-import * as React from 'react';
-import { observer } from 'mobx-react';
-import { observable, computed, action } from 'mobx';
+import {
+	FC,
+	memo,
+	useMemo,
+	useState,
+	useEffect,
+	useCallback,
+	ChangeEvent,
+	KeyboardEvent,
+} from 'react';
 
-/* npm imports: material-ui/core */
-import { withStyles, WithStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 
-/* root imports: view components */
+import { removeSpaces } from 'utils/helpers';
 import { IconProps, InputButton } from 'views/elements';
 
-/* root imports: common */
-import { removeSpaces } from 'utils/helpers';
+import { useStyles } from './styles';
 
-/* local imports: common */
-import { styles } from './styles';
-
-export interface CustomInputProps extends WithStyles<typeof styles> {
+export interface CustomInputProps {
 	icon?: IconProps;
 	placeholder?: string;
 	defaultValue?: string;
@@ -28,117 +28,100 @@ export interface CustomInputProps extends WithStyles<typeof styles> {
 	onCancel?: () => void;
 }
 
-@observer
-class CustomInputComponent extends React.Component<CustomInputProps> {
-	public static defaultProps = {
-		isFetching: false,
-		autoFocus: false,
-	};
+const CustomInput: FC<CustomInputProps> = memo((props) => {
+	const {
+		icon,
+		placeholder,
+		defaultValue,
+		isFetching = false,
+		autoFocus = false,
+		onClick,
+		onCancel,
+		onChange,
+	} = props;
 
-	@observable private inputValue = '';
+	const classes = useStyles();
 
-	@computed private get trimedValue(): string {
-		return removeSpaces(this.inputValue).trim();
-	}
+	const [inputValue, setInputValue] = useState('');
 
-	@computed private get isEmpty() {
-		const { defaultValue } = this.props;
-		return !this.trimedValue || this.trimedValue === defaultValue;
-	}
+	const trimedValue = useMemo(() => {
+		return removeSpaces(inputValue).trim();
+	}, [inputValue]);
 
-	@action private changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const isEmpty = useMemo(() => {
+		return !trimedValue || trimedValue === defaultValue;
+	}, [defaultValue, trimedValue]);
+
+	const value = useMemo(() => inputValue || defaultValue || inputValue, [
+		defaultValue,
+		inputValue,
+	]);
+
+	const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
-		this.inputValue = value;
-		this.changeCallbackHandler();
+
+		setInputValue(value);
 	};
 
-	@action private actionClickHandler = () => {
-		const { onClick, onCancel } = this.props;
-		if (onClick) onClick(this.trimedValue);
+	const clearHandler = useCallback(() => {
+		setInputValue('');
+	}, []);
+
+	const actionClickHandler = () => {
+		if (onClick) onClick(trimedValue);
 		if (onCancel) onCancel();
-		this.clearInputValue();
+
+		clearHandler();
 	};
 
-	@action private clearHandler = () => {
-		this.clearInputValue();
-	};
-
-	@action private clearInputValue = () => {
-		this.inputValue = '';
-		this.changeCallbackHandler();
-	};
-
-	private keyPressHandler = (e: React.KeyboardEvent) => {
-		const { onClick, onCancel } = this.props;
+	const keyPressHandler = (e: KeyboardEvent) => {
 		if (e.key === 'Enter' && onClick) {
-			if (this.trimedValue) onClick(this.trimedValue);
+			if (trimedValue) onClick(trimedValue);
 			if (onCancel) onCancel();
-			if (!onCancel) this.clearInputValue();
+			if (!onCancel) clearHandler();
 		}
 
 		if (e.key === 'Escape' && onCancel) onCancel();
 	};
 
-	private changeCallbackHandler = () => {
-		const { onChange } = this.props;
-		if (onChange) onChange(this.trimedValue);
-	};
+	useEffect(() => {
+		if (onChange) onChange(trimedValue);
+	}, [onChange, trimedValue]);
 
-	public render() {
-		const {
-			classes,
-			icon,
-			placeholder,
-			defaultValue,
-			isFetching,
-			autoFocus,
-			onClick,
-			onCancel,
-		} = this.props;
-
-		const value = this.inputValue || defaultValue || this.inputValue;
-
-		return (
-			<div className={classes.root}>
-				{icon && (
-					<InputButton
-						icon={icon}
-						isFetching={isFetching}
-						color={onClick ? 'primary' : 'inherit'}
-						title={icon.title}
-						disabled={onClick && this.isEmpty}
-						onClick={onClick && this.actionClickHandler}
-					/>
-				)}
-				{icon && <Divider className={classes.divider} />}
-				<InputBase
-					className={classes.input}
-					placeholder={placeholder}
-					value={value}
-					autoFocus={autoFocus}
-					onChange={this.changeHandler}
-					onKeyUp={this.keyPressHandler}
+	return (
+		<div className={classes.root}>
+			{icon && (
+				<InputButton
+					icon={icon}
+					isFetching={isFetching}
+					color={onClick ? 'primary' : 'inherit'}
+					title={icon.title}
+					disabled={onClick && isEmpty}
+					onClick={onClick && actionClickHandler}
 				/>
-				{(!this.isEmpty || onCancel) && <Divider className={classes.divider} />}
-				{!this.isEmpty && !onCancel && (
-					<InputButton
-						icon={{ name: 'close' }}
-						title="Clear"
-						onClick={this.clearHandler}
-					/>
-				)}
-				{onCancel && (
-					<InputButton
-						icon={{ name: 'close' }}
-						title="Cancel"
-						onClick={onCancel}
-					/>
-				)}
-			</div>
-		);
-	}
-}
-
-const CustomInput = withStyles(styles)(CustomInputComponent);
+			)}
+			{icon && <Divider className={classes.divider} />}
+			<InputBase
+				className={classes.input}
+				placeholder={placeholder}
+				value={value}
+				autoFocus={autoFocus}
+				onChange={changeHandler}
+				onKeyUp={keyPressHandler}
+			/>
+			{(!isEmpty || onCancel) && <Divider className={classes.divider} />}
+			{!isEmpty && !onCancel && (
+				<InputButton
+					icon={{ name: 'close' }}
+					title="Clear"
+					onClick={clearHandler}
+				/>
+			)}
+			{onCancel && (
+				<InputButton icon={{ name: 'close' }} title="Cancel" onClick={onCancel} />
+			)}
+		</div>
+	);
+});
 
 export { CustomInput };
