@@ -1,5 +1,4 @@
-/* npm imports: material-ui/core */
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 export interface IconParams {
 	size?: Sizes;
@@ -7,7 +6,7 @@ export interface IconParams {
 	color?: 'white' | 'black';
 }
 
-export const useStyles = makeStyles((theme: Theme) =>
+export const useStyles = makeStyles((theme) =>
 	createStyles({
 		svgWrapper: (p: IconParams) => ({
 			position: 'absolute',
