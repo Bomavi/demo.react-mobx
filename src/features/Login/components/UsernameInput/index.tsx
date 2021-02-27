@@ -1,15 +1,8 @@
-/* npm imports: common */
-import * as React from 'react';
+import { FC, memo } from 'react';
 
-/* npm imports: material-ui/core */
 import TextField, { TextFieldProps } from '@material-ui/core/TextField';
 
-/* local imports: common */
-// import { useStyles } from './styles';
-
-const UsernameInput: React.FC<TextFieldProps> = React.memo((props) => {
-	// const classes = useStyles();
-
+const UsernameInput: FC<TextFieldProps> = memo((props) => {
 	return (
 		<TextField
 			fullWidth
