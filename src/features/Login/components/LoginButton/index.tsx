@@ -1,10 +1,7 @@
-/* npm imports: common */
-import * as React from 'react';
+import { FC, memo } from 'react';
 
-/* npm imports: material-ui/core */
 import Button, { ButtonProps } from '@material-ui/core/Button';
 
-/* local imports: common */
 import { useStyles } from './styles';
 
 export interface LoginButtonProps {
@@ -12,7 +9,7 @@ export interface LoginButtonProps {
 	marginTop?: number;
 }
 
-const LoginButton: React.FC<LoginButtonProps & ButtonProps> = React.memo(
+const LoginButton: FC<LoginButtonProps & ButtonProps> = memo(
 	({ children, gradient, marginTop = 0, ...props }) => {
 		const classes = useStyles({ marginTop, gradient });
 
