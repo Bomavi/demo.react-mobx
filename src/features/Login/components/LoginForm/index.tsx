@@ -1,13 +1,9 @@
-/* npm imports: common */
-import * as React from 'react';
-import { observer, inject } from 'mobx-react';
-import { observable, computed, action } from 'mobx';
+import { FC, useMemo, useState } from 'react';
+import { observer } from 'mobx-react-lite';
 
-/* npm imports: material-ui/core */
-import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 
-/* root imports: view components */
+import { useAuthStore } from 'features/Login/store';
 import {
 	UsernameInput,
 	PasswordInput,
@@ -15,127 +11,104 @@ import {
 	LoginButton,
 } from 'features/Login/components';
 
-/* root imports: common */
-import { AuthStore } from 'features/Login/store';
+import { useStyles } from './styles';
 
-/* local imports: common */
-import { styles } from './styles';
+const LoginForm: FC = observer(() => {
+	const classes = useStyles();
 
-interface LoginFormProps extends WithStyles<typeof styles> {
-	store?: AuthStore;
-}
+	const [tabIndex, setTabIndex] = useState(0);
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
+	const [repeatPassword, setRepeatPassword] = useState('');
 
-@inject('store')
-@observer
-class LoginFormComponent extends React.Component<LoginFormProps> {
-	@observable private tabIndex = 0;
+	const { login, register } = useAuthStore();
 
-	@observable public username = '';
-	@observable public password = '';
-	@observable public repeatPassword = '';
+	const isPasswordCorrect = useMemo(() => {
+		return password === repeatPassword;
+	}, [password, repeatPassword]);
 
-	@computed public get isPasswordCorrect() {
-		return this.password === this.repeatPassword;
-	}
+	const isLoginReady = useMemo(() => {
+		return !!username && !!password;
+	}, [username, password]);
 
-	@computed public get isLoginReady() {
-		return !!this.username && !!this.password;
-	}
+	const isRegistrationReady = useMemo(() => {
+		return isLoginReady && isPasswordCorrect;
+	}, [isLoginReady, isPasswordCorrect]);
 
-	@computed public get isRegistrationReady() {
-		return this.isLoginReady && this.isPasswordCorrect;
-	}
-
-	@action private tabClickHandler = (
+	const tabClickHandler = (
 		_e: React.ChangeEvent<Record<string, never>>,
 		value: number
 	) => {
-		this.tabIndex = value;
+		setTabIndex(value);
 	};
 
-	@action public usernameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const usernameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
-		this.username = value;
+		setUsername(value);
 	};
 
-	@action public passwordChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const passwordChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
-		this.password = value;
+		setPassword(value);
 	};
 
-	@action public repeatPasswordChangeHandler = (
-		e: React.ChangeEvent<HTMLInputElement>
-	) => {
+	const repeatPasswordChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
-		this.repeatPassword = value;
+		setRepeatPassword(value);
 	};
 
-	public loginHandler = () => {
-		const { login } = this.props.store!;
-		const userData = {
-			username: this.username,
-			password: this.password,
-		};
-
-		if (this.isLoginReady) login(userData);
+	const loginHandler = () => {
+		if (isLoginReady) {
+			login({
+				username,
+				password,
+			});
+		}
 	};
 
-	public registrationHandler = () => {
-		const { register } = this.props.store!;
-		const userData = {
-			username: this.username,
-			password: this.password,
-		};
-
-		if (this.isRegistrationReady) register(userData);
+	const registrationHandler = () => {
+		if (isRegistrationReady) {
+			register({
+				username,
+				password,
+			});
+		}
 	};
 
-	public render() {
-		const { classes } = this.props;
-
-		return (
-			<Paper className={classes.paper}>
-				<LoginTabs tabIndex={this.tabIndex} onChange={this.tabClickHandler} />
-				<div className={classes.wrapper}>
-					<UsernameInput
-						value={this.username}
-						onChange={this.usernameChangeHandler}
-					/>
-					<PasswordInput
-						value={this.password}
-						onChange={this.passwordChangeHandler}
-					/>
-					{this.tabIndex === 0 && (
+	return (
+		<Paper className={classes.paper}>
+			<LoginTabs tabIndex={tabIndex} onChange={tabClickHandler} />
+			<div className={classes.wrapper}>
+				<UsernameInput value={username} onChange={usernameChangeHandler} />
+				<PasswordInput value={password} onChange={passwordChangeHandler} />
+				{tabIndex === 0 && (
+					<LoginButton
+						marginTop={14}
+						gradient="secondary"
+						onClick={loginHandler}
+					>
+						Login
+					</LoginButton>
+				)}
+				{tabIndex === 1 && (
+					<>
+						<PasswordInput
+							repeatPassword
+							value={repeatPassword}
+							onChange={repeatPasswordChangeHandler}
+						/>
 						<LoginButton
 							marginTop={14}
 							gradient="secondary"
-							onClick={this.loginHandler}
+							onClick={registrationHandler}
 						>
-							Login
+							Register
 						</LoginButton>
-					)}
-					{this.tabIndex === 1 && (
-						<>
-							<PasswordInput
-								repeatPassword
-								value={this.repeatPassword}
-								onChange={this.repeatPasswordChangeHandler}
-							/>
-							<LoginButton
-								marginTop={14}
-								gradient="secondary"
-								onClick={this.registrationHandler}
-							>
-								Register
-							</LoginButton>
-						</>
-					)}
-				</div>
-			</Paper>
-		);
-	}
-}
-
-const LoginForm = withStyles(styles)(LoginFormComponent);
+					</>
+				)}
+			</div>
+		</Paper>
+	);
+});
 
 export { LoginForm };
