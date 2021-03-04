@@ -1,7 +1,6 @@
-/* npm imports: material-ui/core */
-import { createStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 
-export const styles = (theme: Theme): Record<string, any> =>
+export const useStyles = makeStyles((theme) =>
 	createStyles({
 		root: {},
 		paper: {
@@ -16,4 +15,5 @@ export const styles = (theme: Theme): Record<string, any> =>
 			backgroundColor: theme.palette.background.default,
 			borderRadius: 4,
 		},
-	});
+	})
+);
