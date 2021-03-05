@@ -7,13 +7,15 @@ export interface UiStore {
 }
 
 const createUiStore = (): UiStore => {
-	return makeAutoObservable<UiStore>({
+	const store = makeAutoObservable<UiStore>({
 		isDrawerOpen: false,
 
 		toggleDrawer(isOpen = null) {
-			this.isDrawerOpen = isOpen !== null ? isOpen : !this.isDrawerOpen;
+			store.isDrawerOpen = isOpen !== null ? isOpen : !store.isDrawerOpen;
 		},
 	});
+
+	return store;
 };
 
 // class UiStore {
