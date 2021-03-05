@@ -35,7 +35,7 @@ export interface HomeStore {
 }
 
 export const createHomeStore = (): HomeStore => {
-	return makeAutoObservable<HomeStore>(
+	const store = makeAutoObservable<HomeStore>(
 		{
 			services: new Services(),
 			search: createSearchModel(),
@@ -82,70 +82,72 @@ export const createHomeStore = (): HomeStore => {
 			setFetchingState(action, state) {
 				try {
 					if (!action) throw Error('action not found');
-					this[action] = state;
+					store[action] = state;
 				} catch (e) {
 					console.error(e);
 				}
 			},
 
 			setTasks(tasks) {
-				this.tasks.replace(tasks.map((t) => createTaskModel(t)));
+				store.tasks.replace(tasks.map((t) => createTaskModel(t)));
 			},
 
 			setTask(task) {
-				this.tasks.replace([...this.tasks, createTaskModel(task)]);
+				store.tasks.replace([...store.tasks, createTaskModel(task)]);
 			},
 
 			unsetTask(id) {
-				this.tasks.replace(
-					(this.taskList as TaskModel[]).filter((t) => t.id !== id)
+				store.tasks.replace(
+					(store.taskList as TaskModel[]).filter((t) => t.id !== id)
 				);
 			},
 
 			replaceTask(task) {
-				this.tasks.replace(
-					(this.taskList as TaskModel[]).map((t) =>
+				store.tasks.replace(
+					(store.taskList as TaskModel[]).map((t) =>
 						t.id === task._id ? createTaskModel(task) : t
 					)
 				);
 			},
 
 			sortTasks(value) {
-				this.sortKey = value;
+				store.sortKey = value;
 			},
 
 			async searchTasks() {
-				this.setFetchingState('isFetching', true);
+				store.setFetchingState('isFetching', true);
 
 				try {
-					const tasks = await this.services.api.tasks.search(this.fetchParams);
-					this.setTasks(tasks);
+					const tasks = await store.services.api.tasks.search(
+						store.fetchParams
+					);
+					store.setTasks(tasks);
 				} catch ({ message }) {
 					if (message === 'Network Error') throw message;
 					console.error(message);
 				} finally {
-					this.setFetchingState('isFetching', false);
+					store.setFetchingState('isFetching', false);
 				}
 			},
 
 			async addTask(taskData) {
-				this.setFetchingState('inProgress', true);
+				store.setFetchingState('inProgress', true);
 
 				try {
-					const task = await this.services.api.tasks.create(taskData);
-					this.setTask(task);
+					const task = await store.services.api.tasks.create(taskData);
+					store.setTask(task);
 				} catch ({ message }) {
 					if (message === 'Network Error') throw message;
 					console.error(message);
 				} finally {
-					this.setFetchingState('inProgress', false);
+					store.setFetchingState('inProgress', false);
 				}
 			},
 
 			async updateTask(id, taskData) {
 				try {
-					const task = await this.services.api.tasks.update(id, taskData);
-					this.replaceTask(task);
+					const task = await store.services.api.tasks.update(id, taskData);
+					store.replaceTask(task);
 				} catch ({ message }) {
 					if (message === 'Network Error') throw message;
 					console.error(message);
@@ -154,8 +156,8 @@ export const createHomeStore = (): HomeStore => {
 
 			async deleteTask(id) {
 				try {
-					await this.services.api.tasks.delete(id);
-					this.unsetTask(id);
+					await store.services.api.tasks.delete(id);
+					store.unsetTask(id);
 				} catch ({ message }) {
 					if (message === 'Network Error') throw message;
 					console.error(message);
@@ -171,6 +173,8 @@ export const createHomeStore = (): HomeStore => {
 			// deleteTask: flow,
 		}
 	);
+
+	return store;
 };
 
 // export class HomeStore {
