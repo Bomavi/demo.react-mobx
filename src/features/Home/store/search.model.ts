@@ -12,20 +12,20 @@ export interface SearchModel {
 }
 
 export const createSearchModel = (): SearchModel => {
-	return makeAutoObservable<SearchModel>({
+	const store = makeAutoObservable<SearchModel>({
 		q: '',
 
 		onChange(name, value) {
 			try {
-				if (this[name] === undefined) throw Error(`${name} - field not found`);
-				this[name] = value;
+				if (store[name] === undefined) throw Error(`${name} - field not found`);
+				store[name] = value;
 			} catch (e) {
 				console.error(e);
 			}
 		},
 
 		reset() {
-			this.q = '';
+			store.q = '';
 		},
 
 		toJSON() {
@@ -34,6 +34,8 @@ export const createSearchModel = (): SearchModel => {
 			};
 		},
 	});
+
+	return store;
 };
 
 // export class Search {
