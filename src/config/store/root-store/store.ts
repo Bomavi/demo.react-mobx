@@ -1,16 +1,43 @@
+import { makeAutoObservable } from 'mobx';
+
 import { Services } from 'config/services';
 
-import { HomeStore } from 'features/Home/store';
-import { AuthStore } from 'features/Login/store';
+import { createHomeStore, HomeStore } from 'features/Home/store';
+import { createAuthStore, AuthStore } from 'features/Login/store';
 
-export class RootStore {
-	public readonly services;
-	public readonly featureHome;
-	public readonly featureAuth;
-
-	constructor() {
-		this.services = new Services();
-		this.featureHome = new HomeStore(this);
-		this.featureAuth = new AuthStore(this);
-	}
+interface RootStore {
+	services: Services;
+	// featureHome: HomeStore;
+	// featureAuth: AuthStore;
 }
+
+const createRootStore = (): RootStore => {
+	return makeAutoObservable<RootStore>(
+		{
+			services: new Services(),
+			// featureHome: createHomeStore(this),
+			// featureAuth: createAuthStore(this),
+		},
+		{
+			services: false,
+			// featureHome: false,
+			// featureAuth: false,
+		}
+	);
+};
+
+// class RootStore {
+// 	public readonly services;
+// 	public readonly featureHome;
+// 	public readonly featureAuth;
+
+// 	constructor() {
+// 		this.services = new Services();
+// 		this.featureHome = createHomeStore(this);
+// 		this.featureAuth = createAuthStore(this);
+// 	}
+// }
+
+export const rootStore = createRootStore();
+
+export type TRootStore = RootStore;

@@ -1,16 +1,14 @@
 import React, { createContext, useContext } from 'react';
 
-import { RootStore } from './store';
+import { rootStore, TRootStore } from './store';
 
-const RootStoreContext = createContext<RootStore | null>(null);
+const RootStoreContext = createContext<TRootStore | null>(null);
 
 export const RootStoreProvider: React.FC = ({ children }) => (
-	<RootStoreContext.Provider value={new RootStore()}>
-		{children}
-	</RootStoreContext.Provider>
+	<RootStoreContext.Provider value={rootStore}>{children}</RootStoreContext.Provider>
 );
 
-export const useRootStore = (): RootStore => {
+export const useRootStore = (): TRootStore => {
 	const rootStore = useContext(RootStoreContext);
 
 	if (!rootStore) {
