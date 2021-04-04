@@ -23,7 +23,8 @@
     "noImplicitThis": false,
     "jsx": "react-jsx",
     "baseUrl": "src",
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "inlineSourceMap": true
   },
   "include": [
     "src",
