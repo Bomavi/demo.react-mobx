@@ -1,18 +1,23 @@
+// import { StrictMode } from 'react';
 import { render } from 'react-dom';
-import { configure } from 'mobx';
+// import { configure } from 'mobx';
 
-import { RootStoreProvider, UiStoreProvider } from 'config/store';
-import { App } from 'views/layouts/App';
+import { UiStoreProvider } from 'config/store';
+import { AuthStoreProvider } from 'pages/Login/store';
+import { HomeStoreProvider } from 'pages/Home/store';
+import App from 'views/layouts/App';
 
-/* mobx configuration */
-configure({ enforceActions: 'observed' });
+// configure({ enforceActions: 'observed' });
 
-/* init react app */
 render(
+	// <StrictMode>
 	<UiStoreProvider>
-		<RootStoreProvider>
-			<App />
-		</RootStoreProvider>
+		<AuthStoreProvider>
+			<HomeStoreProvider>
+				<App />
+			</HomeStoreProvider>
+		</AuthStoreProvider>
 	</UiStoreProvider>,
+	// </StrictMode>,
 	document.getElementById('root') as HTMLElement
 );
