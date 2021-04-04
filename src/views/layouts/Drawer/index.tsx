@@ -5,19 +5,17 @@ import MUIDrawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 
-import { useRootStore, useUiStore } from 'config/store';
+import { useUiStore } from 'config/store';
+import { useAuthStore } from 'pages/Login/store';
 
-import { DrawerItem } from './DrawerItem';
+import DrawerItem from './DrawerItem';
 import { useStyles } from './styles';
 
-const Drawer: FC = observer(() => {
+const Drawer: FC = () => {
 	const classes = useStyles();
 
 	const { isDrawerOpen, toggleDrawer } = useUiStore();
-
-	const {
-		featureAuth: { switchTheme, themeNameToSwitch, user, inProgress, logout },
-	} = useRootStore();
+	const { switchTheme, themeNameToSwitch, user, inProgress, logout } = useAuthStore();
 
 	const hideDrawer = useCallback(() => {
 		toggleDrawer(false);
@@ -51,6 +49,6 @@ const Drawer: FC = observer(() => {
 			</List>
 		</MUIDrawer>
 	);
-});
+};
 
-export { Drawer };
+export default observer(Drawer);

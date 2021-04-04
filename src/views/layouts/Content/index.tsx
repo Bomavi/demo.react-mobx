@@ -1,16 +1,17 @@
 import { FC } from 'react';
 import { observer } from 'mobx-react-lite';
 
-import { Header, Footer, Drawer } from 'views/layouts';
-import { useRootStore } from 'config/store';
+import Drawer from 'views/layouts/Drawer';
+import Footer from 'views/layouts/Footer';
+import Header from 'views/layouts/Header';
+import { useAuthStore } from 'pages/Login/store';
 
 import { useStyles } from './styles';
 
-const Content: FC = observer(({ children }) => {
+const Content: FC = ({ children }) => {
 	const classes = useStyles();
-	const {
-		featureAuth: { isAuthenticated },
-	} = useRootStore();
+
+	const { isAuthenticated } = useAuthStore();
 
 	return (
 		<>
@@ -21,6 +22,6 @@ const Content: FC = observer(({ children }) => {
 			<Footer />
 		</>
 	);
-});
+};
 
-export { Content };
+export default observer(Content);

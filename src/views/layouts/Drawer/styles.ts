@@ -1,7 +1,5 @@
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
-export const useStyles = makeStyles((theme) =>
-	createStyles({
-		toolbar: theme.mixins.toolbar,
-	})
-);
+export const useStyles = makeStyles((theme) => ({
+	toolbar: theme.mixins.toolbar,
+}));

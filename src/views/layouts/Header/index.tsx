@@ -6,19 +6,18 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 
-import { Icon } from 'views/elements';
-import { useRootStore, useUiStore } from 'config/store';
+import { useUiStore } from 'config/store';
+import { useAuthStore } from 'pages/Login/store';
+import Icon from 'views/elements/Icon';
 
 import { useStyles } from './styles';
 
-const Header: FC = observer(() => {
+const Header: FC = () => {
 	const classes = useStyles();
 
 	const { toggleDrawer } = useUiStore();
 
-	const {
-		featureAuth: { user },
-	} = useRootStore();
+	const { user } = useAuthStore();
 
 	const toggleDrawerHandler = () => {
 		toggleDrawer();
@@ -48,6 +47,6 @@ const Header: FC = observer(() => {
 			</Toolbar>
 		</AppBar>
 	);
-});
+};
 
-export { Header };
+export default observer(Header);

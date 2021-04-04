@@ -4,21 +4,21 @@ import { observer } from 'mobx-react-lite';
 import { ThemeProvider } from '@material-ui/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import { Router } from 'router';
-import { useRootStore } from 'config/store';
-import { Content } from 'views/layouts';
+import Router from 'router';
+import { useAuthStore } from 'pages/Login/store';
+import Content from 'views/layouts/Content';
 
 import { useStyles } from './styles';
 
-const App: FC = observer(() => {
+const App: FC = () => {
 	const classes = useStyles();
 
-	const {
-		featureAuth: { isAuthenticated, selectedTheme, authenticate },
-	} = useRootStore();
+	const { isAuthenticated, selectedTheme, authenticate } = useAuthStore();
 
 	useEffect(() => {
-		if (!isAuthenticated) authenticate();
+		if (!isAuthenticated) {
+			authenticate();
+		}
 	}, [isAuthenticated, authenticate]);
 
 	return (
@@ -33,6 +33,6 @@ const App: FC = observer(() => {
 			</>
 		</ThemeProvider>
 	);
-});
+};
 
-export { App };
+export default observer(App);

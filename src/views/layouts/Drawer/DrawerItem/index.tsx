@@ -5,9 +5,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import { Icon, IconName } from 'views/elements';
+import Icon, { IconName } from 'views/elements/Icon';
 
-interface DrawerItemProps {
+interface Props {
 	iconName: IconName;
 	text: string;
 	caption?: string;
@@ -15,21 +15,25 @@ interface DrawerItemProps {
 	onClick: () => void;
 }
 
-const DrawerItem: FC<DrawerItemProps> = memo(
-	({ iconName, text, caption, inProgress = false, onClick }) => {
-		return (
-			<ListItem button onClick={onClick}>
-				<ListItemIcon>
-					{inProgress ? (
-						<CircularProgress size={18} thickness={4} color="inherit" />
-					) : (
-						<Icon name={iconName} svgSize="md" />
-					)}
-				</ListItemIcon>
-				<ListItemText primary={text} secondary={caption} />
-			</ListItem>
-		);
-	}
-);
+const DrawerItem: FC<Props> = ({
+	iconName,
+	text,
+	caption,
+	inProgress = false,
+	onClick,
+}) => {
+	return (
+		<ListItem button onClick={onClick}>
+			<ListItemIcon>
+				{inProgress ? (
+					<CircularProgress size={18} thickness={4} color="inherit" />
+				) : (
+					<Icon name={iconName} svgSize="md" />
+				)}
+			</ListItemIcon>
+			<ListItemText primary={text} secondary={caption} />
+		</ListItem>
+	);
+};
 
-export { DrawerItem };
+export default memo(DrawerItem);
