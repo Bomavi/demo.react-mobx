@@ -2,8 +2,8 @@ import { makeAutoObservable } from 'mobx';
 
 import { Services } from 'config/services';
 
-import { createHomeStore, HomeStore } from 'features/Home/store';
-import { createAuthStore, AuthStore } from 'features/Login/store';
+import { homeStore, HomeStore } from 'pages/Home/store';
+import { authStore, AuthStore } from 'pages/Login/store';
 
 interface RootStore {
 	services: Services;
