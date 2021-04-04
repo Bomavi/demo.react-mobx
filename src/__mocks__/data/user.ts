@@ -10,4 +10,4 @@ const userFabric = (index: number): UserType => {
 
 export const user = userFabric(1);
 
-export const users = [1, 2, 3].map(i => userFabric(i));
+export const users = [1, 2, 3].map((i) => userFabric(i));

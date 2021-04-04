@@ -10,4 +10,4 @@ const taskFabric = (index: number): TaskType => {
 
 export const task = taskFabric(1);
 
-export const tasks = [1, 2, 3].map(i => taskFabric(i));
+export const tasks = [1, 2, 3].map((i) => taskFabric(i));
