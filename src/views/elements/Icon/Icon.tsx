@@ -11,7 +11,7 @@ export interface IconProps extends IconParams {
 	title?: string;
 }
 
-const Icon: FC<IconProps> = memo(({ name, size = 'sm', svgSize = 'sm', color }) => {
+const Icon: FC<IconProps> = ({ name, size = 'sm', svgSize = 'sm', color }) => {
 	const classes = useStyles({ color });
 	const SVG = lazy(() => import(`assets/icons/${name}`));
 
@@ -24,6 +24,6 @@ const Icon: FC<IconProps> = memo(({ name, size = 'sm', svgSize = 'sm', color }) 
 			</div>
 		</div>
 	);
-});
+};
 
-export { Icon };
+export default memo(Icon);

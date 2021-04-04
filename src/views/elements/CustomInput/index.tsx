@@ -13,7 +13,8 @@ import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 
 import { removeSpaces } from 'utils/helpers';
-import { IconProps, InputButton } from 'views/elements';
+import InputButton from 'views/elements/InputButton';
+import { IconProps } from 'views/elements/Icon';
 
 import { useStyles } from './styles';
 
@@ -28,7 +29,7 @@ export interface CustomInputProps {
 	onCancel?: () => void;
 }
 
-const CustomInput: FC<CustomInputProps> = memo((props) => {
+const CustomInput: FC<CustomInputProps> = (props) => {
 	const {
 		icon,
 		placeholder,
@@ -122,6 +123,6 @@ const CustomInput: FC<CustomInputProps> = memo((props) => {
 			)}
 		</div>
 	);
-});
+};
 
-export { CustomInput };
+export default memo(CustomInput);
