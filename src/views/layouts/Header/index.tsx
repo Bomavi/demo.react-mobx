@@ -13,40 +13,35 @@ import Icon from 'views/elements/Icon';
 import { useStyles } from './styles';
 
 const Header: FC = () => {
-	const classes = useStyles();
+  const classes = useStyles();
 
-	const { toggleDrawer } = useUiStore();
+  const { toggleDrawer } = useUiStore();
 
-	const { user } = useAuthStore();
+  const { user } = useAuthStore();
 
-	const toggleDrawerHandler = () => {
-		toggleDrawer();
-	};
+  const toggleDrawerHandler = () => {
+    toggleDrawer();
+  };
 
-	return (
-		<AppBar position="fixed" className={classes.appBar}>
-			<Toolbar>
-				<Typography variant="h6" noWrap className={classes.title}>
-					TODO'SHER
-				</Typography>
-				{user && (
-					<Typography variant="subtitle2" noWrap className={classes.hello}>
-						Hello, {user.username}
-					</Typography>
-				)}
-				{user && (
-					<IconButton color="inherit" onClick={toggleDrawerHandler}>
-						<Icon
-							name="account-circle"
-							color="white"
-							size="md"
-							svgSize="lg"
-						/>
-					</IconButton>
-				)}
-			</Toolbar>
-		</AppBar>
-	);
+  return (
+    <AppBar position="fixed" className={classes.appBar}>
+      <Toolbar>
+        <Typography noWrap variant="h6" className={classes.title}>
+          TODO'SHER
+        </Typography>
+        {user && (
+          <Typography noWrap variant="subtitle2" className={classes.hello}>
+            Hello, {user.username}
+          </Typography>
+        )}
+        {user && (
+          <IconButton color="inherit" onClick={toggleDrawerHandler}>
+            <Icon name="account-circle" color="white" size="md" svgSize="lg" />
+          </IconButton>
+        )}
+      </Toolbar>
+    </AppBar>
+  );
 };
 
 export default observer(Header);

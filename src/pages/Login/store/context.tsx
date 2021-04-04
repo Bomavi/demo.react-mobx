@@ -5,15 +5,15 @@ import { AuthStore, authStore } from './store';
 const StoreContext = createContext<AuthStore | null>(null);
 
 export const AuthStoreProvider: React.FC = ({ children }) => (
-	<StoreContext.Provider value={authStore}>{children}</StoreContext.Provider>
+  <StoreContext.Provider value={authStore}>{children}</StoreContext.Provider>
 );
 
 export const useAuthStore = (): AuthStore => {
-	const store = useContext(StoreContext);
+  const store = useContext(StoreContext);
 
-	if (!store) {
-		throw new Error('useAuthStore must be used within a AuthStoreProvider');
-	}
+  if (!store) {
+    throw new Error('useAuthStore must be used within a AuthStoreProvider');
+  }
 
-	return store;
+  return store;
 };

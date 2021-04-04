@@ -3,205 +3,205 @@ import { MockedAuthStore } from '__mocks__/store/auth';
 import { mockedAuthServerResponse } from '__mocks__/services/auth';
 import { mockedUsersServerResponse } from '__mocks__/services/users';
 
-import { lightTheme, darkTheme } from 'utils/themes';
+import { darkTheme, lightTheme } from 'utils/themes';
 
 import { AuthStore } from './store';
 
 describe('AuthStore', () => {
-	afterEach(() => {
-		mockedAuthServerResponse.reset();
-	});
+  afterEach(() => {
+    mockedAuthServerResponse.reset();
+  });
 
-	afterAll(() => {
-		mockedAuthServerResponse.restore();
-	});
+  afterAll(() => {
+    mockedAuthServerResponse.restore();
+  });
 
-	it('should be empty', () => {
-		const store = new AuthStore();
+  it('should be empty', () => {
+    const store = new AuthStore();
 
-		expect(store.user).toBe(null);
-	});
+    expect(store.user).toBe(null);
+  });
 
-	it('should set inProgress to true', () => {
-		const store = new AuthStore();
+  it('should set inProgress to true', () => {
+    const store = new AuthStore();
 
-		store.setInProgress(true);
+    store.setInProgress(true);
 
-		expect(store.inProgress).toBe(true);
-	});
+    expect(store.inProgress).toBe(true);
+  });
 
-	it('should change selected theme type', () => {
-		const store = new AuthStore();
+  it('should change selected theme type', () => {
+    const store = new AuthStore();
 
-		store.changeSelectedThemeType('light');
+    store.changeSelectedThemeType('light');
 
-		expect(store.themeNameToSwitch).toBe('dark');
-		expect(store.selectedTheme).toBe(lightTheme);
+    expect(store.themeNameToSwitch).toBe('dark');
+    expect(store.selectedTheme).toBe(lightTheme);
 
-		store.changeSelectedThemeType('dark');
+    store.changeSelectedThemeType('dark');
 
-		expect(store.themeNameToSwitch).toBe('light');
-		expect(store.selectedTheme).toBe(darkTheme);
-	});
+    expect(store.themeNameToSwitch).toBe('light');
+    expect(store.selectedTheme).toBe(darkTheme);
+  });
 
-	it('should request user authentication (failed response)', async () => {
-		mockedAuthServerResponse.initFailResponse();
+  it('should request user authentication (failed response)', async () => {
+    mockedAuthServerResponse.initFailResponse();
 
-		const store = new AuthStore();
+    const store = new AuthStore();
 
-		try {
-			await store.authenticate();
-		} catch (e) {
-			expect(e).toEqual('Network Error');
-		}
+    try {
+      await store.authenticate();
+    } catch (e) {
+      expect(e).toEqual('Network Error');
+    }
 
-		expect(store.user).toBe(null);
-		expect(store.isAuthenticated).toBe(false);
-	});
+    expect(store.user).toBe(null);
+    expect(store.isAuthenticated).toBe(false);
+  });
 
-	it('should request user authentication (success response)', async () => {
-		mockedAuthServerResponse.initSuccessResponse();
+  it('should request user authentication (success response)', async () => {
+    mockedAuthServerResponse.initSuccessResponse();
 
-		const store = new AuthStore();
-		const mockedStore = new MockedAuthStore();
+    const store = new AuthStore();
+    const mockedStore = new MockedAuthStore();
 
-		mockedStore.setUser(user);
+    mockedStore.setUser(user);
 
-		await store.authenticate();
+    await store.authenticate();
 
-		expect(store.user).not.toBe(null);
-		expect(store.user).toEqual(mockedStore.user);
-		expect(store.isAuthenticated).toBe(true);
-	});
+    expect(store.user).not.toBe(null);
+    expect(store.user).toEqual(mockedStore.user);
+    expect(store.isAuthenticated).toBe(true);
+  });
 
-	it('should request user login (failed response)', async () => {
-		mockedAuthServerResponse.initFailResponse();
+  it('should request user login (failed response)', async () => {
+    mockedAuthServerResponse.initFailResponse();
 
-		const store = new AuthStore();
+    const store = new AuthStore();
 
-		try {
-			await store.login({});
-		} catch (e) {
-			expect(e).toEqual('Network Error');
-		}
+    try {
+      await store.login({});
+    } catch (e) {
+      expect(e).toEqual('Network Error');
+    }
 
-		expect(store.user).toBe(null);
-	});
+    expect(store.user).toBe(null);
+  });
 
-	it('should request user login (success response)', async () => {
-		mockedAuthServerResponse.initSuccessResponse();
+  it('should request user login (success response)', async () => {
+    mockedAuthServerResponse.initSuccessResponse();
 
-		const store = new AuthStore();
-		const mockedStore = new MockedAuthStore();
+    const store = new AuthStore();
+    const mockedStore = new MockedAuthStore();
 
-		mockedStore.setUser(user);
+    mockedStore.setUser(user);
 
-		await store.login({});
+    await store.login({});
 
-		expect(store.user).not.toBe(null);
-		expect(store.user).toEqual(mockedStore.user);
-	});
+    expect(store.user).not.toBe(null);
+    expect(store.user).toEqual(mockedStore.user);
+  });
 
-	it('should request user registration (failed response)', async () => {
-		mockedAuthServerResponse.initFailResponse();
+  it('should request user registration (failed response)', async () => {
+    mockedAuthServerResponse.initFailResponse();
 
-		const store = new AuthStore();
+    const store = new AuthStore();
 
-		try {
-			await store.register({ username: 'username', password: 'password' });
-		} catch (e) {
-			expect(e).toEqual('Network Error');
-		}
+    try {
+      await store.register({ username: 'username', password: 'password' });
+    } catch (e) {
+      expect(e).toEqual('Network Error');
+    }
 
-		expect(store.user).toBe(null);
-	});
+    expect(store.user).toBe(null);
+  });
 
-	it('should request user registration (success response)', async () => {
-		mockedAuthServerResponse.initSuccessResponse();
+  it('should request user registration (success response)', async () => {
+    mockedAuthServerResponse.initSuccessResponse();
 
-		const store = new AuthStore();
-		const mockedStore = new MockedAuthStore();
+    const store = new AuthStore();
+    const mockedStore = new MockedAuthStore();
 
-		mockedStore.setUser(user);
+    mockedStore.setUser(user);
 
-		await store.register({ username: 'username', password: 'password' });
+    await store.register({ username: 'username', password: 'password' });
 
-		expect(store.user).not.toBe(null);
-		expect(store.user).toEqual(mockedStore.user);
-	});
+    expect(store.user).not.toBe(null);
+    expect(store.user).toEqual(mockedStore.user);
+  });
 
-	it('should request user logout (failed response)', async () => {
-		mockedAuthServerResponse.initFailResponse();
+  it('should request user logout (failed response)', async () => {
+    mockedAuthServerResponse.initFailResponse();
 
-		const store = new AuthStore();
+    const store = new AuthStore();
 
-		try {
-			await store.logout();
-		} catch (e) {
-			expect(e).toEqual('Network Error');
-		}
-	});
+    try {
+      await store.logout();
+    } catch (e) {
+      expect(e).toEqual('Network Error');
+    }
+  });
 
-	it('should request user logout (success response)', async () => {
-		mockedAuthServerResponse.initSuccessResponse();
+  it('should request user logout (success response)', async () => {
+    mockedAuthServerResponse.initSuccessResponse();
 
-		const store = new AuthStore();
+    const store = new AuthStore();
 
-		await store.authenticate();
-		await store.logout();
+    await store.authenticate();
+    await store.logout();
 
-		expect(store.user).toBe(null);
-	});
+    expect(store.user).toBe(null);
+  });
 
-	it('should request user update (failed response)', async () => {
-		mockedUsersServerResponse.initFailResponse();
+  it('should request user update (failed response)', async () => {
+    mockedUsersServerResponse.initFailResponse();
 
-		const store = new AuthStore();
+    const store = new AuthStore();
 
-		try {
-			await store.setUser(user);
-			await store.update({});
-		} catch (e) {
-			expect(e).toEqual('Network Error');
-		}
-	});
+    try {
+      await store.setUser(user);
+      await store.update({});
+    } catch (e) {
+      expect(e).toEqual('Network Error');
+    }
+  });
 
-	it('should request user update (success response)', async () => {
-		mockedUsersServerResponse.initSuccessResponse();
+  it('should request user update (success response)', async () => {
+    mockedUsersServerResponse.initSuccessResponse();
 
-		const store = new AuthStore();
-		const mockedStore = new MockedAuthStore();
+    const store = new AuthStore();
+    const mockedStore = new MockedAuthStore();
 
-		mockedStore.setUser(user);
-		store.setUser(user);
+    mockedStore.setUser(user);
+    store.setUser(user);
 
-		await store.update({});
+    await store.update({});
 
-		expect(store.user).toEqual(mockedStore.user);
-	});
+    expect(store.user).toEqual(mockedStore.user);
+  });
 
-	it('should switch theme and request user update (failed response)', async () => {
-		mockedUsersServerResponse.initFailResponse();
+  it('should switch theme and request user update (failed response)', async () => {
+    mockedUsersServerResponse.initFailResponse();
 
-		const store = new AuthStore();
+    const store = new AuthStore();
 
-		store.setUser(user);
+    store.setUser(user);
 
-		try {
-			await store.switchTheme();
-		} catch (e) {
-			expect(e).toEqual('Network Error');
-		}
-	});
+    try {
+      await store.switchTheme();
+    } catch (e) {
+      expect(e).toEqual('Network Error');
+    }
+  });
 
-	it('should switch theme and request user update (success response)', async () => {
-		mockedUsersServerResponse.initSuccessResponse();
+  it('should switch theme and request user update (success response)', async () => {
+    mockedUsersServerResponse.initSuccessResponse();
 
-		const store = new AuthStore();
+    const store = new AuthStore();
 
-		await store.setUser(user);
-		await store.switchTheme();
+    await store.setUser(user);
+    await store.switchTheme();
 
-		expect(store.selectedThemeType).toEqual(user.theme);
-	});
+    expect(store.selectedThemeType).toEqual(user.theme);
+  });
 });

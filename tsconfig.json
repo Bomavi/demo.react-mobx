@@ -1,10 +1,13 @@
 {
   "compilerOptions": {
     "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
     "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNEXT",
+      "dom",
+      "dom.iterable",
+      "esnext",
       "esnext.intl",
       "es2017.intl",
       "es2018.intl"
@@ -15,15 +18,11 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "noImplicitThis": false,
-    "jsx": "react-jsx",
     "baseUrl": "src",
-    "noFallthroughCasesInSwitch": true,
     "inlineSourceMap": true
   },
   "include": [

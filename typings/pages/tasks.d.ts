@@ -1,10 +1,10 @@
 declare type TasksSearchKeys = 'q';
 
 declare interface TasksSearchType {
-	q?: TasksSearchKeys;
-	// ? pagination options
-	size?: number;
-	page?: number;
+  q?: TasksSearchKeys;
+  // ? pagination options
+  size?: number;
+  page?: number;
 }
 
 declare type TaskActionInProgress = 'updateInProgress' | 'deleteInProgress';
@@ -12,14 +12,14 @@ declare type TaskActionInProgress = 'updateInProgress' | 'deleteInProgress';
 declare type TaskFetchingState = 'inProgress' | 'isFetching';
 
 declare interface TaskType {
-	_id: string;
-	description: string;
-	completed: boolean;
-	createdAt: string | number;
-	updatedAt: string | number;
+  _id: string;
+  description: string;
+  completed: boolean;
+  createdAt: string | number;
+  updatedAt: string | number;
 }
 
 declare interface TaskUpdateSchema {
-	description?: string;
-	completed?: boolean;
+  description?: string;
+  completed?: boolean;
 }

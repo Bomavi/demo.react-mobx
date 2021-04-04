@@ -1,33 +1,15 @@
 import { makeAutoObservable } from 'mobx';
 
-export interface UiStore {
-	isDrawerOpen: boolean;
+export class UiStore {
+  public isDrawerOpen = false;
 
-	toggleDrawer(isOpen?: boolean | null): void;
+  constructor() {
+    makeAutoObservable(this);
+  }
+
+  public toggleDrawer = (isOpen: boolean | null = null): void => {
+    this.isDrawerOpen = isOpen !== null ? isOpen : !this.isDrawerOpen;
+  };
 }
 
-const createUiStore = (): UiStore => {
-	const store = makeAutoObservable<UiStore>({
-		isDrawerOpen: false,
-
-		toggleDrawer(isOpen = null) {
-			store.isDrawerOpen = isOpen !== null ? isOpen : !store.isDrawerOpen;
-		},
-	});
-
-	return store;
-};
-
-// class UiStore {
-// 	public isDrawerOpen = false;
-
-// 	constructor() {
-// 		makeAutoObservable(this);
-// 	}
-
-// 	public toggleDrawer = (isOpen: boolean | null = null): void => {
-// 		this.isDrawerOpen = isOpen !== null ? isOpen : !this.isDrawerOpen;
-// 	};
-// }
-
-export const uiStore = createUiStore();
+export const uiStore = new UiStore();

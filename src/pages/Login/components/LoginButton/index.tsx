@@ -2,26 +2,26 @@ import { FC, memo } from 'react';
 
 import Button, { ButtonProps } from '@material-ui/core/Button';
 
-import { useStyles, ButtonGradient } from './styles';
+import { ButtonGradient, useStyles } from './styles';
 
 interface Props {
-	gradient: ButtonGradient;
-	marginTop?: number;
+  gradient: ButtonGradient;
+  marginTop?: number;
 }
 
 const LoginButton: FC<Props & ButtonProps> = ({
-	children,
-	gradient,
-	marginTop = 0,
-	...restProps
+  children,
+  gradient,
+  marginTop = 0,
+  ...restProps
 }) => {
-	const classes = useStyles({ marginTop, gradient });
+  const classes = useStyles({ marginTop, gradient });
 
-	return (
-		<Button className={classes.button} {...restProps}>
-			{children}
-		</Button>
-	);
+  return (
+    <Button className={classes.button} {...restProps}>
+      {children}
+    </Button>
+  );
 };
 
 export default memo(LoginButton);

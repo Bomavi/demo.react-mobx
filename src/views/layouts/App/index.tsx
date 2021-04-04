@@ -11,28 +11,28 @@ import Content from 'views/layouts/Content';
 import { useStyles } from './styles';
 
 const App: FC = () => {
-	const classes = useStyles();
+  const classes = useStyles();
 
-	const { isAuthenticated, selectedTheme, authenticate } = useAuthStore();
+  const { isAuthenticated, selectedTheme, authenticate } = useAuthStore();
 
-	useEffect(() => {
-		if (!isAuthenticated) {
-			authenticate();
-		}
-	}, [isAuthenticated, authenticate]);
+  useEffect(() => {
+    if (!isAuthenticated) {
+      authenticate();
+    }
+  }, [isAuthenticated, authenticate]);
 
-	return (
-		<ThemeProvider theme={selectedTheme}>
-			<>
-				<CssBaseline />
-				<div className={classes.app}>
-					<Content>
-						<Router />
-					</Content>
-				</div>
-			</>
-		</ThemeProvider>
-	);
+  return (
+    <ThemeProvider theme={selectedTheme}>
+      <>
+        <CssBaseline />
+        <div className={classes.app}>
+          <Content>
+            <Router />
+          </Content>
+        </div>
+      </>
+    </ThemeProvider>
+  );
 };
 
 export default observer(App);

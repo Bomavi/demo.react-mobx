@@ -6,22 +6,22 @@ import Typography from '@material-ui/core/Typography';
 import { useStyles } from './styles';
 
 interface Props {
-	completed: boolean;
+  completed: boolean;
 }
 
 const Description: FC<Props> = ({ children, completed }) => {
-	const classes = useStyles();
+  const classes = useStyles();
 
-	return (
-		<Typography
-			className={cx(classes.typography, { completed })}
-			title={String(children)}
-			noWrap
-			variant="body1"
-		>
-			{children}
-		</Typography>
-	);
+  return (
+    <Typography
+      noWrap
+      className={cx(classes.typography, { completed })}
+      title={String(children)}
+      variant="body1"
+    >
+      {children}
+    </Typography>
+  );
 };
 
 export default Description;

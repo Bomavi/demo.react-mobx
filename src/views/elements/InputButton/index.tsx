@@ -9,53 +9,53 @@ import Icon, { IconProps } from 'views/elements/Icon';
 import { useStyles } from './styles';
 
 interface Props {
-	icon: IconProps;
-	title?: string;
-	disabled?: boolean;
-	isFetching?: boolean;
-	color?: 'primary' | 'secondary' | 'inherit';
-	onClick?: () => void;
+  icon: IconProps;
+  title?: string;
+  disabled?: boolean;
+  isFetching?: boolean;
+  color?: 'primary' | 'secondary' | 'inherit';
+  onClick?: () => void;
 }
 
 const InputButton: FC<Props> = ({
-	icon: { name: iconName, svgSize = 'sm' },
-	title,
-	disabled,
-	isFetching = false,
-	color = 'inherit',
-	onClick,
+  icon: { name: iconName, svgSize = 'sm' },
+  title,
+  disabled,
+  isFetching = false,
+  color = 'inherit',
+  onClick,
 }) => {
-	const classes = useStyles();
+  const classes = useStyles();
 
-	if (isFetching) {
-		return (
-			<div className={classes.root}>
-				<CircularProgress size={18} thickness={4} color="inherit" />
-			</div>
-		);
-	}
+  if (isFetching) {
+    return (
+      <div className={classes.root}>
+        <CircularProgress size={18} thickness={4} color="inherit" />
+      </div>
+    );
+  }
 
-	if (!onClick) {
-		return (
-			<div className={classes.root}>
-				<Icon name={iconName} size="sm" svgSize={svgSize} />
-			</div>
-		);
-	}
+  if (!onClick) {
+    return (
+      <div className={classes.root}>
+        <Icon name={iconName} size="sm" svgSize={svgSize} />
+      </div>
+    );
+  }
 
-	return (
-		<div className={classes.root}>
-			<IconButton
-				className={cx(classes.iconButton, color)}
-				title={title}
-				color={color}
-				disabled={disabled}
-				onClick={onClick}
-			>
-				<Icon name={iconName} size="sm" svgSize={svgSize} />
-			</IconButton>
-		</div>
-	);
+  return (
+    <div className={classes.root}>
+      <IconButton
+        className={cx(classes.iconButton, color)}
+        title={title}
+        color={color}
+        disabled={disabled}
+        onClick={onClick}
+      >
+        <Icon name={iconName} size="sm" svgSize={svgSize} />
+      </IconButton>
+    </div>
+  );
 };
 
 export default memo(InputButton);

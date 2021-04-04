@@ -9,19 +9,19 @@ import { useAuthStore } from 'pages/Login/store';
 import { useStyles } from './styles';
 
 const Content: FC = ({ children }) => {
-	const classes = useStyles();
+  const classes = useStyles();
 
-	const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated } = useAuthStore();
 
-	return (
-		<>
-			<Header />
-			<div className={classes.toolbar} />
-			{isAuthenticated && <Drawer />}
-			<main className={classes.main}>{children}</main>
-			<Footer />
-		</>
-	);
+  return (
+    <>
+      <Header />
+      <div className={classes.toolbar} />
+      {isAuthenticated && <Drawer />}
+      <main className={classes.main}>{children}</main>
+      <Footer />
+    </>
+  );
 };
 
 export default observer(Content);

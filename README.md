@@ -6,7 +6,7 @@ Application was built in demo purpose
 
 * [React](https://reactjs.org/)
 * [MobX](https://mobx.js.org/)
-* [router5](https://router5.js.org/)
+* [react-router](https://reactrouter.com/)
 * [TypeScript](https://www.typescriptlang.org/)
 * [Material UI](https://material-ui.com/)
 * [ESLint](https://eslint.org/)
@@ -36,7 +36,6 @@ This application depends on [Docker](https://www.docker.com/), and [docker-micro
 - [x] performance optimisations
 - [x] integration tests
 - [ ] unit tests
-- [ ] e2e tests
 
 ## Available Scripts
 

@@ -1,11 +1,18 @@
 module.exports = {
+	root: true,
 	parser: '@typescript-eslint/parser',
-	plugins: ['@typescript-eslint', 'react', 'prettier', 'jsx-a11y'],
+	plugins: [
+		'@typescript-eslint',
+		'eslint-plugin-import',
+		'prettier',
+		'react',
+		'react-hooks',
+		'jsx-a11y',
+	],
 	extends: [
 		'eslint:recommended',
-		'plugin:@typescript-eslint/recommended',
 		'plugin:prettier/recommended',
-		// 'plugin:react/recommended',
+		'plugin:@typescript-eslint/recommended',
 		'react-app',
 		'plugin:jsx-a11y/recommended',
 	],
@@ -22,12 +29,28 @@ module.exports = {
 		'no-nested-ternary': 'error',
 		'no-trailing-spaces': 'error',
 		'prefer-object-spread': 'error',
+		'no-duplicate-imports': 'warn',
+		'sort-imports': [
+			'error',
+			{
+				ignoreCase: true,
+				ignoreDeclarationSort: true,
+				ignoreMemberSort: false,
+			},
+		],
 		'space-before-blocks': 'error',
 		'spaced-comment': ['error', 'always'],
+		'object-shorthand': [
+			'error',
+			'always',
+			{
+				avoidQuotes: true,
+			},
+		],
 		// tslint
 		'@typescript-eslint/no-non-null-assertion': 0,
-		'@typescript-eslint/no-explicit-any': 0,
-		'@typescript-eslint/no-empty-interface': 0,
+		'@typescript-eslint/no-explicit-any': 1,
+		'@typescript-eslint/no-empty-interface': 1,
 		'@typescript-eslint/explicit-function-return-type': [
 			0,
 			{
@@ -36,17 +59,33 @@ module.exports = {
 				allowHigherOrderFunctions: true,
 			},
 		],
-		// jsx-a11y
-		'jsx-a11y/no-autofocus': 0,
-		// prettier
-		'prettier/prettier': [
-			'error',
+		'@typescript-eslint/member-ordering': [
+			'warn',
 			{
-				useTabs: true,
-				tabWidth: 4,
-				semi: true,
-				singleQuote: true,
-				printWidth: 90,
+				interfaces: ['signature', 'field', 'constructor', 'method'],
+				typeLiterals: ['signature', 'field', 'constructor', 'method'],
+			},
+		],
+		// prettier
+		'prettier/prettier': ['error', { singleQuote: true }],
+		// react
+		'react/jsx-sort-props': [
+			1,
+			{
+				shorthandFirst: true,
+				callbacksLast: true,
+				ignoreCase: false,
+				noSortAlphabetically: true,
+				reservedFirst: true,
+			},
+		],
+		'react/sort-comp': [
+			1,
+			{
+				order: ['static-methods', 'lifecycle', 'everything-else', 'rendering'],
+				groups: {
+					rendering: ['/^render.+$/', 'render'],
+				},
 			},
 		],
 	},

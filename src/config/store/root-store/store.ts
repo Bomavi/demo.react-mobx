@@ -6,24 +6,24 @@ import { homeStore, HomeStore } from 'pages/Home/store';
 import { authStore, AuthStore } from 'pages/Login/store';
 
 interface RootStore {
-	services: Services;
-	// featureHome: HomeStore;
-	// featureAuth: AuthStore;
+  services: Services;
+  // featureHome: HomeStore;
+  // featureAuth: AuthStore;
 }
 
 const createRootStore = (): RootStore => {
-	return makeAutoObservable<RootStore>(
-		{
-			services: new Services(),
-			// featureHome: createHomeStore(this),
-			// featureAuth: createAuthStore(this),
-		},
-		{
-			services: false,
-			// featureHome: false,
-			// featureAuth: false,
-		}
-	);
+  return makeAutoObservable<RootStore>(
+    {
+      services: new Services(),
+      // featureHome: createHomeStore(this),
+      // featureAuth: createAuthStore(this),
+    },
+    {
+      services: false,
+      // featureHome: false,
+      // featureAuth: false,
+    }
+  );
 };
 
 // class RootStore {

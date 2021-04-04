@@ -13,50 +13,50 @@ import { SPRING_TRANSITION } from './constants';
 import { useStyles } from './styles';
 
 const TaskList: FC = () => {
-	const classes = useStyles();
+  const classes = useStyles();
 
-	const {
-		sortedByComplete,
-		isEmpty,
-		tasksLength,
-		sortKey,
-		searchTasks,
-		sortTasks,
-	} = useHomeStore();
+  const {
+    sortedByComplete,
+    isEmpty,
+    tasksLength,
+    sortKey,
+    searchTasks,
+    sortTasks,
+  } = useHomeStore();
 
-	useEffect(() => {
-		searchTasks();
-	}, [searchTasks]);
+  useEffect(() => {
+    searchTasks();
+  }, [searchTasks]);
 
-	const sortTasksHandler = () => {
-		if (sortKey === 'asc') sortTasks('desc');
-		if (sortKey === 'desc') sortTasks('asc');
-	};
+  const sortTasksHandler = () => {
+    if (sortKey === 'asc') sortTasks('desc');
+    if (sortKey === 'desc') sortTasks('asc');
+  };
 
-	return (
-		<Paper className={classes.root}>
-			<div className={classes.header}>
-				<Typography className={classes.title} noWrap variant="subtitle2">
-					Task List &nbsp;&nbsp;
-					{!isEmpty && '|'}
-					&nbsp;&nbsp;&nbsp;
-					{!isEmpty && `${tasksLength}`}
-				</Typography>
-				<SortButton
-					sortKey={sortKey}
-					disabled={isEmpty}
-					onClick={sortTasksHandler}
-				/>
-			</div>
-			{!isEmpty
-				? sortedByComplete.map((task, i) => (
-						<motion.div key={task.id} transition={SPRING_TRANSITION}>
-							<Task task={task} isLastChild={tasksLength === i + 1} />
-						</motion.div>
-				  ))
-				: 'no tasks'}
-		</Paper>
-	);
+  return (
+    <Paper className={classes.root}>
+      <div className={classes.header}>
+        <Typography noWrap className={classes.title} variant="subtitle2">
+          Task List &nbsp;&nbsp;
+          {!isEmpty && '|'}
+          &nbsp;&nbsp;&nbsp;
+          {!isEmpty && `${tasksLength}`}
+        </Typography>
+        <SortButton
+          sortKey={sortKey}
+          disabled={isEmpty}
+          onClick={sortTasksHandler}
+        />
+      </div>
+      {!isEmpty
+        ? sortedByComplete.map((task, i) => (
+            <motion.div key={task.id} transition={SPRING_TRANSITION}>
+              <Task task={task} isLastChild={tasksLength === i + 1} />
+            </motion.div>
+          ))
+        : 'no tasks'}
+    </Paper>
+  );
 };
 
 export default observer(TaskList);

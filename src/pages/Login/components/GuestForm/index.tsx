@@ -10,24 +10,24 @@ import LoginButton from '../LoginButton';
 import { useStyles } from './styles';
 
 const GuestForm: FC = () => {
-	const classes = useStyles();
+  const classes = useStyles();
 
-	const { login } = useAuthStore();
+  const { login } = useAuthStore();
 
-	const loginHandler = () => {
-		login({ isGuest: true });
-	};
+  const loginHandler = () => {
+    login({ isGuest: true });
+  };
 
-	return (
-		<Paper className={classes.paper}>
-			<Subtitle>Use Guest Access</Subtitle>
-			<div className={classes.wrapper}>
-				<LoginButton gradient="primary" onClick={loginHandler}>
-					Get access
-				</LoginButton>
-			</div>
-		</Paper>
-	);
+  return (
+    <Paper className={classes.paper}>
+      <Subtitle>Use Guest Access</Subtitle>
+      <div className={classes.wrapper}>
+        <LoginButton gradient="primary" onClick={loginHandler}>
+          Get access
+        </LoginButton>
+      </div>
+    </Paper>
+  );
 };
 
 export default observer(GuestForm);

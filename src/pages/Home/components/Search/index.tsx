@@ -7,33 +7,33 @@ import CustomInput from 'views/elements/CustomInput';
 import { useHomeStore } from '../../store';
 
 const Search: FC = () => {
-	const { isFetching, search, searchTasks } = useHomeStore();
+  const { isFetching, search, searchTasks } = useHomeStore();
 
-	useEffect(() => {
-		return () => {
-			if (search.q.length > 0) {
-				search.onChange('q', '');
-				searchTasks();
-			}
-		};
-	}, [search, searchTasks]);
+  useEffect(() => {
+    return () => {
+      if (search.q.length > 0) {
+        search.onChange('q', '');
+        searchTasks();
+      }
+    };
+  }, [search, searchTasks]);
 
-	const changeHandler = debounce((value: string) => {
-		search.onChange('q', value);
-		searchTasks();
-	}, debounceTiming.input);
+  const changeHandler = debounce((value: string) => {
+    search.onChange('q', value);
+    searchTasks();
+  }, debounceTiming.input);
 
-	return (
-		<CustomInput
-			icon={{
-				name: 'magnify',
-				svgSize: 'md',
-			}}
-			isFetching={isFetching}
-			placeholder="Type to search..."
-			onChange={changeHandler}
-		/>
-	);
+  return (
+    <CustomInput
+      icon={{
+        name: 'magnify',
+        svgSize: 'md',
+      }}
+      isFetching={isFetching}
+      placeholder="Type to search..."
+      onChange={changeHandler}
+    />
+  );
 };
 
 export default observer(Search);

@@ -10,14 +10,14 @@ import App from 'views/layouts/App';
 // configure({ enforceActions: 'observed' });
 
 render(
-	// <StrictMode>
-	<UiStoreProvider>
-		<AuthStoreProvider>
-			<HomeStoreProvider>
-				<App />
-			</HomeStoreProvider>
-		</AuthStoreProvider>
-	</UiStoreProvider>,
-	// </StrictMode>,
-	document.getElementById('root') as HTMLElement
+  // <StrictMode>
+  <UiStoreProvider>
+    <AuthStoreProvider>
+      <HomeStoreProvider>
+        <App />
+      </HomeStoreProvider>
+    </AuthStoreProvider>
+  </UiStoreProvider>,
+  // </StrictMode>,
+  document.getElementById('root') as HTMLElement
 );

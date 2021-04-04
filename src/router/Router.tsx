@@ -9,18 +9,18 @@ import AuthRoute from './components/AuthRoute';
 import PrivateRoute from './components/PrivateRoute';
 
 const Router: FC = () => {
-	return (
-		<BrowserRouter history={history}>
-			<Switch>
-				<AuthRoute exact path="/login">
-					<Login />
-				</AuthRoute>
-				<PrivateRoute exact path="/">
-					<Home />
-				</PrivateRoute>
-			</Switch>
-		</BrowserRouter>
-	);
+  return (
+    <BrowserRouter history={history}>
+      <Switch>
+        <AuthRoute exact path="/login">
+          <Login />
+        </AuthRoute>
+        <PrivateRoute exact path="/">
+          <Home />
+        </PrivateRoute>
+      </Switch>
+    </BrowserRouter>
+  );
 };
 
 export default Router;

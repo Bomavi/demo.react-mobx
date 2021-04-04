@@ -5,18 +5,18 @@ import Typography from '@material-ui/core/Typography';
 import { useStyles } from './styles';
 
 const Subtitle: FC = ({ children }) => {
-	const classes = useStyles();
+  const classes = useStyles();
 
-	return (
-		<Typography
-			className={classes.subtitle}
-			noWrap
-			variant="subtitle2"
-			align="center"
-		>
-			{children}
-		</Typography>
-	);
+  return (
+    <Typography
+      noWrap
+      className={classes.subtitle}
+      variant="subtitle2"
+      align="center"
+    >
+      {children}
+    </Typography>
+  );
 };
 
 export default Subtitle;
